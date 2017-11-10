@@ -25,7 +25,6 @@ HRESULT mainGame::init(void)
  //¿¬»ê~
  void mainGame::update(void)
  {
-	 st->update();
 	 gameNode::update();
 
  }

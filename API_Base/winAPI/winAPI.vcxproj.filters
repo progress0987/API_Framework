@@ -58,7 +58,7 @@
     <Filter Include="2DGameFramework\Manager\singletonBase">
       <UniqueIdentifier>{c3fb9386-5e94-4ab3-9186-1b8ca36dccec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DGameFramework\MainGame\Tests">
+    <Filter Include="2DGameFramework\Tests">
       <UniqueIdentifier>{ed54c2f5-2658-44e7-834a-394b75544d8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -105,16 +105,10 @@
     <ClInclude Include="enemy.h">
       <Filter>2DGameFramework\MainGame\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="enemyManager.h">
-      <Filter>2DGameFramework\MainGame\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="progressBar.h">
       <Filter>2DGameFramework\MainGame\progressbar</Filter>
     </ClInclude>
     <ClInclude Include="txtData.h">
-      <Filter>2DGameFramework\txtdata</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveLoadTest.h">
       <Filter>2DGameFramework\txtdata</Filter>
     </ClInclude>
     <ClInclude Include="randomFuction.h">
@@ -122,12 +116,6 @@
     </ClInclude>
     <ClInclude Include="fontTest.h">
       <Filter>2DGameFramework\MainGame\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="test.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CfastPixel.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>2DGameFramework\MainGame\Timer</Filter>
@@ -142,10 +130,10 @@
       <Filter>2DGameFramework\MainGame\Animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationTest.h">
-      <Filter>2DGameFramework\MainGame\Tests</Filter>
+      <Filter>2DGameFramework\Tests</Filter>
     </ClInclude>
     <ClInclude Include="PixelCollisionTest.h">
-      <Filter>2DGameFramework\MainGame\Tests</Filter>
+      <Filter>2DGameFramework\Tests</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>2DGameFramework\MainGame\Player</Filter>
@@ -157,7 +145,19 @@
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="soundTest.h">
-      <Filter>2DGameFramework\MainGame\Tests</Filter>
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="CfastPixel.h">
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoadTest.h">
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,16 +191,10 @@
     <ClCompile Include="enemy.cpp">
       <Filter>2DGameFramework\MainGame\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="enemyManager.cpp">
-      <Filter>2DGameFramework\MainGame\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="progressBar.cpp">
       <Filter>2DGameFramework\MainGame\progressbar</Filter>
     </ClCompile>
     <ClCompile Include="txtData.cpp">
-      <Filter>2DGameFramework\txtdata</Filter>
-    </ClCompile>
-    <ClCompile Include="SaveLoadTest.cpp">
       <Filter>2DGameFramework\txtdata</Filter>
     </ClCompile>
     <ClCompile Include="fontTest.cpp">
@@ -219,10 +213,10 @@
       <Filter>2DGameFramework\MainGame\Animation</Filter>
     </ClCompile>
     <ClCompile Include="AnimationTest.cpp">
-      <Filter>2DGameFramework\MainGame\Tests</Filter>
+      <Filter>2DGameFramework\Tests</Filter>
     </ClCompile>
     <ClCompile Include="PixelCollisionTest.cpp">
-      <Filter>2DGameFramework\MainGame\Tests</Filter>
+      <Filter>2DGameFramework\Tests</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>2DGameFramework\MainGame\Player</Filter>
@@ -234,7 +228,13 @@
       <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="soundTest.cpp">
-      <Filter>2DGameFramework\MainGame\Tests</Filter>
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadTest.cpp">
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
