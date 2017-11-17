@@ -2,6 +2,7 @@
 #include "mainGame.h"
 
 RECT rtemp;
+//È«±â Å×½ºÆ®
 mainGame::mainGame()
 {
 }
