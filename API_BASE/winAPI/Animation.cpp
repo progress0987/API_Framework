@@ -20,7 +20,6 @@ HRESULT Animation::init(int totalW, int totalH, int frameW, int frameH)
 	//프레임 세로 갯수
 	frameHeight = frameH;
 	int frameNumHeight = totalH / frameHeight;
-	frameNum = frameNumWidth*frameNumHeight;
 
 	for (int i = 0;i< frameNumHeight; i++) {
 		for (int j = 0; j < frameNumWidth; j++) {

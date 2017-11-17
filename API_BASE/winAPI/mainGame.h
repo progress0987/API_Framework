@@ -1,12 +1,9 @@
 #pragma once
 #include"gameNode.h"
-#include "StarcraftScene.h"
-#include "selectScene.h"
 class mainGame :  public gameNode
 {
 
 private:
-
 public:
 
 	HRESULT init(void);

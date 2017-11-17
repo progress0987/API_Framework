@@ -140,8 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationTest.h" />
-    <ClInclude Include="inventory.h" />
-    <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="bullets.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -161,7 +160,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SaveLoadTest.h" />
     <ClInclude Include="singletonBase.h" />
-    <ClInclude Include="Skill.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="soundTest.h" />
     <ClInclude Include="stdafx.h" />
@@ -175,8 +173,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationTest.cpp" />
-    <ClCompile Include="inventory.cpp" />
-    <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="bullets.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -191,7 +188,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="SaveLoadTest.cpp" />
-    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="soundTest.cpp" />
     <ClCompile Include="stdafx.cpp">

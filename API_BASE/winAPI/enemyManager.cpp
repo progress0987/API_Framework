@@ -14,26 +14,9 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
-	for (MinionsIter = Minions.begin(); MinionsIter != Minions.end(); MinionsIter++) {
-
-		(*MinionsIter)->update();
-	}
 }
 
 void enemyManager::render()
-{
-	for (MinionsIter = Minions.begin(); MinionsIter != Minions.end(); MinionsIter++) {
-
-		(*MinionsIter)->render();
-	}
-}
-
-void enemyManager::setMinion()
-{
-	//포지션들 잡아주는것 - 수정
-}
-
-void enemyManager::removeMinion(int arrnum)
 {
 }
 

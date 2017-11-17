@@ -7,8 +7,8 @@ HRESULT Effect::init(image * effectImage, int frameW, int frameH, int fps, float
 	if (!effectImage) return E_FAIL;
 
 	isRunning = false;
-	this->effectImage = effectImage;
-	this->elapsedTime = elapsedTime;
+	effectImage = effectImage;
+	elapsedTime = elapsedTime;
 
 	if (!effectAnimation) effectAnimation = new Animation;
 
@@ -49,8 +49,8 @@ void Effect::startEffect(int x, int y)
 	//이미지나 애니메이션 둘중 하나라도 없으면 실행시키지마라
 	if (!effectImage || !effectAnimation) return;
 
-	this->x = x - (effectAnimation->getFrameWidth() / 2);
-	this->y = y - (effectAnimation->getFrameHeight() / 2);
+	x = x - (effectAnimation->getFrameWidth() / 2);
+	y = y - (effectAnimation->getFrameHeight() / 2);
 
 	isRunning = true;
 	effectAnimation->start();

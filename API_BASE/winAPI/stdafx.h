@@ -34,8 +34,6 @@
 #include "timeManager.h"
 #include "txtData.h"
 #include "soundManager.h"
-#include "effectManager.h"
-#include "sceneManager.h"
 
 using namespace std;
 using namespace Util;
@@ -55,8 +53,8 @@ using namespace Util;
 #define WINNAME (LPTSTR)(TEXT("API BASE"))
 #define WINSTARTX 100
 #define WINSTARTY 50
-#define WINSIZEX  800
-#define WINSIZEY  600
+#define WINSIZEX  1280
+#define WINSIZEY  720
 #define WINSTYLE  WS_CAPTION|WS_SYSMENU
 
 
@@ -72,7 +70,6 @@ using namespace Util;
 
 #define SOUNDMANAGER soundManager::getSingleton()
 #define TXTDATA    txtData::getSingleton()
-#define SCENEMANAGER sceneManager::getSingleton()
 //===============================================
 //   ##매크로 함수 ##(메인게임 릴리즈 부분에서 사용)
 //===============================================

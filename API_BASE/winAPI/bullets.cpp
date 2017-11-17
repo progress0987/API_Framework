@@ -184,7 +184,9 @@ void classBullet::update()
 
 void classBullet::render()
 {
-	draw();
+	for (BulletListIter = BulletList.begin(); BulletListIter != BulletList.end(); BulletListIter++) {
+		BulletListIter->bulletImg->render(getMemDC(), BulletListIter->rc.left, BulletListIter->rc.top);
+	}
 }
 
 void classBullet::fire(float x, float y, float angle, float speed)
@@ -216,85 +218,4 @@ void classBullet::move()
 		else
 			BulletListIter++;
 	}
-}
-
-void classBullet::draw()
-{
-	for (BulletListIter = BulletList.begin(); BulletListIter != BulletList.end(); BulletListIter++) {
-		BulletListIter->bulletImg->render(getMemDC(), BulletListIter->rc.left, BulletListIter->rc.top);
-	}
-}
-
-HRESULT missilePF::init(const char * imgName, int bulMax, float range)
-{
-	this->imgName = imgName;
-	this->bulletMax = bulMax;
-	this->range = range;
-
-	return S_OK;
-}
-
-void missilePF::release()
-{
-	Bullets.clear();
-}
-
-void missilePF::update()
-{
-	move();
-}
-
-void missilePF::render()
-{
-	draw();
-}
-
-void missilePF::fire(float x, float y, float angle, float speed)
-{
-	if (bulletMax < Bullets.size())return;
-	Bullet bul;
-	ZeroMemory(&bul, sizeof(Bullet));
-	bul.bulletImg = IMAGEMANAGER->findImage(imgName);
-	bul.angle = angle;
-	bul.speed = speed;
-	bul.radius = bul.bulletImg->getFrameWidth()/2;
-	bul.x = bul.fireX = x;
-	bul.y = bul.fireY = y;
-	bul.rc = RectMakeCenter(bul.x, bul.y, bul.bulletImg->getWidth(), bul.bulletImg->getHeight());
-	Bullets.push_back(bul);
-}
-
-void missilePF::move()
-{
-	float elapsedTime = TIMEMANAGER->getElapsedTime();
-	for (BulletIter = Bullets.begin(); BulletIter != Bullets.end();) {
-		BulletIter->x += cosf(BulletIter->angle)*BulletIter->speed*elapsedTime;
-		BulletIter->y += -sinf(BulletIter->angle)*BulletIter->speed*elapsedTime;
-
-		BulletIter->rc = RectMakeCenter(BulletIter->x, BulletIter->y, BulletIter->bulletImg->getFrameWidth(), BulletIter->bulletImg->getFrameHeight());
-
-		if (range < getDistance(BulletIter->fireX, BulletIter->fireY, BulletIter->x, BulletIter->y)) {
-			BulletIter = Bullets.erase(BulletIter);
-		}
-		else BulletIter++;
-	}
-}
-
-void missilePF::draw()
-{
-	int frame;
-	float angle;
-	for (BulletIter = Bullets.begin(); BulletIter != Bullets.end();) {
-		angle = BulletIter->angle + (PI / 16);
-		if (angle >= PI2) angle -= PI2;
-
-		frame = (angle / (PI / 8));
-
-		BulletIter->bulletImg->frameRender(getMemDC(), BulletIter->rc.left, BulletIter->rc.top, frame, 0);
-	}
-}
-
-void missilePF::removeBullet(int arrNum)
-{
-	Bullets.erase(Bullets.begin() + arrNum);
 }

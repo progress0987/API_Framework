@@ -13,32 +13,6 @@ struct Bullet {
 	bool fired;
 	int count;
 };
-
-class missilePF :public gameNode {
-
-private:
-	vector<Bullet> Bullets;
-	vector<Bullet>::iterator BulletIter;
-	const char* imgName;
-	float range;
-	int bulletMax;
-
-public:
-	HRESULT init(const char* imgName, int bulMax, float range);
-	void release();
-	void update();
-	void render();
-	void fire(float x, float y, float angle, float speed);
-	void move();
-	void draw();
-	void removeBullet(int arrNum);
-
-	vector<Bullet> getBulList() { return Bullets; }
-	vector<Bullet>::iterator getBulIter() { return BulletIter; }
-
-};
-
-
 //공용 총알 클래스
 class classBullet :public gameNode{
 private:
@@ -59,7 +33,6 @@ public:
 
 	void fire(float x, float y,float angle,float speed);
 	void move();
-	void draw();
 	vector<Bullet> getBulList() { return BulletList; }
 	vector<Bullet>::iterator getBulIter() { return BulletListIter; }
 
