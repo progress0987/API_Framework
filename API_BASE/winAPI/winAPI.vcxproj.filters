@@ -21,9 +21,6 @@
     <Filter Include="2DGameFramework\Image">
       <UniqueIdentifier>{9aefe4c2-296d-4550-8418-9d5d1ac31bf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DGameFramework\txtdata">
-      <UniqueIdentifier>{764de938-a43e-4fba-98a4-f52867333bdf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2DGameFramework\Manager\singletonBase">
       <UniqueIdentifier>{c3fb9386-5e94-4ab3-9186-1b8ca36dccec}</UniqueIdentifier>
     </Filter>
@@ -33,33 +30,39 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{8f2af53b-46be-44be-8106-95319dfcf85a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Bullets">
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{4b7707a3-4ea4-46c5-b614-2fedb2dea6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="2DGameFramework\Bullets">
       <UniqueIdentifier>{629681ba-d411-4dbd-964b-e0bcfcc65826}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Enemy">
       <UniqueIdentifier>{633a0dfe-b127-42a1-b350-4e8fc3d7d8a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Player">
-      <UniqueIdentifier>{4b7707a3-4ea4-46c5-b614-2fedb2dea6d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\progressbar">
+    <Filter Include="2DGameFramework\progressbar">
       <UniqueIdentifier>{f2940302-55d4-484f-a2e4-07f1fb996606}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Font">
-      <UniqueIdentifier>{5c3480da-0eeb-4604-927c-c62899ad9012}</UniqueIdentifier>
+    <Filter Include="2DGameFramework\Inventory">
+      <UniqueIdentifier>{d8c5da16-9e22-41eb-9f96-d3d286404ef4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Timer">
-      <UniqueIdentifier>{43b62e08-ab3d-4270-bb24-c031be814750}</UniqueIdentifier>
+    <Filter Include="2DGameFramework\SpriteEffects">
+      <UniqueIdentifier>{5c30e2ba-38ef-4594-91e3-acc14dac7476}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Effect">
-      <UniqueIdentifier>{162390e1-cf17-458c-b33a-5b0da20d2f8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Animation">
+    <Filter Include="2DGameFramework\SpriteEffects\Animation">
       <UniqueIdentifier>{0462a38a-5343-4628-886d-0fab20f17227}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="2DGameFramework\SpriteEffects\Effect">
+      <UniqueIdentifier>{162390e1-cf17-458c-b33a-5b0da20d2f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\txtdata">
+      <UniqueIdentifier>{764de938-a43e-4fba-98a4-f52867333bdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\Tests\Timer">
+      <UniqueIdentifier>{43b62e08-ab3d-4270-bb24-c031be814750}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,13 +103,13 @@
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="bullets.h">
-      <Filter>MainGame\Bullets</Filter>
+      <Filter>2DGameFramework\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="progressBar.h">
-      <Filter>MainGame\progressbar</Filter>
+      <Filter>2DGameFramework\progressbar</Filter>
     </ClInclude>
     <ClInclude Include="txtData.h">
       <Filter>2DGameFramework\txtdata</Filter>
@@ -114,20 +117,17 @@
     <ClInclude Include="randomFuction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="fontTest.h">
-      <Filter>MainGame\Font</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>MainGame\Timer</Filter>
+      <Filter>2DGameFramework\Tests\Timer</Filter>
     </ClInclude>
     <ClInclude Include="timeManager.h">
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>MainGame\Effect</Filter>
+      <Filter>2DGameFramework\SpriteEffects\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>MainGame\Animation</Filter>
+      <Filter>2DGameFramework\SpriteEffects\Animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationTest.h">
       <Filter>2DGameFramework\Tests</Filter>
@@ -159,6 +159,12 @@
     <ClInclude Include="enemyManager.h">
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="inventory.h">
+      <Filter>2DGameFramework\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="fontTest.h">
+      <Filter>2DGameFramework\Tests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -186,31 +192,28 @@
       <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="bullets.cpp">
-      <Filter>MainGame\Bullets</Filter>
+      <Filter>2DGameFramework\Bullets</Filter>
     </ClCompile>
     <ClCompile Include="enemy.cpp">
       <Filter>MainGame\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="progressBar.cpp">
-      <Filter>MainGame\progressbar</Filter>
+      <Filter>2DGameFramework\progressbar</Filter>
     </ClCompile>
     <ClCompile Include="txtData.cpp">
       <Filter>2DGameFramework\txtdata</Filter>
     </ClCompile>
-    <ClCompile Include="fontTest.cpp">
-      <Filter>MainGame\Font</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>MainGame\Timer</Filter>
+      <Filter>2DGameFramework\Tests\Timer</Filter>
     </ClCompile>
     <ClCompile Include="timeManager.cpp">
       <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>MainGame\Effect</Filter>
+      <Filter>2DGameFramework\SpriteEffects\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>MainGame\Animation</Filter>
+      <Filter>2DGameFramework\SpriteEffects\Animation</Filter>
     </ClCompile>
     <ClCompile Include="AnimationTest.cpp">
       <Filter>2DGameFramework\Tests</Filter>
@@ -235,6 +238,12 @@
     </ClCompile>
     <ClCompile Include="enemyManager.cpp">
       <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="inventory.cpp">
+      <Filter>2DGameFramework\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="fontTest.cpp">
+      <Filter>2DGameFramework\Tests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

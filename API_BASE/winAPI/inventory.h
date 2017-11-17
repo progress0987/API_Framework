@@ -30,7 +30,7 @@ struct item {
 	char* itemName;
 	int stack; // only for potion
 
-	int dmg = 0;
+	int dmg = 0;//힐일때는 체력회복
 	int def = 0;//물방 표현용
 	int mr = 0;//마방 표현용
 
