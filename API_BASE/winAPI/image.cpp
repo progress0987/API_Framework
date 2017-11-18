@@ -731,14 +731,6 @@ void image::rotatedRender(HDC hdc, int destX, int destY, float angle)
 	GdiTransparentBlt(hdc, destX, destY, imgInfo->width, imgInfo->height, imgInfo->hRMemDC, 0, 0, imgInfo->width, imgInfo->height, transColor);
 	SelectObject(imgInfo->hRMemDC, oRotBIT);
 	DeleteObject(oRotBIT);
-
-	/*HDC tmp = CreateCompatibleDC(hdc);
-	HBITMAP oBit = (HBITMAP)CreateCompatibleBitmap(hdc, imgInfo->width, imgInfo->height);
-
-	HBITMAP test = (HBITMAP)SelectObject(tmp, GetRotatedBitmap(hdc, 0, 0, imgInfo->width, imgInfo->height, angle, transColor));
-
-	GdiTransparentBlt(hdc, destX, destY, imgInfo->width, imgInfo->height, tmp, 0, 0, imgInfo->width, imgInfo->height, transColor);*/
-	//DeleteObject(SelectObject(imgInfo->hMemDC, test));
 }
 void image::rotatedRender(HDC hdc, int destX, int destY, int pivotX, int pivotY, float angle)
 {
@@ -754,47 +746,3 @@ void image::rotatedRender(HDC hdc, int destX, int destY, int pivotX, int pivotY,
 	DeleteObject(oRotBIT);
 }
 
-// 인수 목록
-// HDC hdc : 화면DC의 핸들. GetRotatedBitmap()함수의 인자로 전달하게 됩니다.
-// HDC hOffScreen : 회전 이미지를 출력할, 오프스크린DC의 핸들.
-// int dest_x : 오프스크린 상에서, 회전 이미지가 출력될 x좌표.
-// int dest_y : 오프스크린 상에서, 회전 이미지가 출력될 y좌표.
-// int dest_width : 회전할 비트맵 이미지의 폭 크기 == 회전할 비트맵 이미지가 출력될 폭 크기
-// int dest_heigjt : 회전할 비트맵 이미지의 높이 크기 == 회전할 비트맵 이미지가 출력될 높이 크기
-// HBITMAP hBit : 회전 이미지 비트맵핸들
-// int source_x : 회전 이미지 비트맵에서의, 출력할 사각영역의 좌상단x좌표.
-// int source_y : 회전 이미지 비트맵에서의, 출력할 사각영역의 좌상단y좌표.
-// DWORD dFlag : ROP모드를 나타내는 플래그 매크로
-// float angle : 회전할 각도.
-// COLORREF bkColor : 회전후 생긴 공백영역을 칠할 색상. 이미지 사각형을 회전하면, 공백영역이 생깁니다. (예)다이아몬드 형태로 회전된 사각형에서의 뒤부분 영역
-//
-
-//
-//void RotateBlt(HDC hdc, HDC hOffScreen, int dest_x, int dest_y, int dest_width, int dest_height,
-//	HBITMAP hBit, int source_x, int source_y, DWORD dFlag, float angle, COLORREF bkColor)
-//{
-//	static HDC hTempMemDC; // 회전한 비트맵을 선택할 메모리DC
-//	HBITMAP hTempBitmap, hOldBitmap; // 회전한 비트맵을 저장할, 비트맵 핸들
-//
-//									 // 최초 한번만 비트맵DC를 생성합니다.
-//
-//	if (!hTempMemDC) hTempMemDC = CreateCompatibleDC(hdc);
-//
-//	// 비트맵을 회전하는 함수를 호출하여, 리턴되는 회전된 비트맵 핸들을 저장
-//
-//	hTempBitmap = GetRotatedBitmap(hdc, hBit, source_x, source_y, dest_width, dest_height, angle, bkColor);
-//
-//	// 회전된 비트맵 핸들을 선택하고,
-//
-//	hOldBitmap = (HBITMAP)SelectObject(hTempMemDC, hTempBitmap);
-//
-//	// 오프스크린DC에, 회전된 비트맵 핸들을 선택한, 메모리DC의 이미지를 출력합니다.
-//	// 안의 주석을 해제하면, 출력좌표를 중심으로 하는 회전이미지가 됩니다.
-//
-//	BitBlt(hOffScreen, dest_x
-//		// - dest_width/2
-//		, dest_y - dest_height / 2, dest_width, dest_height, hTempMemDC, 0, 0, dFlag);
-//
-//	SelectObject(hTempMemDC, hOldBitmap);
-//	DeleteObject(hTempBitmap);
-//}

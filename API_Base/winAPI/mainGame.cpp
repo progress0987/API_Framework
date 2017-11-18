@@ -2,7 +2,7 @@
 #include "mainGame.h"
 
 RECT rtemp;
-//테스팅
+int testing = 0;
 mainGame::mainGame()
 {
 }
@@ -15,6 +15,7 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void) 
 {
 	gameNode::init(true);
+	IMAGEMANAGER->addImage("test", "sprites/a.bmp", 26, 124, TRUE, RGB(255, 0, 255));
 
 	return S_OK;
 }
@@ -27,6 +28,9 @@ HRESULT mainGame::init(void)
  void mainGame::update(void)
  {
 	 gameNode::update();
+	 testing++;
+	 if (testing > 360)
+		 testing = 0;
 
  }
  //여기가 그려주는 곳
@@ -39,7 +43,9 @@ HRESULT mainGame::init(void)
 	 //////////////////////////////////////////////////////////////////////////////////////////////
 	 //getmemdc에 넣어줌
 
-	 TIMEMANAGER->render(getMemDC());
+	 //TIMEMANAGER->render(getMemDC());
+	 IMAGEMANAGER->findImage("test")->rotatedRender(getMemDC(), 100, 100, (float)testing);
+	 IMAGEMANAGER->findImage("test")->rotatedRender(getMemDC(),100,300,10,10,(float)testing);
 
 	 /////////////////////그려주는부분 - 건들지말것//////////////////
 	 this->getBackBuffer()->render(getHDC(), 0, 0);

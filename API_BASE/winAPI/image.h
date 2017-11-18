@@ -96,7 +96,6 @@ public:
 	void alphaRender(HDC hdc,int destX, int destY,int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
 	void aniRender(HDC hdc, int destX, int destY, Animation* ani);
 
-	//void rotateRender(HDC hdc, int destX, int destY, float angle);
 private:
 	HBITMAP GetRotatedBitmap(HDC hdc, int source_x, int source_y,
 		int dest_width, int dest_height,int pivotX, int pivotY, float angle, COLORREF bkColor);
