@@ -25,7 +25,9 @@ public:
 		//당연하지만 호환이 가능하다면 불안해지기때문에 컴퓨터는 호환하지않는 DWORD를 선호한다.
 		DWORD resID;			//리소스 ID
 		HDC hMemDC;				//메모리 DC
+		HDC hRMemDC;			//회전 메모리 DC
 		HBITMAP hBit;			//새로운 비트맵 핸들
+		HBITMAP hRBit;			//회전된 비트맵 핸들
 		HBITMAP hOBit;			//기존 비트맵 핸들
 		float x;
 		float y;
@@ -94,6 +96,15 @@ public:
 	void alphaRender(HDC hdc,int destX, int destY,int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
 	void aniRender(HDC hdc, int destX, int destY, Animation* ani);
 
+	//void rotateRender(HDC hdc, int destX, int destY, float angle);
+private:
+	HBITMAP GetRotatedBitmap(HDC hdc, int source_x, int source_y,
+		int dest_width, int dest_height,int pivotX, int pivotY, float angle, COLORREF bkColor);
+public:
+	//각도는 0~360도 단위
+	void rotatedRender(HDC hdc, int destX, int destY, float angle);
+	//각도는 0~360도 단위
+	void rotatedRender(HDC hdc, int destX, int destY, int pivotX, int pivotY, float angle);
 
 	inline HDC getMemDC(void) { return imgInfo->hMemDC; }
 	/*****************************************************************************/
