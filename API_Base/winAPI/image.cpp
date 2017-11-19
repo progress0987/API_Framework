@@ -22,7 +22,9 @@ HRESULT image::init(int width, int height)
 	imgInfo->loadType = LOAD_EMPTY;
 	imgInfo->resID = 0;
 	imgInfo->hMemDC = CreateCompatibleDC(hdc);
+	imgInfo->hRMemDC = CreateCompatibleDC(hdc);
 	imgInfo->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, width, height);
+	imgInfo->hRBit = (HBITMAP)CreateCompatibleBitmap(hdc, width, height);
 	imgInfo->hOBit = (HBITMAP)SelectObject(imgInfo->hMemDC, imgInfo->hBit);
 	imgInfo->width = width;
 	imgInfo->height = height;
@@ -65,7 +67,9 @@ HRESULT image::init(const char * fileName, int width, int height, BOOL trans, CO
 	imgInfo->loadType = LOAD_FILE;
 	imgInfo->resID = 0;
 	imgInfo->hMemDC = CreateCompatibleDC(hdc);
+	imgInfo->hRMemDC = CreateCompatibleDC(hdc);
 	imgInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
+	imgInfo->hRBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	imgInfo->hOBit = (HBITMAP)SelectObject(imgInfo->hMemDC, imgInfo->hBit);
 	imgInfo->width = width;
 	imgInfo->height = height;
@@ -111,7 +115,9 @@ HRESULT image::init(const char * fileName, int width, int height, int frameX, in
 	imgInfo->loadType = LOAD_FILE;
 	imgInfo->resID = 0;
 	imgInfo->hMemDC = CreateCompatibleDC(hdc);
+	imgInfo->hRMemDC = CreateCompatibleDC(hdc);
 	imgInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
+	imgInfo->hRBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	imgInfo->hOBit = (HBITMAP)SelectObject(imgInfo->hMemDC, imgInfo->hBit);
 	imgInfo->width = width;
 	imgInfo->height = height;
@@ -163,7 +169,9 @@ HRESULT image::init(const char * fileName, float x, float y, int width, int heig
 	imgInfo->loadType = LOAD_FILE;
 	imgInfo->resID = 0;
 	imgInfo->hMemDC = CreateCompatibleDC(hdc);
+	imgInfo->hRMemDC = CreateCompatibleDC(hdc);
 	imgInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
+	imgInfo->hRBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	imgInfo->hOBit = (HBITMAP)SelectObject(imgInfo->hMemDC, imgInfo->hBit);
 	imgInfo->x = x;
 	imgInfo->y = y;
@@ -211,7 +219,9 @@ HRESULT image::init(const char * fileName, float x, float y, int width, int heig
 	imgInfo->loadType = LOAD_FILE;
 	imgInfo->resID = 0;
 	imgInfo->hMemDC = CreateCompatibleDC(hdc);
+	imgInfo->hRMemDC = CreateCompatibleDC(hdc);
 	imgInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
+	imgInfo->hRBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	imgInfo->hOBit = (HBITMAP)SelectObject(imgInfo->hMemDC, imgInfo->hBit);
 	imgInfo->x = x - (width / 2);
 	imgInfo->y = y - (height / 2);
@@ -655,4 +665,85 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 }void image::aniRender(HDC hdc, int destX, int destY, Animation* ani)
 {
 	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
+}
+
+HBITMAP image::GetRotatedBitmap(HDC hdc, int source_x, int source_y,
+	int dest_width, int dest_height, int pivotX, int pivotY, float angle, COLORREF bkColor)
+{
+	HDC sourceDC = CreateCompatibleDC(hdc); // 회전할 비트맵 원본을 선택할 DC
+	HDC destDC = CreateCompatibleDC(hdc); // 회전할 비트맵을 출력받을 DC
+	HBITMAP hbmResult = CreateCompatibleBitmap(hdc, dest_width * 2, dest_height * 2); // 회전할 비트맵을 출력받을 메모리비트맵 핸들
+
+	HBITMAP hbmOldSource = (HBITMAP)SelectObject(sourceDC, imgInfo->hRBit); // 회전할 비트맵 원본을 DC에 선택
+	HBITMAP hbmOldDest = (HBITMAP)SelectObject(destDC, hbmResult); // 회전할 비트맵을 출력받을 DC에, 회전할 비트맵을 출력받을 메모리비트맵 선택
+
+	HBRUSH hbrBack = CreateSolidBrush(bkColor); // 회전으로 인한, 공백영역을 칠할 브러시핸들 생성
+	HBRUSH hbrOld = (HBRUSH)SelectObject(destDC, hbrBack); // 브러시핸들 선택
+	PatBlt(destDC, 0, 0, dest_width, dest_height, PATCOPY); // 선택된 브러시로, 회전할 비트맵을 출력받을 DC에, 미리 색상을 채워 지움
+	DeleteObject(SelectObject(destDC, hbrOld)); // 브러시 해제
+
+	angle = (float)(angle * PI / 180); // 회전할 각도(360분법)를, 라디안단위의 각도로 변경
+	float cosine = (float)cos(angle); // 회전이동변환 행렬에 들어갈 cos세타 값을 구함
+	float sine = (float)sin(angle); // 회전이동변환 행렬에 들어갈 sin세타 값을 구함
+
+	SetGraphicsMode(destDC, GM_ADVANCED); // 윈도우 좌표계의 회전을 위하여, 그래픽모드를 확장모드로 변경합니다.(요구사항:윈98,NT이상)
+
+										  // 회전이동변환 행렬을 정의.
+										  // (윈도우즈 API정복 개정판 2권 Page(1279) 참조.)
+										  // (게임 프로그래머를 위한 기초수학과 물리 Page(196) 참조.)
+
+	XFORM xform; // 방정식을 표현하는 3행3열의 행렬 선언
+	xform.eM11 = cosine; // 1행 1열 성분 설정 (회전성분)
+	xform.eM12 = -sine; // 1행 2열 성분 설정 (회전성분)
+	xform.eM21 = sine; // 2행 1열 성분 설정 (회전성분)
+	xform.eM22 = cosine; // 2행 2열 성분 설정 (회전성분)
+	xform.eDx = (FLOAT)pivotX; // 3행 1열 성분 설정 (X축 이동 성분)
+	xform.eDy = (FLOAT)pivotY; // 3행 2열 성분 설정 (Y축 이동 성분)
+
+							   // 설정한 행렬로, 인수DC의 윈도우즈 좌표계를 변환.
+							   // 인수DC는 출력대상으로 메모리비트맵을 가지므로,
+							   // 선택하고 있는 메모리비트맵의 좌표체계가 회전된다.
+
+	SetWorldTransform(destDC, &xform);
+
+	// 회전된 메모리DC에, 회전할 이미지를 출력
+
+	BitBlt(destDC, -pivotX, -pivotY, dest_width, dest_height, sourceDC, source_x, source_y, SRCCOPY);
+
+	// 사용된 자원 해제
+
+	SelectObject(sourceDC, hbmOldSource);
+	SelectObject(destDC, hbmOldDest);
+	DeleteObject(sourceDC);
+	DeleteObject(destDC);
+
+	// 회전된 비트맵 핸들 리턴
+
+	return hbmResult;
+}
+
+void image::rotatedRender(HDC hdc, int destX, int destY, float angle)
+{
+	//HBITMAP test = (HBITMAP)SelectObject(imgInfo->hMemDC, GetRotatedBitmap(hdc, 0, 0, imgInfo->width, imgInfo->height, angle, transColor));
+
+	//GdiTransparentBlt(hdc, destX, destY, imgInfo->width, imgInfo->height, imgInfo->hMemDC, 0, 0, imgInfo->width, imgInfo->height, transColor);
+	//------------------------------------------------------------------------------------------------------------------------------
+	HBITMAP oRotBIT = (HBITMAP)SelectObject(imgInfo->hRMemDC, GetRotatedBitmap(hdc, 0, 0, imgInfo->width, imgInfo->height, imgInfo->width / 2, imgInfo->height / 2, angle, transColor));
+
+	GdiTransparentBlt(hdc, destX, destY, imgInfo->width, imgInfo->height, imgInfo->hRMemDC, 0, 0, imgInfo->width, imgInfo->height, transColor);
+	SelectObject(imgInfo->hRMemDC, oRotBIT);
+	DeleteObject(oRotBIT);
+}
+void image::rotatedRender(HDC hdc, int destX, int destY, int pivotX, int pivotY, float angle)
+{
+	HBITMAP oRotBIT = (HBITMAP)SelectObject(imgInfo->hRMemDC, GetRotatedBitmap(hdc, 0, 0, imgInfo->width, imgInfo->height, pivotX, pivotY, angle, transColor));
+
+	if (trans) {
+		GdiTransparentBlt(hdc, destX, destY, imgInfo->width, imgInfo->height, imgInfo->hRMemDC, 0, 0, imgInfo->width, imgInfo->height, transColor);
+	}
+	else {
+		BitBlt(hdc, destX, destY, imgInfo->width, imgInfo->height, imgInfo->hRMemDC, 0, 0, SRCCOPY);
+	}
+	SelectObject(imgInfo->hRMemDC, oRotBIT);
+	DeleteObject(oRotBIT);
 }
