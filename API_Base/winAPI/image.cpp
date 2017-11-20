@@ -433,6 +433,41 @@ void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 	}
 }
 
+//바닥가운데를 기점으로 렌더링.
+void image::CharacterframeRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
+{
+	imgInfo->currentFrameX = currentFrameX;
+	imgInfo->currentFrameY = currentFrameY;
+	if (trans) {
+		GdiTransparentBlt(
+			hdc,											//복사될 장소의 hdc
+			destX - imgInfo->frameWidth/2,					//복사될 좌표 시작점 X
+			destY - imgInfo->frameHeight,					//복사될 좌표 시작점 Y
+			imgInfo->frameWidth,							//복사될 이미지 가로크기
+			imgInfo->frameHeight,							//복사될 이미지 세로크기
+			imgInfo->hMemDC,								//복사대상DC
+			imgInfo->currentFrameX*imgInfo->frameWidth,
+			imgInfo->currentFrameY*imgInfo->frameHeight,
+			imgInfo->frameWidth,							//복사될 가로크기
+			imgInfo->frameHeight,							//복사될 세로크기
+			transColor										//투명처리 할 색
+		);
+	}
+	else {
+		BitBlt(
+			hdc,
+			destX - imgInfo->frameWidth / 2,
+			destY - imgInfo->frameHeight,
+			imgInfo->frameWidth,
+			imgInfo->frameHeight,
+			imgInfo->hMemDC,
+			imgInfo->currentFrameX*imgInfo->frameWidth,
+			imgInfo->currentFrameY*imgInfo->frameHeight,
+			SRCCOPY
+		);
+	}
+}
+
 void image::loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY)
 {
 	if (offsetX < 0) offsetX = imgInfo->width + (offsetX % imgInfo->width);
@@ -592,6 +627,40 @@ void image::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, i
 	//원본이미지 그대로 알파블랜딩
 	else {
 		AlphaBlend(hdc, destX, destY, imgInfo->frameWidth, imgInfo->frameHeight, imgInfo->hMemDC, imgInfo->currentFrameX*imgInfo->frameWidth, imgInfo->currentFrameY*imgInfo->frameHeight, imgInfo->frameWidth, imgInfo->frameHeight, alphaBlendFunc);
+		//블랜드 DC를 출력해야할 DC에 그림.
+	}
+}
+
+void image::alphaCharacterFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	imgInfo->currentFrameX = currentFrameX;
+	imgInfo->currentFrameY = currentFrameY;
+	alphaBlendFunc.SourceConstantAlpha = alpha;
+
+	if (trans) {
+
+		//출력해야할 DC에 그려져있는 내용을 블랜드이미지에 그려줌.
+		BitBlt(alphaBlendImg->hMemDC, 0, 0, alphaBlendImg->width, alphaBlendImg->height, hdc, destX, destY, SRCCOPY);
+		//출력해야 할 이미지를 블랜드에 그림
+		GdiTransparentBlt(
+			alphaBlendImg->hMemDC,											//복사될 장소의 hdc
+			0,											//복사될 좌표 시작점 X
+			0,											//복사될 좌표 시작점 Y
+			imgInfo->frameWidth,							//복사될 이미지 가로크기
+			imgInfo->frameHeight,							//복사될 이미지 세로크기
+			imgInfo->hMemDC,								//복사대상DC
+			imgInfo->currentFrameX*imgInfo->frameWidth,
+			imgInfo->currentFrameY*imgInfo->frameHeight,
+			imgInfo->frameWidth,							//복사될 가로크기
+			imgInfo->frameHeight,							//복사될 세로크기
+			transColor										//투명처리 할 색
+		);
+		//블랜드 DC를 출력해야할 DC에 그림.
+		AlphaBlend(hdc, destX - imgInfo->frameWidth / 2, destY - imgInfo->frameHeight, imgInfo->frameWidth, imgInfo->frameHeight, alphaBlendImg->hMemDC, 0, 0, imgInfo->frameWidth, imgInfo->frameHeight, alphaBlendFunc);
+	}
+	//원본이미지 그대로 알파블랜딩
+	else {
+		AlphaBlend(hdc, destX - imgInfo->frameWidth / 2, destY - imgInfo->frameHeight, imgInfo->frameWidth, imgInfo->frameHeight, imgInfo->hMemDC, imgInfo->currentFrameX*imgInfo->frameWidth, imgInfo->currentFrameY*imgInfo->frameHeight, imgInfo->frameWidth, imgInfo->frameHeight, alphaBlendFunc);
 		//블랜드 DC를 출력해야할 DC에 그림.
 	}
 }
