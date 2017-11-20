@@ -33,7 +33,7 @@ void monster::SubHp(int atk)
 //체력이 0인지 확인
 bool monster::ZeroHp(void)
 {
-	if (NowHp > 0)
+	if (NowHp >= 1)
 	{
 		return false;
 	}
@@ -45,7 +45,7 @@ bool monster::ZeroHp(void)
 //공격을 받았는지 확인
 bool monster::hit(void)
 {
-	if (NowHp != MaxHp)
+	if (NowHp >= MaxHp)
 	{
 		return false;
 	}
@@ -127,7 +127,6 @@ HRESULT Harp::init(void)
 
 void Harp::moving(void)
 {
-	//왼쪽으로 가는 몬스터
 	Timer++;
 	if (Timer % 10 == 0)
 	{
@@ -158,10 +157,30 @@ void Harp::moving(void)
 						MoveTime--;
 						if (MoveTime == 0)
 						{
-							MoveTime = rand() % 3 + 2;
-							Stay = true;
-							int way = rand() % 2;
-							harp->left(way);
+							if (harp->hit() == false)
+							{
+								MoveTime = rand() % 3 + 2;
+								Stay = true;
+								int way = rand() % 2;
+								harp->left(way);
+							}
+							else if (harp->hit() == true)
+							{
+								MoveTime = rand() % 3 + 2;
+								if (player.right < harp->Base().left&&player.left > harp->Base().right)
+								{
+									int way = rand() % 2;
+									harp->left(way);
+								}
+								else if (player.right < harp->Base().left)
+								{
+									harp->left(0);
+								}
+								else if (player.left > harp->Base().right)
+								{
+									harp->left(1);
+								}
+							}
 						}
 						fream = 0;
 					}
@@ -177,83 +196,116 @@ void Harp::moving(void)
 		}
 		else if (hit == true)
 		{
+
+			if (harp->ZeroHp() == false)
+			{
 			HitTimer--;
+			}
+			else if (harp->ZeroHp() == true)
+			{
+				if (alpha != 0)
+				{
+					alpha -= 50;
+				}
+			}
 			if (HitTimer == 0)
 			{
 				hit = false;
 			}
 		}
 	}
+	//왼쪽으로 가는 몬스터
 	if (harp->way() == true)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
-		if (Stay == false)
+		if (harp->ZeroHp() == false)
 		{
-			int pixel = harp->Base().bottom;
-			for (int i = pixel - 5; i < pixel + 5; i++)
+			if (Stay == false)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2, i);
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-
-				if ((r == 255 & g == 0 && b == 0))
+				int pixel = harp->Base().bottom;
+				for (int i = pixel - 5; i < pixel + 5; i++)
 				{
-					harp->MonsterMoving(-3);
-					harp->Setbody(i);
-					break;
-				}
-				else if (!(r == 255 & g == 0 && b == 0) && i == pixel + 4)
-				{
-					harp->MonsterDown(-3);
-					if (harp->way() == true)
+					if (hit == true)
 					{
-						COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2 - 20, i);
-						int r1 = GetRValue(color);
-						int g1 = GetGValue(color);
-						int b1 = GetBValue(color);
-						if (!(r1 == 255 && g1 == 0 && b1 == 0))
+						break;
+					}
+					COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2, i);
+					int r = GetRValue(color);
+					int g = GetGValue(color);
+					int b = GetBValue(color);
+					if ((r == 255 & g == 0 && b == 0))
+					{
+						harp->MonsterMoving(-3);
+						harp->Setbody(i);
+						if (harp->way() == true)
 						{
-							harp->left(1);
+							COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2 - 10, i + 30);
+							COLORREF color1 = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2 - 10, i - 30);
+							int r1 = GetRValue(color);
+							int g1 = GetGValue(color);
+							int b1 = GetBValue(color);
+							int r2 = GetRValue(color);
+							int g2 = GetGValue(color);
+							int b2 = GetBValue(color);
+							if (!(r1 == 255 && g1 == 0 && b1 == 0) && !(r2 == 255 && g2 == 0 && b2 == 0))
+							{
+								harp->left(1);
+							}
 						}
+						break;
+					}
+					else if (!(r == 255 & g == 0 && b == 0) && i == pixel + 4)
+					{
+						harp->MonsterDown(-3);
 					}
 				}
 			}
 		}
 	}
+	//오른쪽으로 가는 몬스터
 	else
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
-		if (Stay == false)
+		if (harp->ZeroHp() == false)
 		{
-			int pixel = harp->Base().bottom;
-			for (int i = pixel - 5; i < pixel + 5; i++)
+			if (Stay == false)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2, i);
-				
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-
-				if ((r == 255 & g == 0 && b == 0))
+				int pixel = harp->Base().bottom;
+				for (int i = pixel - 5; i < pixel + 5; i++)
 				{
-					harp->Setbody(i);
-					harp->MonsterMoving(3);
-					break;
-				}
-				else if (!(r == 255 & g == 0 && b == 0) && i == pixel + 4)
-				{
-					harp->MonsterDown(-3);
-					if (harp->way() == false)
+					if (hit == true)
 					{
-						COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2 + 20, i);
-						int r1 = GetRValue(color);
-						int g1 = GetGValue(color);
-						int b1 = GetBValue(color);
-						if (!(r1 == 255 && g1 == 0 && b1 == 0))
+						break;
+					}
+					COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2, i);
+					int r = GetRValue(color);
+					int g = GetGValue(color);
+					int b = GetBValue(color);
+
+					if ((r == 255 & g == 0 && b == 0))
+					{
+						harp->Setbody(i);
+						harp->MonsterMoving(3);
+						if (harp->way() == false)
 						{
-							harp->left(0);
+							COLORREF color = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2 + 10, i + 30);
+							COLORREF color1 = GetPixel(IMAGEMANAGER->findImage("map")->getMemDC(), harp->Base().left + (harp->Base().right - harp->Base().left) / 2 + 10, i - 30);
+							int r1 = GetRValue(color);
+							int g1 = GetGValue(color);
+							int b1 = GetBValue(color);
+							int r2 = GetRValue(color);
+							int g2 = GetGValue(color);
+							int b2 = GetBValue(color);
+							if (!(r1 == 255 && g1 == 0 && b1 == 0) && !(r2 == 255 && g2 == 0 && b2 == 0))
+							{
+								harp->left(0);
+							}
 						}
+						break;
+					}
+					else if (!(r == 255 & g == 0 && b == 0) && i == pixel + 4)
+					{
+						harp->MonsterDown(-3);
 					}
 				}
 			}
@@ -272,6 +324,14 @@ void Harp::SubHp(int Atk)
 	hit = true;
 	HitTimer = 6;
 	fream = 0;
+	if (harp->way() == true)
+	{
+		harp->MonsterMoving(5);
+	}
+	else if (harp->way() == false)
+	{
+		harp->MonsterMoving(-5);
+	}
 }
 
 void Harp::dead(void)
@@ -289,13 +349,13 @@ void Harp::render(void)
 	if (harp->way() == true)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
-		if (hit == true)
-		{
-			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), harp->Base().left, harp->Base().top, 0, 0);
-		}
 		if (harp->ZeroHp() == true)
 		{
-			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), harp->Base().left, harp->Base().top, fream, 0);
+			IMAGEMANAGER->findImage("harpD")->alphaFrameRender(getMemDC(), harp->Base().left, harp->Base().top, fream, 0, alpha);
+		}
+		else if (harp->ZeroHp() == false && hit == true)
+		{
+			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), harp->Base().left, harp->Base().top, 0, 0);
 		}
 		else if (Stay == false)
 		{
@@ -308,13 +368,13 @@ void Harp::render(void)
 	}
 	else if(harp->way()==false)
 	{
-		if (hit == true)
-		{
-			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), harp->Base().left, harp->Base().top, 0, 1);
-		}
 		if (harp->ZeroHp() == true)
 		{
-			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), harp->Base().left, harp->Base().top, fream, 1);
+			IMAGEMANAGER->findImage("harpD")->alphaFrameRender(getMemDC(), harp->Base().left, harp->Base().top, fream, 1, alpha);
+		}
+		else if (hit == true)
+		{
+			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), harp->Base().left, harp->Base().top, 0, 1);
 		}
 		else if (Stay == false)
 		{
@@ -330,4 +390,17 @@ void Harp::render(void)
 void Harp::SetPoint(POINT position)
 {
 	generator = position;
+}
+
+void Harp::collRect(RECT player, int demage)
+{
+	RECT rc;
+	if (hit == false)
+	{
+		if (IntersectRect(&rc, &player, &harp->Base()))
+		{
+			SubHp(demage);
+		}
+	}
+	this->player = player;
 }

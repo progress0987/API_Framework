@@ -42,11 +42,13 @@ class Harp :public gameNode
 	int Timer=0;
 	POINT generator;
 	monster* harp;
+	RECT player;
 	int fream = 0;
 	bool Stay;
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
+	int alpha = 250;
 public:
 	Harp();
 	~Harp();
@@ -64,4 +66,6 @@ public:
 	void render(void);
 	//몬스터 좌표 설정
 	void SetPoint(POINT position);
+	//몬스터가 플레이어에게 공격당했는가(공격력도 입력해주셔야 합니다)
+	void collRect(RECT player, int demage);
 };

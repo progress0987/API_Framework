@@ -165,6 +165,9 @@
     <ClInclude Include="fontTest.h">
       <Filter>2DGameFramework\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="fontTest.cpp">
       <Filter>2DGameFramework\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
