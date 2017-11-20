@@ -233,7 +233,7 @@ void VillageMap::MingmingMove()
 	if (mingming.pattern == 0)
 	{
 		mingming.x ++;
-		if (mingming.rc.right > 1200)
+		if (count % 100 == 0)
 		{
 			mingming.pattern = rand() % 4;
 		}
@@ -241,7 +241,7 @@ void VillageMap::MingmingMove()
 	else if (mingming.pattern == 1)
 	{
 		mingming.x --;
-		if (mingming.rc.left < 900)
+		if (count % 100 == 0)
 		{
 			mingming.pattern = rand() % 4;
 		}
