@@ -9,7 +9,7 @@ protected:
 	image* bodyImg;
 	RECT RC;
 	RECT hitRC;
-
+	
 	bool onHit;
 
 	int x, y;
