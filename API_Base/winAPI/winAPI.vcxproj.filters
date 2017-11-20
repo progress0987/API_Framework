@@ -61,6 +61,9 @@
     <Filter Include="2DGameFramework\Tests">
       <UniqueIdentifier>{ed54c2f5-2658-44e7-834a-394b75544d8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\MainGame\Map">
+      <UniqueIdentifier>{f09a6067-3f54-49e1-b2ef-a212fc30b17c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -159,6 +162,18 @@
     <ClInclude Include="enemyManager.h">
       <Filter>2DGameFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="inventory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="VillageMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -235,6 +250,18 @@
     </ClCompile>
     <ClCompile Include="enemyManager.cpp">
       <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="inventory.cpp">
+      <Filter>2DGameFramework\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="VillageMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

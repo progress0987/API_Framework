@@ -17,7 +17,9 @@ HRESULT VillageMap::init()
 	//배경
 	IMAGEMANAGER->addImage("village", "image/village/파괴된 헤네시스(원본).bmp", 3495, 947, false, RGB(255, 0, 255));
 	//포탈
-	_portal.rc = RectMake(0, 529, 50, 80);
+	_portal.x = -300;
+	_portal.y = 529;
+	_portal.rc = RectMake(_portal.x, _portal.y, 50, 80);
 	_portal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
 	_portal.currentX = 0;
 
@@ -33,7 +35,8 @@ void VillageMap::release()
 }
 void VillageMap::update()
 {
-	_portal.rc = RectMake(0, 480, 50, 80);
+	
+	_portal.rc = RectMake(_portal.x, _portal.y, 50, 80);
 
 	//프레임을 돌리자
 	count++;
@@ -47,20 +50,19 @@ void VillageMap::update()
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && moveX > 0)//사진크기를 못넘어가게 막아준거
 	{
 		moveX -= 3;
-		_portal.rc.left += 100;
-		_portal.rc.right += 100;
+		_portal.x += 3;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && moveX < 2100)//사진크기를 못넘어가게 막아준거
 	{
-		moveX += 3;
+		//moveX += 3;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_UP) && moveY > 0)//사진크기를 못넘어가게 막아준거
 	{
-		moveY -= 3;
+		//moveY -= 3;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && moveY < 180)//사진크기를 못넘어가게 막아준거
 	{
-		moveY += 3;
+		//moveY += 3;
 	}
 }
 void VillageMap::render()

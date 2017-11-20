@@ -14,6 +14,11 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void) 
 {
 	gameNode::init(true);
+	_map = new StoreMap;
+	_map->init();
+
+	_village = new VillageMap;
+	_village->init();
 
 	return S_OK;
 }
@@ -21,11 +26,15 @@ HRESULT mainGame::init(void)
  void mainGame::release(void)
  {//사용한 이미지도 릴리즈해줘야함
 	 gameNode::release();
+	 SAFE_DELETE(_map);
+	 SAFE_DELETE(_village);
  }
  //연산~
  void mainGame::update(void)
  {
 	 gameNode::update();
+	 _map->update();
+	 _village->update();
 
  }
  //여기가 그려주는 곳
@@ -38,6 +47,8 @@ HRESULT mainGame::init(void)
 	 //////////////////////////////////////////////////////////////////////////////////////////////
 	 //getmemdc에 넣어줌
 
+	// _map->render();
+	 _village->render();
 	 TIMEMANAGER->render(getMemDC());
 
 	 /////////////////////그려주는부분 - 건들지말것//////////////////

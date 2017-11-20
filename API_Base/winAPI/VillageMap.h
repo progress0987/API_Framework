@@ -5,6 +5,8 @@ struct tagrect
 	image* _img;
 	RECT rc;
 	int currentX;
+	int x;
+	int y;
 
 };
 class VillageMap:public gameNode
