@@ -154,12 +154,14 @@
     <ClInclude Include="inventory.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="StoreMap.h" />
     <ClInclude Include="PixelCollisionTest.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFuction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SaveLoadTest.h" />
+    <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="soundTest.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="VillageMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -186,10 +189,12 @@
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="StoreMap.cpp" />
     <ClCompile Include="PixelCollisionTest.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="SaveLoadTest.cpp" />
+    <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="soundTest.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -202,6 +207,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="VillageMap.cpp" />
     <ClCompile Include="winAPI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
