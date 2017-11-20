@@ -2,6 +2,7 @@
 #include "mainGame.h"
 
 RECT rtemp;
+//태규 테스트
 mainGame::mainGame()
 {
 }

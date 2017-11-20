@@ -85,10 +85,12 @@ public:
 	void render(HDC hdc, int destX, int destY,int sourX, int sourY, int sourWidth, int sourHeight);
 	void frameRender(HDC hdc, int destX, int destY);
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+	void CharacterframeRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
 	void loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY);
 	void loopAlphaRender(HDC hdc, const LPRECT drawArea, int offSetX, int offsetY,BYTE alpha);//alpha - 0-255
 
 	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY,BYTE alpha);
+	void alphaCharacterFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 	void alphaRender(HDC hdc, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
 	void alphaRender(HDC hdc,int destX, int destY,int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);

@@ -42,6 +42,11 @@ public:
 	void render(string key, HDC hdc, int destX, int destY);
 	void render(string key, HDC hdc, int destX, int destY,int sourX, int sourY, int width, int height);
 
+	void loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
+	void loopAlphaRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY, BYTE alpha);
+
+	void alphaRender(string strKey, HDC hdc, int destX, int destY, BYTE alpha);
+	void alphaRender(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
 
 	imageManager();
 	~imageManager();
