@@ -1,17 +1,30 @@
 #pragma once
 #include"gameNode.h"
-class mainGame :  public gameNode
+#include"enemyManager.h"
+class mainGame : public gameNode
 {
-
 private:
-public:
+	image *_human;
+	image *backStage;
+	RECT MAN;
+	RECT TREE;
 
-	HRESULT init(void);
+	bool left, right, up, down;
+	bool staywalk = false;
+
+	float mapx, mapy, x, y;
+
+	int count, _index;
+	
+public:
+	//void collision();
+	virtual HRESULT init(void);
 	virtual void release(void);
 	virtual void update(void);
-	virtual void render();
-
+	virtual void render(void);
+	
 	mainGame();
 	~mainGame();
+	
 };
 
