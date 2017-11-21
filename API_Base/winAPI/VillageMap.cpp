@@ -16,6 +16,7 @@ HRESULT VillageMap::init()
 {
 	//¹è°æ
 	IMAGEMANAGER->addImage("village", "image/village/ÆÄ±«µÈ Çì³×½Ã½º(¿øº»).bmp", 3495, 947, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelvillage", "image/village/ÆÄ±«µÈ Çì³×½Ã½º.bmp", 3495, 947, false, RGB(255, 0, 255));
 	////////////////////////////////////////////////////////////////////////////////Æ÷Å»
 	//¿ÞÂÊ Æ÷Å»
 	_lefeportal.x = -500;
@@ -127,6 +128,10 @@ void VillageMap::render()
 	//Rectangle(getMemDC(), mingming.rc.left, mingming.rc.top, mingming.rc.right, mingming.rc.bottom);
 
 }
+
+
+
+
 
 void VillageMap::Keymanager()
 {

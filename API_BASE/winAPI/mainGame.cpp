@@ -14,12 +14,15 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void) 
 {
 	gameNode::init(true);
+
 	_map = new StoreMap;
 	_map->init();
 
 	_village = new VillageMap;
 	_village->init();
 
+	_park = new ParkMap;
+	_park->init();
 	return S_OK;
 }
 //해제
@@ -28,6 +31,8 @@ HRESULT mainGame::init(void)
 	 gameNode::release();
 	 SAFE_DELETE(_map);
 	 SAFE_DELETE(_village);
+	 SAFE_DELETE(_park);
+
  }
  //연산~
  void mainGame::update(void)
@@ -35,6 +40,7 @@ HRESULT mainGame::init(void)
 	 gameNode::update();
 	 _map->update();
 	 _village->update();
+	 _park->update();
 
  }
  //여기가 그려주는 곳
@@ -48,7 +54,8 @@ HRESULT mainGame::init(void)
 	 //getmemdc에 넣어줌
 
 	// _map->render();
-	 _village->render();
+	// _village->render();
+	 _park->render();
 	 TIMEMANAGER->render(getMemDC());
 
 	 /////////////////////그려주는부분 - 건들지말것//////////////////

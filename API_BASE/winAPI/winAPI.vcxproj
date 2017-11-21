@@ -154,6 +154,7 @@
     <ClInclude Include="inventory.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="ParkMap.h" />
     <ClInclude Include="StoreMap.h" />
     <ClInclude Include="PixelCollisionTest.h" />
     <ClInclude Include="player.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="ParkMap.cpp" />
     <ClCompile Include="StoreMap.cpp" />
     <ClCompile Include="PixelCollisionTest.cpp" />
     <ClCompile Include="player.cpp" />
