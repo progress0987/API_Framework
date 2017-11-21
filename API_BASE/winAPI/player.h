@@ -16,13 +16,23 @@ private:
 
 
 	bool left, right, up, down;
+
+
 	bool staywalk = false;
 	bool onlope = false;
 	bool onladder = false;
+	bool onJump = false; //공중에 있느냐
 
 	float mapx, mapy;
 
 	int count, _index;
+
+
+	//점프처리를 위한 중력값 설정
+
+	int velocity = 0, gravity = 1, lift = -13;
+
+
 
 
 	//픽셀검출용 프로브

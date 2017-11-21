@@ -1,9 +1,12 @@
 #pragma once
 #include"gameNode.h"
+#include"player.h"
+
 class mainGame :  public gameNode
 {
-
 private:
+
+	player *_player;
 public:
 
 	HRESULT init(void);

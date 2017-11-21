@@ -15,6 +15,9 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void) 
 {
 	gameNode::init(true);
+	_player = new player;
+
+	_player->init();
 
 	return S_OK;
 }
@@ -22,12 +25,14 @@ HRESULT mainGame::init(void)
  void mainGame::release(void)
  {//사용한 이미지도 릴리즈해줘야함
 	 gameNode::release();
+	 _player->release();
  }
  //연산~
  void mainGame::update(void)
  {
 	 gameNode::update();
 
+	 _player->update();
  }
  //여기가 그려주는 곳
  void mainGame::render() 
@@ -39,7 +44,7 @@ HRESULT mainGame::init(void)
 	 //////////////////////////////////////////////////////////////////////////////////////////////
 	 //getmemdc에 넣어줌
 
-	 TIMEMANAGER->render(getMemDC());
+	 _player->render();
 
 	 /////////////////////그려주는부분 - 건들지말것//////////////////
 	 this->getBackBuffer()->render(getHDC(), 0, 0);
