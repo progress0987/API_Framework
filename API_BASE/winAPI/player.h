@@ -17,11 +17,12 @@ private:
 
 	bool left, right, up, down;
 
-
-	bool staywalk = false;
-	bool onlope = false;
-	bool onladder = false;
+	//모션 상태변수
+	bool staywalk = false; //걷는중일때
+	bool onlope = false; //줄위에 매달려있을때
+	bool onladder = false; //사다리 위에 있을때
 	bool onJump = false; //공중에 있느냐
+	bool onLand = false; //땅위에 있을때
 
 	float mapx, mapy;
 
