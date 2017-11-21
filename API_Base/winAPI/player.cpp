@@ -48,12 +48,17 @@ void player::update(void)
 
 	//제일 처음 중력값부터 처리해준다.
 	//중력값은 아무것도 입력하지 않아도 기본적으로 작용하기 때문.
-	if (velocity > 20)
-		velocity = 20;
-	else
-		velocity += gravity;
+	//중력은 땅에 착지한 상태에서는 작용하지 않도록 한다.
 
-	_human->setY(_human->getY() + velocity);
+	if (!onLand)
+	{
+		if (velocity > 20)
+			velocity = 20;
+		else
+			velocity += gravity;
+
+		_human->setY(_human->getY() + velocity);
+	}
 
 
 	//그 이후에 조작에 따른 모션 처리.
@@ -223,6 +228,7 @@ void player::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_MENU))
 	{
+		onLand = false;
 		onJump = true;
 	}
 
@@ -262,27 +268,32 @@ void player::update(void)
 	pb = _human->getY() + _human->getFrameHeight() - 10;
 	pu = _human->getY();
 
+
 	//바닥검출 범위는 아래와 같이 
-	for (int i = pb; i < pb + 1; ++i)
+	if (!onLand)
 	{
-		//픽셀 정보값을 가져와서 컬러 레퍼런스에 담자
-
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), mapx + _human->getCenterX(), mapy + i);
-
-		int r = GetRValue(color);
-		int g = GetGValue(color);
-		int b = GetBValue(color);
-
-		//공중에 있는게 아닌경우. 매달리거나 착지한 경우.
-		if (!(r == 255 && g == 255 && b == 255))
+		for (int i = pb; i < pb + 1; ++i)
 		{
-			//-1을 해줘야 덜덜거리지않는다. -2부터 덜덜거린다.
-			_human->setY(i - _human->getFrameHeight());
-			velocity = 0;
-			onJump = false;
-			break;
-			//참고로 -1 안해주면 발이 빨간색지형에 파고들어서 못빠져나온다. 
-			//점점 지형속으로 쑤욱 들어가버려.
+			//픽셀 정보값을 가져와서 컬러 레퍼런스에 담자
+
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), mapx + _human->getCenterX(), mapy + i);
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			//공중에 있는게 아닌경우. 매달리거나 착지한 경우.
+			if (!(r == 255 && g == 255 && b == 255))
+			{
+				//-1을 해줘야 덜덜거리지않는다. -2부터 덜덜거린다.
+				_human->setY(i - _human->getFrameHeight() - 1);
+				velocity = 0;
+				onJump = false;
+				onLand = true;
+				break;
+				//참고로 -1 안해주면 발이 빨간색지형에 파고들어서 못빠져나온다. 
+				//점점 지형속으로 쑤욱 들어가버려.
+			}
 		}
 	}
 
