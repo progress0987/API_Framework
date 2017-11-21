@@ -16,8 +16,6 @@ HRESULT player::init(void)
 	count = 0;
 	_index = 0;
 
-	MAN = RectMake(_human->getX(), _human->getY(), _human->getFrameWidth(), _human->getFrameHeight());
-
 	//처음 위치는 맵의 가운데 아래서부터 시작한다.
 
 	mapx = backStage->getWidth() / 2 - 450;
@@ -47,6 +45,18 @@ void player::release(void)
 
 void player::update(void)
 {
+
+	//제일 처음 중력값부터 처리해준다.
+	//중력값은 아무것도 입력하지 않아도 기본적으로 작용하기 때문.
+	if (velocity > 20)
+		velocity = 20;
+	else
+		velocity += gravity;
+
+	_human->setY(_human->getY() + velocity);
+
+
+	//그 이후에 조작에 따른 모션 처리.
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		onlope = false;
@@ -196,48 +206,32 @@ void player::update(void)
 			_human->setFrameY(5);
 	}
 
+	//아래 키를 뗐을때. ->오직 엎드렸다가 일어서는 모션에만 작용.
 	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
 	{
-		if (_human->getFrameY() == 4) //만약 캐릭터가 왼쪽을 바라보고 있었다면
-			_human->setFrameY(0);
-		else if (_human->getFrameY() == 5) // 만약 캐릭터가 오른쪽을 바라보고 있었다면
-			_human->setFrameY(1);
+		//일어서는 모션처리.
+		//줄, 사다리에 매달려 있거나, 점프중에는 이 커맨드를 처리하면 안된다.
+		if (!onlope && !onladder && !onJump)
+			if (_human->getFrameY() == 4) //만약 캐릭터가 왼쪽을 바라보고 있었다면
+				_human->setFrameY(0);
+			else if (_human->getFrameY() == 5) // 만약 캐릭터가 오른쪽을 바라보고 있었다면
+				_human->setFrameY(1);
+
 	}
 
+	
 
-	if (KEYMANAGER->isStayKeyDown(VK_MENU))
+	if (KEYMANAGER->isOnceKeyDown(VK_MENU))
 	{
-		if (up)
-		{
-			mapy = 0;
-		}
-		else
-			mapy += 2;
-
-		if (mapy > backStage->getHeight() - WINSIZEY)
-			down = true; //Down지점에 부딪혔다!!!!!!
-
-		if (down)
-		{
-			mapy = backStage->getHeight() - WINSIZEY; //카메라가 맵 밖으로 벗어나기 시작하면 다시 조정해준다.
-
-			_human->setY(_human->getY() + 2);
-			if (_human->getY() > WINSIZEY - _human->getFrameHeight())
-				_human->setY(_human->getY() - 2); //팩맨이 맵밖으로 도망가려고 하면 조정!!!
-		}
-
-		else if (up) //위쪽벽에 부딪힌 시점이면
-		{
-			_human->setY(_human->getY() + 2);
-			if (_human->getY() > WINSIZEY / 2) //화면의 가운데서 아래쪽으로 더 이동하기 시작하면 위쪽 지점 탈출.
-				up = false;
-		}
-		_human->setFrameY(3);
+		onJump = true;
 	}
 
-	if (KEYMANAGER->isOnceKeyUp(VK_MENU))
+	if (onJump)
 	{
+		velocity = 0;
+		velocity += lift;
 
+		onJump = false;
 	}
 
 	count++;
@@ -269,7 +263,7 @@ void player::update(void)
 	pu = _human->getY();
 
 	//바닥검출 범위는 아래와 같이 
-	for (int i = pb; i < pb + 10; ++i)
+	for (int i = pb; i < pb + 1; ++i)
 	{
 		//픽셀 정보값을 가져와서 컬러 레퍼런스에 담자
 
@@ -279,10 +273,13 @@ void player::update(void)
 		int g = GetGValue(color);
 		int b = GetBValue(color);
 
+		//공중에 있는게 아닌경우. 매달리거나 착지한 경우.
 		if (!(r == 255 && g == 255 && b == 255))
 		{
 			//-1을 해줘야 덜덜거리지않는다. -2부터 덜덜거린다.
-			_human->setY(i - _human->getFrameHeight() - 1);
+			_human->setY(i - _human->getFrameHeight());
+			velocity = 0;
+			onJump = false;
 			break;
 			//참고로 -1 안해주면 발이 빨간색지형에 파고들어서 못빠져나온다. 
 			//점점 지형속으로 쑤욱 들어가버려.
@@ -305,7 +302,7 @@ void player::render(void)
 
 //캐릭터를 비춰주는 카메라 함수. 렌더링은 렌더함수 부분에서 처리.
 //진행방향과 캐릭터좌표정보를 받아서 mapx, mapy를 조정해준다.
-void camera(int dir, image *character)
+void player::camera(int dir, image *character)
 {
 
 }
