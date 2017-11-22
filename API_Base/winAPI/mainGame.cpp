@@ -50,7 +50,7 @@ void mainGame::update(void)
 	gameNode::update();
 
 	_player->update();
-	em->update();
+	//em->update();
 }
 //여기가 그려주는 곳
 void mainGame::render()
@@ -66,7 +66,7 @@ void mainGame::render()
 	IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
 
 	_player->render();
-	em->render();
+	//em->render();
 
 
 	IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
@@ -81,7 +81,8 @@ void mainGame::imgInit()
 {
 	IMAGEMANAGER->addImage("미니맵", "sprites/map/파헤공원(원본).bmp", 1951 / 10, 1024 / 10, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("맵", "sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("지형", "sprites/map/파헤공원.bmp", 1951, 1024, false, RGB(255, 0, 255));
+	//IMAGEMANAGER->addImage("지형", "sprites/map/파헤버섯숲.bmp", 1951, 1024, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("지형", "sprites/map/파헤버섯숲.bmp", 1365, 1034, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인터페이스", "sprites/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpM", "sprites/monster/HarpM.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpS", "sprites/monster/HarpS.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
