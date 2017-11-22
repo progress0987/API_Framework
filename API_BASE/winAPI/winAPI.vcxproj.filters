@@ -168,6 +168,9 @@
     <ClInclude Include="inventory.h">
       <Filter>2DGameFramework\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="inventory.cpp">
       <Filter>2DGameFramework\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
