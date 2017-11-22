@@ -18,15 +18,26 @@ HRESULT mainGame::init(void)
 	IMAGEMANAGER->addImage("맵", "sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("지형", "sprites/map/파헤공원.bmp", 1951, 1024, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인터페이스", "sprites/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
-	IMAGEMANAGER->findImage("맵")->render(IMAGEMANAGER->findImage("맵")->getMemDC());
+	//IMAGEMANAGER->findImage("맵")->render(IMAGEMANAGER->findImage("맵")->getMemDC());
 	cam = new Camera;
 	cam->camPoint.x = 0;
 	cam->camPoint.y = 0;
 	cam->width = WINSIZEX;
 	cam->height = WINSIZEY;
 	_player = new player;
+	em = new enemyManager;
+
 
 	_player->init(cam);
+	em->init(cam);
+
+
+	Harp* test1;
+	POINT test = { 200,100 };
+	test1 = new Harp;
+	test1->SetCam(cam);
+	test1->init(test);
+	em->addMonster(test1);
 
 	return S_OK;
 }
@@ -42,6 +53,7 @@ void mainGame::update(void)
 	gameNode::update();
 
 	_player->update();
+	em->update();
 }
 //여기가 그려주는 곳
 void mainGame::render()
@@ -57,6 +69,7 @@ void mainGame::render()
 	IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
 
 	_player->render();
+	em->render();
 
 
 	IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
