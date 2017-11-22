@@ -7,14 +7,13 @@
 //hitRC - rcleft + 34 / rcbottom - 7 / rcright - 36 / rctop + 13
 HRESULT player::init(Camera *cam)
 {
-	IMAGEMANAGER->addFrameImage("캐릭터", "sprites/character.bmp", 400, 1000, 4, 10, true, RGB(255, 0, 255));
 	_human = IMAGEMANAGER->findImage("캐릭터");
 	backStage = IMAGEMANAGER->findImage("지형");
 	mycam = cam;
 	curStatus = onJump;
 
-	//mycam->camPoint.x = backStage->getWidth() - WINSIZEX;
-	//mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
+	mycam->camPoint.x = backStage->getWidth() - WINSIZEX;
+	mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
 
 	count = curFrameX = curFrameY = camAccelY = 0;
 
@@ -245,6 +244,8 @@ void player::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) {
 
 		if (curStatus != onJump) {
+			for (int i = -20; i > 0; i++) {
+			}
 			curStatus = Status::onDown;
 			curFrameY = 2 * 2 + curFrameY % 2;
 		}
@@ -252,6 +253,10 @@ void player::update(void)
 	if (KEYMANAGER->isOnceKeyUp(VK_DOWN)) {
 		curStatus = Status::onIdle;
 		curFrameY = curFrameY % 2;
+	}
+	/////////////////////////////////////////////////위로 눌렀을때
+	if (KEYMANAGER->isStayKeyDown(VK_UP)) {
+
 	}
 	/////////////////////////////////////////////////////////////점프
 	if (KEYMANAGER->isOnceKeyDown('C')) {
@@ -295,7 +300,7 @@ void player::update(void)
 void player::render(void)
 {
 	IMAGEMANAGER->render("지형", getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, WINSIZEX, WINSIZEY);
-	Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
+	//Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
 	_human->frameRender(getMemDC(), rc.left, rc.top, curFrameX, curFrameY);
 
 	char tmp[128];

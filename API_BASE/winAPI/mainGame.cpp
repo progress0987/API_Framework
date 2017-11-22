@@ -14,11 +14,8 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
-	IMAGEMANAGER->addImage("미니맵", "sprites/map/파괴된 헤네시스.bmp", 1951 / 10, 1024 / 10, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("맵", "sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("지형", "sprites/map/파헤공원.bmp", 1951, 1024, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("인터페이스", "sprites/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	//IMAGEMANAGER->findImage("맵")->render(IMAGEMANAGER->findImage("맵")->getMemDC());
+	imgInit();
 	cam = new Camera;
 	cam->camPoint.x = 0;
 	cam->camPoint.y = 0;
@@ -78,4 +75,16 @@ void mainGame::render()
 	/////////////////////그려주는부분 - 건들지말것//////////////////
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 	////////////////////////////////////////////////////////////////
+}
+
+void mainGame::imgInit()
+{
+	IMAGEMANAGER->addImage("미니맵", "sprites/map/파헤공원(원본).bmp", 1951 / 10, 1024 / 10, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("맵", "sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("지형", "sprites/map/파헤공원.bmp", 1951, 1024, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("인터페이스", "sprites/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("harpM", "sprites/monster/HarpM.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("harpS", "sprites/monster/HarpS.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("harpD", "sprites/monster/HarpD.bmp", 81, 206, 1, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("캐릭터", "sprites/character.bmp", 400, 1000, 4, 10, true, RGB(255, 0, 255));
 }

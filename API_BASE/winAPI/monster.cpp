@@ -87,9 +87,6 @@ Harp::~Harp()
 
 HRESULT Harp::init(POINT pos)
 {
-	IMAGEMANAGER->addFrameImage("harpM", "sprites/monster/HarpM.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("harpS", "sprites/monster/HarpS.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("harpD", "sprites/monster/HarpD.bmp", 81, 206, 1, 2, true, RGB(255, 0, 255));
 	monster::init(500, 30, 10, pos, 81, 103);
 	int way = rand() % 2;
 	left(way);
@@ -320,7 +317,7 @@ void Harp::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
 	char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
 	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
