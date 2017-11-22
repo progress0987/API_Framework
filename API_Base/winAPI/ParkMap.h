@@ -6,6 +6,8 @@ class ParkMap:public gameNode
 {
 	//포탈
 	tagrect portal;
+	//보스를 만나러가는 포탈
+	tagrect rightportal;
 
 	//배경 움직이는 변수
 	int moveX, moveY;
@@ -21,5 +23,10 @@ public:
 	void render();
 	//키 
 	void Keymanager();
+	//프레임
+	void Frame();
+
+	tagrect getleftportal() { return portal; }
+	tagrect getrightportal() { return rightportal; }
 };
 

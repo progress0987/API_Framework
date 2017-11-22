@@ -19,23 +19,27 @@ HRESULT VillageMap::init()
 	IMAGEMANAGER->addImage("pixelvillage", "image/village/파괴된 헤네시스.bmp", 3495, 947, false, RGB(255, 0, 255));
 	////////////////////////////////////////////////////////////////////////////////포탈
 	//왼쪽 포탈
-	_lefeportal.x = -500;
-	_lefeportal.y = 480;
-	_lefeportal.rc = RectMake(_lefeportal.x, _lefeportal.y, 50, 80);
+	_lefeportal.x = -420;
+	_lefeportal.y = 530;
+	_lefeportal.rc = RectMakeCenter(_lefeportal.x, _lefeportal.y, 50, 80);
 	_lefeportal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
 	_lefeportal.currentX = 0;
 	//오른쪽 포탈
-	rightportal.x = 2830;
-	rightportal.y = 598;
-	rightportal.rc = RectMake(rightportal.x, rightportal.y, 50, 80);
+	rightportal.x = 2880;
+	rightportal.y = 650;
+	rightportal.rc = RectMakeCenter(rightportal.x, rightportal.y, 50, 80);
 	//상점 포탈
-	storeportal.x = 1450;
-	storeportal.y = 598;
-	storeportal.rc = RectMake(storeportal.x, storeportal.y, 50, 80);
+	storeportal.x = 1490;
+	storeportal.y = 650;
+	storeportal.rc = RectMakeCenter(storeportal.x, storeportal.y, 50, 80);
 	//공원 포탈
-	parkportal.x = 1220;
-	parkportal.y = 270;
-	parkportal.rc = RectMake(parkportal.x, parkportal.y, 50, 80);
+	parkportal.x = 1270;
+	parkportal.y = 320;
+	parkportal.rc = RectMakeCenter(parkportal.x, parkportal.y, 50, 80);
+	//시장 포탈
+	marketportal.x = 430;
+	marketportal.y = 530;
+	marketportal.rc = RectMakeCenter(marketportal.x, marketportal.y, 50, 80);
 	////////////////////////////////////////////////////////////////////////////////NPC
 	//거지걸 
 	gujiGirl.x = 1200;
@@ -80,10 +84,12 @@ void VillageMap::release()
 void VillageMap::update()
 {
 	
-	_lefeportal.rc = RectMake(_lefeportal.x, _lefeportal.y, 50, 80);
-	rightportal.rc = RectMake(rightportal.x, rightportal.y, 50, 80);
-	storeportal.rc = RectMake(storeportal.x, storeportal.y, 50, 80);
-	parkportal.rc = RectMake(parkportal.x, parkportal.y, 50, 80);
+	_lefeportal.rc = RectMakeCenter(_lefeportal.x, _lefeportal.y, 5, 20);
+	rightportal.rc = RectMakeCenter(rightportal.x, rightportal.y, 5, 20);
+	storeportal.rc = RectMakeCenter(storeportal.x, storeportal.y, 5, 20);
+	parkportal.rc = RectMakeCenter(parkportal.x, parkportal.y, 5, 20);
+	marketportal.rc = RectMakeCenter(marketportal.x, marketportal.y, 5, 20);
+
 	gujiGirl.rc = RectMake(gujiGirl.x, gujiGirl.y, 50, 80);
 	Lina.rc = RectMake(Lina.x, Lina.y, 50, 80);
 	OrangeHair.rc = RectMake(OrangeHair.x, OrangeHair.y, 50, 80);
@@ -101,10 +107,20 @@ void VillageMap::render()
 	//배경 
 	IMAGEMANAGER->findImage("village")->render(getMemDC(), 0, 0, moveX, moveY, WINSIZEX, WINSIZEY);
 	//포탈 그리기
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), _lefeportal.rc.left, _lefeportal.rc.top, _lefeportal.currentX, 0, 150);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), rightportal.rc.left, rightportal.rc.top, _lefeportal.currentX, 0, 150);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), storeportal.rc.left, storeportal.rc.top, _lefeportal.currentX, 0, 150);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), parkportal.rc.left, parkportal.rc.top, _lefeportal.currentX, 0, 150);
+	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), _lefeportal.x - 50, _lefeportal.y - 50, _lefeportal.currentX, 0, 150);
+	Rectangle(getMemDC(), _lefeportal.rc.left, _lefeportal.rc.top, _lefeportal.rc.right, _lefeportal.rc.bottom);
+
+	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), rightportal.x - 50, rightportal.y - 50, _lefeportal.currentX, 0, 150);
+	Rectangle(getMemDC(), rightportal.rc.left, rightportal.rc.top, rightportal.rc.right, rightportal.rc.bottom);
+
+	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), storeportal.x - 50, storeportal.y - 50, _lefeportal.currentX, 0, 150);
+	Rectangle(getMemDC(), storeportal.rc.left, storeportal.rc.top, storeportal.rc.right, storeportal.rc.bottom);
+
+	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), parkportal.x - 50, parkportal.y - 50, _lefeportal.currentX, 0, 150);
+	Rectangle(getMemDC(), parkportal.rc.left, parkportal.rc.top, parkportal.rc.right, parkportal.rc.bottom);
+
+	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), marketportal.x - 50, marketportal.y - 50, _lefeportal.currentX, 0, 150);
+	Rectangle(getMemDC(), marketportal.rc.left, marketportal.rc.top, marketportal.rc.right, marketportal.rc.bottom);
 	//npc
 	IMAGEMANAGER->findImage("gujigirl")->frameRender(getMemDC(), gujiGirl.rc.left, gujiGirl.rc.top, gujiGirl.currentX, 0);
 	IMAGEMANAGER->findImage("lina")->frameRender(getMemDC(), Lina.rc.left, Lina.rc.top, Lina.currentX, 0);
@@ -143,6 +159,7 @@ void VillageMap::Keymanager()
 		rightportal.x += 3;
 		storeportal.x += 3;
 		parkportal.x += 3;
+		marketportal.x += 3;
 		//npc 고정
 		gujiGirl.x += 3;
 		Lina.x += 3;
@@ -157,6 +174,7 @@ void VillageMap::Keymanager()
 		rightportal.x -= 3;
 		storeportal.x -= 3;
 		parkportal.x -= 3;
+		marketportal.x -= 3;
 		//npc 고정
 		gujiGirl.x -= 3;
 		Lina.x -= 3;
@@ -171,6 +189,7 @@ void VillageMap::Keymanager()
 		rightportal.y += 3;
 		storeportal.y += 3;
 		parkportal.y += 3;
+		marketportal.y += 3;
 		//npc 고정
 		gujiGirl.y += 3;
 		Lina.y += 3;
@@ -185,6 +204,7 @@ void VillageMap::Keymanager()
 		rightportal.y -= 3;
 		storeportal.y -= 3;
 		parkportal.y -= 3;
+		marketportal.y -= 3;
 		//npc 고정
 		gujiGirl.y -= 3;
 		Lina.y -= 3;

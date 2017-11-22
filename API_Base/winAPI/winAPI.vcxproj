@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationTest.h" />
+    <ClInclude Include="BossMap.h" />
     <ClInclude Include="bullets.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Effect.h" />
@@ -148,12 +149,16 @@
     <ClInclude Include="fontTest.h" />
     <ClInclude Include="CfastPixel.h" />
     <ClInclude Include="enemyManager.h" />
+    <ClInclude Include="ForestMap.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="HillMap.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="MarketMap.h" />
+    <ClInclude Include="ParkMap.h" />
     <ClInclude Include="StoreMap.h" />
     <ClInclude Include="PixelCollisionTest.h" />
     <ClInclude Include="player.h" />
@@ -177,18 +182,23 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationTest.cpp" />
+    <ClCompile Include="BossMap.cpp" />
     <ClCompile Include="bullets.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fontTest.cpp" />
     <ClCompile Include="enemyManager.cpp" />
+    <ClCompile Include="ForestMap.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="HillMap.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="MarketMap.cpp" />
+    <ClCompile Include="ParkMap.cpp" />
     <ClCompile Include="StoreMap.cpp" />
     <ClCompile Include="PixelCollisionTest.cpp" />
     <ClCompile Include="player.cpp" />

@@ -174,6 +174,21 @@
     <ClInclude Include="VillageMap.h">
       <Filter>2DGameFramework\MainGame\Map</Filter>
     </ClInclude>
+    <ClInclude Include="ParkMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ForestMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="HillMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketMap.h">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -261,6 +276,21 @@
       <Filter>2DGameFramework\MainGame\Map</Filter>
     </ClCompile>
     <ClCompile Include="VillageMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="ParkMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="ForestMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="HillMap.cpp">
+      <Filter>2DGameFramework\MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketMap.cpp">
       <Filter>2DGameFramework\MainGame\Map</Filter>
     </ClCompile>
   </ItemGroup>

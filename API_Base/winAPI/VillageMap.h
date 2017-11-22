@@ -17,6 +17,7 @@ class VillageMap:public gameNode
 	tagrect rightportal;//제일 오른쪽에 있는 포탈
 	tagrect storeportal;//상점 포탈
 	tagrect parkportal;//공원가는 포탈
+	tagrect marketportal;//시장가는 포탈
 
 	//NPC
 	tagrect gujiGirl;//그지
@@ -42,6 +43,13 @@ public:
 	void Frame();
 	//밍밍부인 움직이는
 	void MingmingMove();
+	
+	tagrect getlefeportal() { return _lefeportal; }
+	tagrect getrightportal() { return rightportal; }
+	tagrect getstoreportal() { return storeportal; }
+	tagrect getparkportal() { return parkportal; }
+	tagrect getmarketportal() { return marketportal; }
+
 
 };
 

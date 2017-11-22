@@ -1,9 +1,11 @@
 #pragma once
 #include"gameNode.h"
+#include"VillageMap.h"
 
 class StoreMap :public gameNode
 {
-	image* _portal;
+	tagrect portal;
+
 	image* _npc;
 	RECT _pt;
 
@@ -20,5 +22,7 @@ public:
 	void release();
 	void update();
 	void render();
+
+	tagrect getportal() { return portal; }
 };
 
