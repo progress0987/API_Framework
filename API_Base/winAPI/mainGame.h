@@ -16,6 +16,7 @@ public:
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render();
+	void imgInit();
 
 	mainGame();
 	~mainGame();
