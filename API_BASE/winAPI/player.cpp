@@ -11,6 +11,7 @@ HRESULT player::init(Camera *cam)
 	backStage = IMAGEMANAGER->findImage("지형");
 	mycam = cam;
 	curStatus = onJump;
+	curDir = false;
 
 	mycam->camPoint.x = backStage->getWidth() - WINSIZEX;
 	mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
@@ -66,7 +67,7 @@ void player::update(void)
 	//int r = GetRValue(t);
 	//int g = GetGValue(t);
 	//int b = GetBValue(t);
-	if (curStatus != Status::onJump/* && GetPixel(backStage->getMemDC(), mycam->camPoint.x + curPos.x, mycam->camPoint.y + hitRC.bottom) != RGB(255, 0, 0)*/) {
+	if (curStatus != Status::onJump&&(curStatus!=Status::onLadder&&curStatus!=Status::onRope) /* && GetPixel(backStage->getMemDC(), mycam->camPoint.x + curPos.x, mycam->camPoint.y + hitRC.bottom) != RGB(255, 0, 0)*/) {
 		velocity += gravity;
 		if (velocity > 10) velocity = 10;
 		curPos.y += velocity;
@@ -96,11 +97,11 @@ void player::update(void)
 		}
 		if (moveVel > 0.f || moveVel < 0.f) {
 			if (moveVel > 0.f) {
-				moveVel -= 0.01f;
+				moveVel -= 0.1f;
 				if (moveVel < 0.f)moveVel = 0.f;
 			}
 			else {
-				moveVel += 0.01f;
+				moveVel += 0.1f;
 				if (moveVel > 0.f)moveVel = 0.f;
 			}
 		}
@@ -108,6 +109,7 @@ void player::update(void)
 	//////////////////////////////////////////////////////////////왼쪽
 	//왼쪽키 처음눌렸을때
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
+		curDir = false;
 		if (curStatus != Status::onDown) {
 			if (curStatus == Status::onIdle) {
 				curStatus = Status::onWalk;
@@ -176,6 +178,7 @@ void player::update(void)
 	//////////////////////////////////////////////////////////////오른쪽
 	//오른쪽키 처음눌렸을때
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT)) {
+		curDir = true;
 		if (curStatus != Status::onDown) {
 			if (curStatus == Status::onIdle) {
 				curStatus = Status::onWalk;
@@ -244,19 +247,96 @@ void player::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) {
 
 		if (curStatus != onJump) {
-			for (int i = -20; i > 0; i++) {
+			if (curStatus != Status::onRope&&curStatus != Status::onLadder) {	//아래로 내려갈때
+				for (int i = hitRC.left; i < hitRC.right; i++) {
+					COLORREF t = GetPixel(backStage->getMemDC(), mycam->camPoint.x + i, mycam->camPoint.y + hitRC.bottom + 10);
+					if (t == RGB(0, 255, 0)) {
+						curPos.x = i;
+						curStatus = Status::onRope;
+						moveVel = 0;
+						curFrameY = 9;
+						break;
+					}
+					if (t == RGB(0, 0, 255)) {
+						curPos.x = i;
+						curStatus = Status::onLadder;
+						moveVel = 0;
+						curFrameY = 8;
+						break;
+					}
+				}
 			}
-			curStatus = Status::onDown;
-			curFrameY = 2 * 2 + curFrameY % 2;
+			if (curStatus == Status::onRope || curStatus == Status::onLadder) {
+				count++;
+				curPos.y += 1;
+				if (count % 1500) {
+					curFrameX++;
+					if (curFrameX > _human->getMaxFrameX())curFrameX = 0;
+				}
+				COLORREF t = GetPixel(backStage->getMemDC(), mycam->camPoint.x +curPos.x, mycam->camPoint.y + hitRC.bottom+10);
+				if (t != RGB(0, 255, 0) && t != RGB(0, 0, 255)) {
+					curStatus = onJump;
+					if (curDir) {
+						curFrameY = 6;
+					}
+					else {
+						curFrameY = 7;
+					}
+				}
+			}
+			else {
+				curStatus = Status::onDown;
+				curFrameY = 2 * 2 + curFrameY % 2;
+			}
+		}
+		if (curStatus == Status::onRope || curStatus == Status::onLadder) {
+
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_DOWN)) {
-		curStatus = Status::onIdle;
-		curFrameY = curFrameY % 2;
+		if (curStatus == onDown) {
+			curStatus = Status::onIdle;
+			curFrameY = curFrameY % 2;
+		}
 	}
 	/////////////////////////////////////////////////위로 눌렀을때
 	if (KEYMANAGER->isStayKeyDown(VK_UP)) {
-
+		if (curStatus != Status::onLadder && curStatus != Status::onRope) {
+			for (int i = hitRC.left; i < hitRC.right; i++) {
+				COLORREF t = GetPixel(backStage->getMemDC(), mycam->camPoint.x + i, mycam->camPoint.y + hitRC.top);
+				if (t == RGB(0, 255, 0)) {//로프일때
+					curPos.x = i;
+					curPos.y -= 4;
+					curStatus = Status::onRope;
+					moveVel = 0;
+					curFrameY = 9;
+					rc = RectMakeCenter(curPos.x, curPos.y, width, height);
+					hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
+					break;
+				}
+				if (t == RGB(0, 0, 255)) {//사다리일때
+					curPos.x = i;
+					curPos.y -= 4;
+					curStatus = Status::onLadder;
+					moveVel = 0;
+					curFrameY = 8;
+					rc = RectMakeCenter(curPos.x, curPos.y, width, height);
+					hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
+					break;
+				}
+			}
+		}
+		if (curStatus == Status::onRope || curStatus == Status::onLadder) {
+			curPos.y -= 1;
+			for (int i = -2; i < 3; i++) {
+				COLORREF t = GetPixel(backStage->getMemDC(), mycam->camPoint.x+curPos.x, mycam->camPoint.y + hitRC.bottom+i);
+				if (t == RGB(255, 0, 0)) {
+					curStatus = Status::onJump;
+					curFrameY = curDir;
+					break;
+				}
+			}
+		}
 	}
 	/////////////////////////////////////////////////////////////점프
 	if (KEYMANAGER->isOnceKeyDown('C')) {
@@ -265,10 +345,10 @@ void player::update(void)
 			rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 			hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
 			curStatus = Status::onJump;
-			curFrameY = 6 + curFrameY % 2;
+			curFrameY = 6 + curDir;
 		}
 		else if (curStatus != onJump) {
-			curFrameY = 3 * 2 + curFrameY % 2;
+			curFrameY = 3 * 2 + curDir;
 			curStatus = onJump;
 			velocity = jumpPow;
 		}
@@ -308,6 +388,7 @@ void player::render(void)
 	TextOut(getMemDC(), 50, 100, tmp, strlen(tmp));
 	sprintf(tmp, "curStatus : %d", curStatus);
 	TextOut(getMemDC(), 50, 130, tmp, strlen(tmp));
+	EllipseMakeCenter(getMemDC(), curPos.x, hitRC.bottom + 10, 5, 5);
 	//Rectangle(getMemDC(), hitRC.left, hitRC.top, hitRC.right, hitRC.bottom);
 }
 

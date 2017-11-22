@@ -25,6 +25,7 @@ private:
 	Camera* mycam;
 	RECT rc;
 	RECT hitRC;
+	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
 
 
 	//모션 상태변수
@@ -51,6 +52,7 @@ public:
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);
+	void setBackStage(image* backstage) { this->backStage = backstage; }
 
 	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.
 
