@@ -2,12 +2,10 @@
 #include "image.h"
 static image* backBuffer = IMAGEMANAGER->addImage("backBuffer",WINSIZEX,WINSIZEY);
 
-
-typedef struct BezierPoint {
-	float x;
-	float y;
+typedef struct Camera {
+	POINT camPoint;
+	int width, height;
 };
-
 class gameNode
 {
 
