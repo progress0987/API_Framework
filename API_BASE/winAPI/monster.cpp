@@ -24,6 +24,14 @@ HRESULT monster::init(int Hp, int Atk, int Def, POINT position, int Width, int h
 	return S_OK;
 }
 
+void monster::update()
+{
+}
+
+void monster::render()
+{
+}
+
 //공격을 받았는지 확인
 bool monster::hit(void)
 {
@@ -42,7 +50,7 @@ void monster::MonsterMoving(int move)
 	pt.x += move;
 	if (pt.x - bodyW / 2 < 0) pt.x = bodyW / 2;
 	//현재 맵 지정 - 나중에 바꿔줘야함
-	if (pt.x + bodyW / 2 > IMAGEMANAGER->findImage("map")->getWidth()) pt.x = IMAGEMANAGER->findImage("map")->getWidth() - bodyW / 2;
+	if (pt.x + bodyW / 2 > IMAGEMANAGER->findImage("지형")->getWidth()) pt.x = IMAGEMANAGER->findImage("지형")->getWidth() - bodyW / 2;
 }
 void monster::MonsterDown(int Down)
 {
@@ -178,15 +186,15 @@ void Harp::moving(void)
 				{
 					break;
 				}
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("맵")->getMemDC(), pt.x, i);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), pt.x, i);
 				if (color == RGB(255, 0, 0))
 				{
 					MonsterMoving(-3);
 					Setbody(i);
 					if (moveDir == true)
 					{
-						COLORREF color1 = GetPixel(IMAGEMANAGER->findImage("맵")->getMemDC(), pt.x - 10, i + 30);
-						COLORREF color2 = GetPixel(IMAGEMANAGER->findImage("맵")->getMemDC(), pt.x - 10, i - 30);
+						COLORREF color1 = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), pt.x - 10, i + 30);
+						COLORREF color2 = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), pt.x - 10, i - 30);
 						if ((color1 != RGB(255, 0, 0)) && (color2 != RGB(255, 0, 0)))
 						{
 							left(1);
@@ -215,7 +223,7 @@ void Harp::moving(void)
 				{
 					break;
 				}
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("맵")->getMemDC(), pt.x, i);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), pt.x, i);
 
 				if (color == RGB(255, 0, 0))
 				{
@@ -223,8 +231,8 @@ void Harp::moving(void)
 					MonsterMoving(3);
 					if (moveDir == false)
 					{
-						COLORREF color1 = GetPixel(IMAGEMANAGER->findImage("맵")->getMemDC(), pt.x, i + 30);
-						COLORREF color2 = GetPixel(IMAGEMANAGER->findImage("맵")->getMemDC(), pt.x, i - 30);
+						COLORREF color1 = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), pt.x, i + 30);
+						COLORREF color2 = GetPixel(IMAGEMANAGER->findImage("지형")->getMemDC(), pt.x, i - 30);
 						if (color1 != RGB(255, 0, 0) && color2 != RGB(255, 0, 0))
 						{
 							left(0);

@@ -22,16 +22,14 @@ void enemyManager::update()
 
 void enemyManager::render()
 {
+	for (vector<monster*>::iterator i = Monsters.begin(); i != Monsters.end(); i++) {
+		(*i)->render();
+	}
 }
 
 void enemyManager::addMonster(monster * monster)
 {
-	Harp* test1;
-	POINT test = { 200,100 };
-	test1 = new Harp;
-	test1->SetCam(playerCam);
-	test1->init(test);
-	Monsters.push_back(test1);
+	Monsters.push_back(monster);
 }
 
 

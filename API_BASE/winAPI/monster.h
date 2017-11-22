@@ -23,6 +23,8 @@ public:
 	~monster();
 	//셋팅
 	HRESULT init(int Hp, int Atk, int Def, POINT position, int Width, int height);
+	virtual void update();
+	virtual void render();
 
 	bool hit(void);				//공격당한것 확인
 	void MonsterMoving(int move);	//몬스터 좌우 움직임

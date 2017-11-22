@@ -13,8 +13,9 @@ HRESULT player::init(Camera *cam)
 	mycam = cam;
 	curStatus = onJump;
 
-	mycam->camPoint.x = backStage->getWidth() - WINSIZEX;
-	mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
+	//mycam->camPoint.x = backStage->getWidth() - WINSIZEX;
+	//mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
+
 	count = curFrameX = curFrameY = camAccelY = 0;
 
 	//처음 위치는 맵의 가운데 아래서부터 시작한다.
