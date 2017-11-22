@@ -53,7 +53,7 @@ void mainGame::render()
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	//getmemdc¿¡ ³Ö¾îÁÜ
 
-	//IMAGEMANAGER->render("¸Ê", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
+	IMAGEMANAGER->render("¸Ê", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
 	IMAGEMANAGER->findImage("¹Ì´Ï¸Ê")->alphaRender(getMemDC(), 0, 0, 150);
 
 	_player->render();

@@ -270,27 +270,6 @@ void player::update(void)
 			//점프 후 스킬쓸때
 		}
 	}
-	//카메라 y축 처리
-	//if (curPos.y < WINSIZEY / 2) {//윈도우 절반 이상일때(카메라가 위로 올라와야함)
-	//	if (mycam->camPoint.y > 0) {
-	//		mycam->camPoint.y += velocity;
-	//	}
-	//	else if (mycam->camPoint.y < 0) mycam->camPoint.y = 0;
-	//}
-	//else if(curPos.y >WINSIZEY/2) {//윈도우 절반 이하일때(카메라가 아래로 내려가야함)
-	//	//mycam->camPoint.y += velocity;
-	//	//if (mycam->camPoint.y + WINSIZEY > backStage->getHeight()) {
-	//	//	mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
-	//	//	curPos.y += velocity;
-	//	//}
-	//	if (mycam->camPoint.y + WINSIZEY < backStage->getHeight()) {
-	//		mycam->camPoint.y += velocity;
-	//	}
-	//	else if (mycam->camPoint.y + WINSIZEY > backStage->getHeight()) {
-	//		mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
-	//	}
-	//}
-
 	//카메라 Y축 처리
 	//WINSIZEY/2 = 384
 	int temp = mycam->camPoint.y + WINSIZEY / 2;

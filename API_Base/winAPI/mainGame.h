@@ -8,6 +8,7 @@ class mainGame : public gameNode
 private:
 	Camera* cam;
 	player *_player;
+	
 public:
 
 	HRESULT init(void);

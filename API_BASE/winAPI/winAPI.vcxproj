@@ -154,6 +154,7 @@
     <ClInclude Include="inventory.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="monster.h" />
     <ClInclude Include="PixelCollisionTest.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="progressBar.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="monster.cpp" />
     <ClCompile Include="PixelCollisionTest.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="progressBar.cpp" />
