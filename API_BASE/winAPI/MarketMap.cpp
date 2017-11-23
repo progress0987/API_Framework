@@ -15,26 +15,29 @@ MarketMap::~MarketMap()
 
 HRESULT MarketMap::init()
 {
-
+	front = IMAGEMANAGER->findImage("market");
+	back = IMAGEMANAGER->findImage("pixelmarket");
 	////////////////////////////////////////////////////////////////////////////////Æ÷Å»
-	portal.x = 50;
-	portal.y = 485;
-	portal.rc = RectMake(portal.x, portal.y, 50, 80);
-	portal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
-	portal.currentX = 0;
+	leftportal.x = 71;
+	leftportal.y = 680;
+	leftportal.rc = RectMake(leftportal.x, leftportal.y, 2, 10);
+	leftportal._img = IMAGEMANAGER->findImage("portal");
+	leftportal.currentX = 0;
+	leftportal.pattern = 0;
 
-	//¹è°æ ¿òÁ÷ÀÌ´Â º¯¼ö
-	moveX = 0;
-	moveY = 200;
+	
+
+	PORTAL.push_back(leftportal);
+
+	
 	return S_OK;
 }
 void MarketMap::release()
 {
-	SAFE_DELETE(portal._img);
+	SAFE_DELETE(leftportal._img);
 }
 void MarketMap::update()
 {
-	portal.rc = RectMakeCenter(portal.x, portal.y, 5, 20);
 	//Å°¸Å´ÏÀú
 	Keymanager();
 	//ÇÁ·¹ÀÓ
@@ -42,39 +45,23 @@ void MarketMap::update()
 }
 void MarketMap::render()
 {
-	IMAGEMANAGER->findImage("market")->render(getMemDC(), 0, 0, moveX, moveY, WINSIZEX, WINSIZEY);
+	//¹è°æ
+	front->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, cam->width, cam->height);
 	//Æ÷Å»
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), portal.x - 50, portal.y - 50, portal.currentX, 0, 150);
+	for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++)
+	{
+		i->_img->alphaFrameRender(getMemDC(), i->x - 50 - cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
+	}
+	//Æ÷Å»Ãæµ¹·ºÆ®
+	Rectangle(getMemDC(), leftportal.rc.left - cam->camPoint.x, leftportal.rc.top - cam->camPoint.y,
+		leftportal.rc.right - cam->camPoint.x, leftportal.rc.bottom - cam->camPoint.y);
+	
+
 }
 //Å° 
 void MarketMap::Keymanager()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && moveX > 0)
-	{
-		moveX -= 3;
-		//Æ÷Å»
-		portal.x += 3;
-
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && moveX < 440)
-	{
-		moveX += 3;
-		//Æ÷Å»
-		portal.x -= 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && moveY > 0)
-	{
-		moveY -= 3;
-		//Æ÷Å»
-		portal.y += 3;
-
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && moveY < 200)
-	{
-		moveY += 3;
-		//Æ÷Å»
-		portal.y -= 3;
-	}
+	
 }
 //ÇÁ·¹ÀÓ
 void MarketMap::Frame()
@@ -84,8 +71,10 @@ void MarketMap::Frame()
 	//Æ÷Å»
 	if (count % 15 == 0)
 	{
-		portal._img->setFrameX(portal._img->getFrameX());
-		portal.currentX++;
-		if (portal.currentX > portal._img->getMaxFrameX())portal.currentX = 0;
+		for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++)
+		{
+			i->currentX++;
+			if (i->currentX > i->_img->getMaxFrameX())i->currentX = 0;
+		}
 	}
 }

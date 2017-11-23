@@ -14,36 +14,40 @@ ParkMap::~ParkMap()
 
 HRESULT ParkMap::init()
 {
+	front = IMAGEMANAGER->findImage("park");
+	back = IMAGEMANAGER->findImage("pixelpark");
 
 	////////////////////////////////////////////////////////////////////////////////포탈
 	//왼쪽에 있는 포탈
-	portal.x = 50;
-	portal.y = 500;
-	portal.rc = RectMake(portal.x, portal.y, 50, 80);
-	portal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
-	portal.currentX = 0;
-	//오른쪽에 있는 보스 만나러가는 포탈
-	rightportal.x = 1880;
-	rightportal.y = 610;
-	rightportal.rc = RectMake(rightportal.x, rightportal.y, 50, 80);
-	rightportal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
-	rightportal.currentX = 0;
+	leftportal.x = 86;
+	leftportal.y = 680;
+	leftportal.rc = RectMake(leftportal.x, leftportal.y, 2, 10);
+	leftportal._img = IMAGEMANAGER->findImage("portal");
+	leftportal.currentX = 0;
+	leftportal.pattern = 0;
 
-	//배경 움직이는 변수
-	moveX = 0;
-	moveY = 190;
+	//오른쪽에 있는 보스 만나러가는 포탈
+	rightportal.x = 1863;
+	rightportal.y = 806;
+	rightportal.rc = RectMake(rightportal.x, rightportal.y, 2, 10);
+	rightportal._img = IMAGEMANAGER->findImage("portal");
+	rightportal.currentX = 0;
+	rightportal.pattern = 1;
+
+	PORTAL.push_back(leftportal);
+	PORTAL.push_back(rightportal);
+
+	
 
 	return S_OK;
 }
 void ParkMap::release()
 {
-	SAFE_DELETE(portal._img);
+	SAFE_DELETE(leftportal._img);
+	SAFE_DELETE(rightportal._img);
 }
 void ParkMap::update()
 {
-	portal.rc = RectMakeCenter(portal.x, portal.y, 5, 20);
-	rightportal.rc = RectMakeCenter(rightportal.x, rightportal.y, 5, 20);
-
 	//키매니저
 	Keymanager();
 	//프레임
@@ -54,45 +58,23 @@ void ParkMap::update()
 void ParkMap::render()
 {
 	//배경
-	IMAGEMANAGER->findImage("park")->render(getMemDC(), 0, 0, moveX, moveY, WINSIZEX, WINSIZEY);
-	//포탈
-	Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), portal.x - 50 , portal.y - 50, portal.currentX, 0, 150);
-	Rectangle(getMemDC(), rightportal.rc.left, rightportal.rc.top, rightportal.rc.right, rightportal.rc.bottom);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), rightportal.x - 50, rightportal.y - 50, portal.currentX, 0, 150);
+	front->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, cam->width, cam->height);
+	//포탈그리기
+	for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++)
+	{
+		i->_img->alphaFrameRender(getMemDC(), i->x - 50 - cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
+	}
+	//포탈 충돌렉트
+	Rectangle(getMemDC(), leftportal.rc.left - cam->camPoint.x, leftportal.rc.top - cam->camPoint.y,
+		leftportal.rc.right - cam->camPoint.x, leftportal.rc.bottom - cam->camPoint.y);
+
+	Rectangle(getMemDC(), rightportal.rc.left - cam->camPoint.x, rightportal.rc.top - cam->camPoint.y,
+		rightportal.rc.right - cam->camPoint.x, rightportal.rc.bottom - cam->camPoint.y);
 }
 
 void ParkMap::Keymanager()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && moveX > 0)
-	{
-		moveX -= 3;
-
-		//포탈
-		portal.x += 3;
-		rightportal.x += 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && moveX < 580)
-	{
-		moveX += 3;
-		//포탈
-		portal.x -= 3;
-		rightportal.x -= 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && moveY > 0)
-	{
-		moveY -= 3;
-		//포탈
-		portal.y += 3;
-		rightportal.y += 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && moveY < 255)
-	{
-		moveY += 3;
-		//포탈
-		portal.y -= 3;
-		rightportal.y -= 3;
-	}
+	
 }
 
 void ParkMap::Frame()
@@ -102,8 +84,10 @@ void ParkMap::Frame()
 	//포탈
 	if (count % 15 == 0)
 	{
-		portal._img->setFrameX(portal._img->getFrameX());
-		portal.currentX++;
-		if (portal.currentX > portal._img->getMaxFrameX())portal.currentX = 0;
+		for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++)
+		{
+			i->currentX++;
+			if (i->currentX > i->_img->getMaxFrameX())i->currentX = 0;
+		}
 	}
 }

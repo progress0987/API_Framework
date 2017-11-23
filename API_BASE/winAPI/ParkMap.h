@@ -1,11 +1,10 @@
 #pragma once
-#include"gameNode.h"
-#include"VillageMap.h"
+#include"mapFrame.h"
 
-class ParkMap:public gameNode
+class ParkMap:public mapFrame
 {
 	//포탈
-	tagrect portal;
+	tagrect leftportal;
 	//보스를 만나러가는 포탈
 	tagrect rightportal;
 
@@ -25,8 +24,5 @@ public:
 	void Keymanager();
 	//프레임
 	void Frame();
-
-	tagrect getleftportal() { return portal; }
-	tagrect getrightportal() { return rightportal; }
 };
 

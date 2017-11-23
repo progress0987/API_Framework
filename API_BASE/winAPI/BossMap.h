@@ -1,11 +1,9 @@
 #pragma once
-#include"gameNode.h"
-#include"VillageMap.h"
-class BossMap:public gameNode
+#include"mapFrame.h"
+class BossMap:public mapFrame
 {
 	tagrect portal;
-	image* frontMap;
-	image* backMap;
+
 	//배경 움직이는 변수
 	int moveX, moveY;
 	//프레임 돌리는 변수

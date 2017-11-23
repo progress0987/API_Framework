@@ -38,6 +38,31 @@ HRESULT mainGame::init(void)
 	_village = new VillageMap;
 	_village->init();
 	_village->setCam(cam);
+
+	_map = new StoreMap;
+	_map->init();
+	_map->setCam(cam);
+
+	_boss = new BossMap;
+	_boss->init();
+	_boss->setCam(cam);
+
+	_forest = new ForestMap;
+	_forest->init();
+	_forest->setCam(cam);
+
+	_hill = new HillMap;
+	_hill->init();
+	_hill->setCam(cam);
+
+	_market = new MarketMap;
+	_market->init();
+	_market->setCam(cam);
+
+	_park = new ParkMap;
+	_park->init();
+	_park->setCam(cam);
+
 	curScene = _village;
 	_player->init(pointMake(500, 500), curScene);
 
@@ -98,10 +123,23 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addFrameImage("gujigirl",		"sprites/npc/gujiGirl.bmp", 352, 71, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("lina",			"sprites/npc/Lina.bmp", 600, 67, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("orange",		"sprites/npc/OrangeHair.bmp", 322, 66, 7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ming",			"sprites/npc/MingMing.bmp", 432, 276, 9, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ming", "sprites/npc/MingMing.bmp", 432, 276, 9, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("storenpc",			"sprites/npc/storeNPC.bmp", 424, 71, 8, 1, true, RGB(255, 0, 255));
 
 	/////////////////////////////////////////지도/////////////////////////////////////////////////
 	IMAGEMANAGER->addImage("village",			"sprites/map/파괴된 헤네시스(원본).bmp", 3495, 947, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("pixelvillage",		"sprites/map/파괴된 헤네시스.bmp", 3495, 947, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelvillage", "sprites/map/파괴된 헤네시스.bmp", 3495, 947, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("store", "sprites/map/잡화상점(원본).bmp", 1365, 766, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelstore", "sprites/map/잡화상점.bmp", 1365, 766, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("boss",		"sprites/map/BossMap(원본).bmp", 1684, 903, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelboss", "sprites/map/BossMap.bmp", 1684, 903, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("forest", "sprites/map/ForestMap(원본).bmp", 1365, 1034, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelforest", "sprites/map/ForestMap.bmp", 1365, 1034, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("hill", "sprites/map/HillMap(원본).bmp", 2075, 1047, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelhill", "sprites/map/HillMap.bmp", 2075, 1047, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("market", "sprites/map/MarketMap(원본).bmp", 1807, 986, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelmarket", "sprites/map/MarketMap.bmp", 1807, 986, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("park", "sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelpark", "sprites/map/파헤공원.bmp", 1951, 1024, false, RGB(255, 0, 255));
 
 }

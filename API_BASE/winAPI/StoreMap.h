@@ -1,12 +1,11 @@
 #pragma once
-#include"gameNode.h"
-#include"VillageMap.h"
+#include"mapFrame.h"
 
-class StoreMap :public gameNode
+class StoreMap :public mapFrame
 {
 	tagrect portal;
+	tagrect storenpc;
 
-	image* _npc;
 	RECT _pt;
 
 	//프레임 카운트 변수

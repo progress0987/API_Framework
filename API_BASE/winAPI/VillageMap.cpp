@@ -130,8 +130,10 @@ void VillageMap::render()
 	//배경 
 	front->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, cam->width, cam->height);
 	//포탈 그리기
-	for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++) {
+	for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++) 
+	{
 		i->_img->alphaFrameRender(getMemDC(), i->x - 25-cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
+		
 	}
 
 	//IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), _lefeportal.x - 50, _lefeportal.y - 50, _lefeportal.currentX, 0, 150);
