@@ -64,6 +64,9 @@
     <Filter Include="2DGameFramework\Inventory">
       <UniqueIdentifier>{a5a00967-f4b0-48ba-8801-f5a5128bee9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Maps">
+      <UniqueIdentifier>{bf3bf0c5-11d4-4fea-aba3-0bd890dad0af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -171,6 +174,30 @@
     <ClInclude Include="monster.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="HillMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="ParkMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="ForestMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="VillageMap.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="mapFrame.h">
+      <Filter>MainGame\Maps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -256,6 +283,30 @@
     </ClCompile>
     <ClCompile Include="monster.cpp">
       <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="ParkMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="VillageMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="ForestMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="HillMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMap.cpp">
+      <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="mapFrame.cpp">
+      <Filter>MainGame\Maps</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
