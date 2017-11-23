@@ -226,7 +226,7 @@ void player::update(void)
 
 	
 
-	if (KEYMANAGER->isOnceKeyDown(VK_MENU))
+	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		onLand = false;
 		onJump = true;
@@ -283,7 +283,7 @@ void player::update(void)
 			int b = GetBValue(color);
 
 			//공중에 있는게 아닌경우. 매달리거나 착지한 경우.
-			if (!(r == 255 && g == 255 && b == 255))
+			if ((r == 255 && g == 0 && b == 0))
 			{
 				//-1을 해줘야 덜덜거리지않는다. -2부터 덜덜거린다.
 				_human->setY(i - _human->getFrameHeight() - 1);
