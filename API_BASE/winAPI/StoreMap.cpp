@@ -34,6 +34,7 @@ HRESULT StoreMap::init()
 	storenpc.currentX = 0;
 	storenpc._img = IMAGEMANAGER->findImage("storenpc");
 	NPC.push_back(storenpc);
+	myIndex = MapIndex::MStore;
 
 	return S_OK;
 }

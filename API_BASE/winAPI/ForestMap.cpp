@@ -26,6 +26,8 @@ HRESULT ForestMap::init()
 
 	PORTAL.push_back(portal);
 
+	myIndex = MapIndex::MForest;
+
 	
 
 	return S_OK;

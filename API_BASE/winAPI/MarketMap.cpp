@@ -29,6 +29,8 @@ HRESULT MarketMap::init()
 
 	PORTAL.push_back(leftportal);
 
+	myIndex = MapIndex::MMarket;
+
 	
 	return S_OK;
 }

@@ -28,6 +28,7 @@ HRESULT BossMap::init()
 
 	PORTAL.push_back(portal);
 
+	myIndex = MapIndex::MBoss;
 
 	return S_OK;
 }

@@ -5,6 +5,7 @@
 class StoreMap :public mapFrame
 {
 	tagrect portal;
+	tagrect storenpc;
 
 	image* _npc;
 	RECT _pt;

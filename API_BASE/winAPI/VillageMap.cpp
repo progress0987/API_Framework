@@ -101,6 +101,9 @@ HRESULT VillageMap::init()
 	NPC.push_back(mingming);
 	front = IMAGEMANAGER->findImage("village");
 	back = IMAGEMANAGER->findImage("pixelvillage");
+
+	myIndex = MapIndex::MVillage;
+	
 	return S_OK;
 }
 void VillageMap::release()

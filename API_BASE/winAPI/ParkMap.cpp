@@ -36,6 +36,7 @@ HRESULT ParkMap::init()
 
 	PORTAL.push_back(leftportal);
 	PORTAL.push_back(rightportal);
+	myIndex = MapIndex::MPark;
 
 	
 

@@ -5,7 +5,7 @@
 class ParkMap:public mapFrame
 {
 	//포탈
-	tagrect portal;
+	tagrect leftportal;
 	//보스를 만나러가는 포탈
 	tagrect rightportal;
 
@@ -26,7 +26,7 @@ public:
 	//프레임
 	void Frame();
 
-	tagrect getleftportal() { return portal; }
+	tagrect getleftportal() { return leftportal; }
 	tagrect getrightportal() { return rightportal; }
 };
 

@@ -29,6 +29,8 @@ HRESULT HillMap::init()
 
 	PORTAL.push_back(portal);
 
+	myIndex = MapIndex::MHill;
+
 	return S_OK;
 }
 void HillMap::release()
