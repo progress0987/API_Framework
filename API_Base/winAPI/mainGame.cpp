@@ -47,6 +47,22 @@ HRESULT mainGame::init(void)
 	_park->init();
 	_park->setCam(cam);
 
+	_hill = new HillMap;
+	_hill->init();
+	_hill->setCam(cam);
+
+	_market = new MarketMap;
+	_market->init();
+	_market->setCam(cam);
+
+	_forest = new ForestMap;
+	_forest->init();
+	_forest->setCam(cam);
+
+	_boss = new BossMap;
+	_boss->init();
+	_boss->setCam(cam);
+
 	curScene = _village;
 	_player->init(pointMake(1660, 400), curScene);
 
@@ -145,7 +161,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addFrameImage("lina",			"sprites/npc/Lina.bmp", 600, 67, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("orange",		"sprites/npc/OrangeHair.bmp", 322, 66, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ming",			"sprites/npc/MingMing.bmp", 432, 276, 9, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("npc", "sprites/npc/storeNPC.bmp", 457, 71, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("storenpc", "sprites/npc/storeNPC.bmp", 457, 71, 8, 1, true, RGB(255, 0, 255));
 
 	/////////////////////////////////////////지도/////////////////////////////////////////////////
 	IMAGEMANAGER->addImage("village",			"sprites/map/파괴된 헤네시스(원본).bmp", 3495, 947, false, RGB(255, 0, 255));
@@ -282,10 +298,10 @@ mapFrame * mainGame::getNextNode()
 {
 	mapFrame* nextMap;
 	int mapindex=-1, portalindex=-1;
-	for (vector<tagrect>::iterator i = curScene->getPortals().begin(); i != curScene->getPortals().end(); i++) {
-		if (IntersectRect(&RECT(), &i->rc, &_player->getHitRC())) {
+	for (int i = 0; i < curScene->getPortals().size(); i++) {
+		if (IntersectRect(&RECT(), &curScene->getPortals()[i].rc, &_player->getHitRC())) {
 			mapindex = curScene->getIndex();
-			portalindex = i->pattern;
+			portalindex = curScene->getPortals()[i].pattern;
 			break;
 		}
 	}
@@ -296,37 +312,91 @@ mapFrame * mainGame::getNextNode()
 	switch (mapindex) {
 	case MapIndex::MVillage:																			//마을
 		switch (portalindex) {
-
+		case 0:																							//왼쪽포탈 - Hill
+			//리스폰될 자리 맞춰주기
+			playerNextPoint.x = _hill->getPortals()[0].x;
+			playerNextPoint.y = _hill->getPortals()[0].y-50;
+			nextMap =curScene = _hill;
+			break;
+		case 1:																							//오른쪽포탈 - Forest
+			playerNextPoint.x = _forest->getPortals()[0].x;
+			playerNextPoint.y = _forest->getPortals()[0].y-50;
+			nextMap =curScene = _forest;
+			break;
+		case 2:																							//상점포탈
+			playerNextPoint.x = _map->getPortals()[0].x;
+			playerNextPoint.y = _map->getPortals()[0].y-50;
+			nextMap = curScene = _map;
+			break;
+		case 3:																							//공원포탈
+			playerNextPoint.x =  _park->getPortals()[0].x;
+			playerNextPoint.y =  _park->getPortals()[0].y-50;
+			nextMap = curScene = _park;
+			break;
+		case 4:																							//시장포탈
+			playerNextPoint.x =  _market->getPortals()[0].x;
+			playerNextPoint.y =  _market->getPortals()[0].y-50;
+			nextMap = curScene = _market;
+			break;
 		}
 		break;
 	case MapIndex::MStore:																				//상점
 		switch (portalindex) {
-
+		case 0:																							//마을로
+			playerNextPoint.x =  _village->getPortals()[2].x;
+			playerNextPoint.y =  _village->getPortals()[2].y-50;
+			nextMap = curScene = _village;
+			break;
 		}
 		break;
 	case MapIndex::MPark:																				//공원
 		switch (portalindex) {
-
+		case 0:																							//마을로
+			playerNextPoint.x = _village->getPortals()[3].x;
+			playerNextPoint.y = _village->getPortals()[3].y - 50;
+			nextMap = curScene = _village;
+			break;
+		case 1:																							//보스포탈
+			playerNextPoint.x =  _boss->getPortals()[0].x;
+			playerNextPoint.y =  _boss->getPortals()[0].y - 50;
+			nextMap = curScene = _boss;
+			break;
 		}
 		break;
 	case MapIndex::MMarket:																				//시장
 		switch (portalindex) {
-
+		case 0:																							//마을
+			playerNextPoint.x = _village->getPortals()[4].x;
+			playerNextPoint.y = _village->getPortals()[4].y - 50;
+			nextMap = curScene = _village;
+			break;
 		}
 		break;
 	case MapIndex::MHill:																				//언덕
 		switch (portalindex) {
-
+		case 0:																							//마을
+			playerNextPoint.x = _village->getPortals()[0].x;
+			playerNextPoint.y = _village->getPortals()[0].y - 50;
+			nextMap = curScene = _village;
+			break;
 		}
 		break;
 	case MapIndex::MForest:																				//숲
 		switch (portalindex) {
-
+		case 0:																							//마을
+			playerNextPoint.x = _village->getPortals()[1].x;
+			playerNextPoint.y = _village->getPortals()[1].y - 50;
+			nextMap = curScene = _village;
+			break;
 		}
 		break;
 	case MapIndex::MBoss:																				//보스
 		switch (portalindex) {
-
+		case 0:																							//공원
+			playerNextPoint.x = _park->getPortals()[1].x;
+			playerNextPoint.y = _park->getPortals()[1].y - 50;
+			nextMap = curScene = _park;
+			break;
 		}
 		break;
 	}

@@ -15,6 +15,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	attackMotion = IMAGEMANAGER->findImage("캐릭터공격");
 	backStage = curScene->getBack();
 	curStatus = onJump;
+	sceneChange = false;
 	curDir = false;
 	curPos = pos;
 	onAttack = false;
@@ -328,6 +329,14 @@ void player::update(void)
 		}
 	}
 	/////////////////////////////////////////////////위로 눌렀을때
+	if (KEYMANAGER->isOnceKeyDown(VK_UP)) {
+		for (int i = 0; i <curScene->getPortals().size(); i++) {
+			if (IntersectRect(&RECT(), &curScene->getPortals()[i].rc, &hitRC)) {
+				sceneChange = true;
+				break;
+			}
+		}
+	}
 	if (KEYMANAGER->isStayKeyDown(VK_UP)) {
 		if (curStatus != Status::onLadder && curStatus != Status::onRope) {
 			for (int i = hitRC.left; i < hitRC.right; i++) {
