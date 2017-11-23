@@ -406,6 +406,17 @@ void player::update(void)
 		attFrame++;
 		if (attFrame % 15 == 0) {
 			attX++;
+			if (attX >=2&&attX<6) {
+				if (curDir) {//¿À¸¥ÂÊ
+					dmgRC = RectMakeCenter(curPos.x + 40, curPos.y+15, 20, 20);
+				}
+				else {//¿ÞÂÊ
+					dmgRC = RectMakeCenter(curPos.x - 40, curPos.y+15, 20, 20);
+				}
+			}
+			if (attX == 6) {
+				dmgRC = RectMakeCenter(curPos.x, curPos.y, 0, 0);
+			}
 			if (attX > attackMotion->getMaxFrameX()) {
 				attX = 0;
 				attFrame = 0;
@@ -439,6 +450,7 @@ void player::render(void)
 	}
 	else {
 		attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
+		Rectangle(getMemDC(), dmgRC.left-mycam->camPoint.x, dmgRC.top-mycam->camPoint.y, dmgRC.right-mycam->camPoint.x, dmgRC.bottom-mycam->camPoint.y);
 	}
 
 	char tmp[128];
