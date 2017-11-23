@@ -1,12 +1,11 @@
 #pragma once
-#include"gameNode.h"
-#include"VillageMap.h"
-class MarketMap:public gameNode
-{
-	tagrect portal;
+#include"mapFrame.h"
 
-	//배경 움직이는 변수
-	int moveX, moveY;
+class MarketMap:public mapFrame
+{
+	tagrect leftportal;
+
+
 	//프레임 돌리는 변수
 	int count = 0;
 
@@ -24,6 +23,5 @@ public:
 	//프레임
 	void Frame();
 	
-	tagrect getportal() { return portal; }
 };
 

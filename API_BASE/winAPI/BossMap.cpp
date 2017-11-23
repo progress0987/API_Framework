@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include "BossMap.h"
 
 
@@ -16,17 +16,19 @@ HRESULT BossMap::init()
 {
 
 	////////////////////////////////////////////////////////////////////////////////포탈
-	frontMap = IMAGEMANAGER->findImage("boss");
-	backMap = IMAGEMANAGER->findImage("pixelboss");
-	portal.x = 50;
-	portal.y = 520;
-	portal.rc = RectMake(portal.x, portal.y, 50, 80);
-	portal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
-	portal.currentX = 0;
+	front = IMAGEMANAGER->findImage("boss");
+	back = IMAGEMANAGER->findImage("pixelboss");
 
-	//배경 움직이는 변수
-	moveX = 0;
-	moveY = 130;
+	portal.x = 343;
+	portal.y = 651;
+	portal.rc = RectMakeCenter(portal.x, portal.y, 5, 10);
+	portal.pattern = 0;
+	portal.currentX = 0;
+	portal._img = IMAGEMANAGER->findImage("portal");
+
+	PORTAL.push_back(portal);
+
+
 	return S_OK;
 }
 void BossMap::release()
@@ -35,19 +37,23 @@ void BossMap::release()
 }
 void BossMap::update()
 {
-	portal.rc = RectMakeCenter(portal.x, portal.y, 5, 20);
 
 	//키매니저
-	Keymanager();
+	//Keymanager();
 	//프레임
 	Frame();
 }
 void BossMap::render()
 {
-	frontMap->render(getMemDC(), 0, 0, moveX, moveY, WINSIZEX, WINSIZEY);
+	front->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, cam->width, cam->height);
 
-	Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), portal.x - 50, portal.y - 50, portal.currentX, 0, 150);
+	for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++)
+	{
+		i->_img->alphaFrameRender(getMemDC(), i->x - 50 - cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
+	}
+	Rectangle(getMemDC(), portal.rc.left - cam->camPoint.x, portal.rc.top - cam->camPoint.y,
+		portal.rc.right - cam->camPoint.x, portal.rc.bottom - cam->camPoint.y);
+
 }
 //키 
 void BossMap::Keymanager()
@@ -87,8 +93,10 @@ void BossMap::Frame()
 	//포탈
 	if (count % 15 == 0)
 	{
-		portal._img->setFrameX(portal._img->getFrameX());
-		portal.currentX++;
-		if (portal.currentX > portal._img->getMaxFrameX())portal.currentX = 0;
+		for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++)
+		{
+			i->currentX++;
+			if (i->currentX > i->_img->getMaxFrameX())i->currentX = 0;
+		}
 	}
 }
