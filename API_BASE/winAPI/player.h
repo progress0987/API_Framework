@@ -27,6 +27,7 @@ private:
 	Camera* mycam;
 	RECT rc;
 	RECT hitRC;
+	RECT dmgRC;
 	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
 
 
