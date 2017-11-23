@@ -31,7 +31,7 @@ private:
 
 	//점프처리를 위한 중력값 설정
 
-	int velocity = 0, gravity = 1, lift = -13;
+	float velocity = 0, gravity = 1, lift = -13;
 
 
 

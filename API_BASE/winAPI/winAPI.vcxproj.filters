@@ -64,6 +64,12 @@
     <Filter Include="2DGameFramework\Tests\Timer">
       <UniqueIdentifier>{43b62e08-ab3d-4270-bb24-c031be814750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\UI">
+      <UniqueIdentifier>{2ac9b733-eac1-4b0a-8175-93940cbaf903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\Items">
+      <UniqueIdentifier>{2ea5248f-0dde-471a-afa5-d868c45b3000}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -165,6 +171,12 @@
     <ClInclude Include="fontTest.h">
       <Filter>2DGameFramework\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="items.h">
+      <Filter>2DGameFramework\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>2DGameFramework\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -244,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="fontTest.cpp">
       <Filter>2DGameFramework\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>2DGameFramework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="items.cpp">
+      <Filter>2DGameFramework\Items</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

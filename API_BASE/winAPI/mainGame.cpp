@@ -16,6 +16,7 @@ HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
 	_player = new player;
+	_inventory = new inventory;
 
 	_player->init();
 
@@ -26,6 +27,7 @@ HRESULT mainGame::init(void)
  {//사용한 이미지도 릴리즈해줘야함
 	 gameNode::release();
 	 _player->release();
+	 _inventory->release();
  }
  //연산~
  void mainGame::update(void)
@@ -33,6 +35,7 @@ HRESULT mainGame::init(void)
 	 gameNode::update();
 
 	 _player->update();
+	 _inventory->update();
  }
  //여기가 그려주는 곳
  void mainGame::render() 
@@ -45,6 +48,7 @@ HRESULT mainGame::init(void)
 	 //getmemdc에 넣어줌
 
 	 _player->render();
+	 _inventory->render();
 
 	 /////////////////////그려주는부분 - 건들지말것//////////////////
 	 this->getBackBuffer()->render(getHDC(), 0, 0);

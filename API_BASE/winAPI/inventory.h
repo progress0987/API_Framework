@@ -61,6 +61,8 @@ struct nodes {
 	int x, y;
 	int size;
 };
+
+
 class inventory :public gameNode
 {
 private:
