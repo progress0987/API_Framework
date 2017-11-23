@@ -19,6 +19,10 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 	mycam->camPoint.x = pos.x-mycam->width/2;
 	mycam->camPoint.y = pos.y-mycam->height/2;
+	if (mycam->camPoint.x < 0) mycam->camPoint.x = 0;
+	if (mycam->camPoint.x + mycam->width > curScene->getBack()->getWidth()) mycam->camPoint.x = curScene->getBack()->getWidth() - mycam->width;
+	if (mycam->camPoint.y < 0) mycam->camPoint.y = 0;
+	if (mycam->camPoint.y + mycam->height > curScene->getBack()->getHeight()) mycam->camPoint.y = curScene->getBack()->getHeight() - mycam->height;
 
 	count = curFrameX = curFrameY = camAccelY = 0;
 
@@ -41,7 +45,31 @@ void player::release(void)
 
 void player::update(void)
 {
-	//중력값
+	//중력값//카메라 처리
+	//WINSIZEY/2 = 384
+	//int temp = mycam->camPoint.y + WINSIZEY / 2;		//테스트용
+	if (curPos.y - mycam->camPoint.y - height / 2>WINSIZEY / 2) {//카메라가 중간보다 아래에있다면(밑으로 내려가야함)
+		mycam->camPoint.y += 3.f;
+		if (mycam->camPoint.y + WINSIZEY > backStage->getHeight()) {
+			mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
+		}
+	}
+	else if (curPos.y - mycam->camPoint.y<WINSIZEY / 4) {
+		mycam->camPoint.y -= 3.f;
+		if (mycam->camPoint.y < 0) {
+			mycam->camPoint.y = 0;
+		}
+	}
+	if (curPos.x - mycam->camPoint.x + width / 2 < WINSIZEX / 2) {//왼쪽이라면
+		mycam->camPoint.x -= 3.f;
+		if (mycam->camPoint.x < 0.f) mycam->camPoint.x = 0.f;
+	}
+	else if (curPos.x - mycam->camPoint.x - width / 2 > WINSIZEX / 2) {//오른쪽이라면
+		mycam->camPoint.x += 3.f;
+		if (mycam->camPoint.x + mycam->width > backStage->getWidth()) {
+			mycam->camPoint.x = backStage->getWidth() - mycam->width;
+		}
+	}
 	if (curStatus == onJump) {
 		velocity += gravity;
 		if (velocity > 10) velocity = 10;
@@ -360,31 +388,7 @@ void player::update(void)
 			//점프 후 스킬쓸때
 		}
 	}
-	//카메라 처리
-	//WINSIZEY/2 = 384
-	//int temp = mycam->camPoint.y + WINSIZEY / 2;		//테스트용
-	if (curPos.y - mycam->camPoint.y-height/2>WINSIZEY / 2) {//카메라가 중간보다 아래에있다면(밑으로 내려가야함)
-		mycam->camPoint.y += 3.f;
-		if (mycam->camPoint.y + WINSIZEY > backStage->getHeight()) {
-			mycam->camPoint.y = backStage->getHeight() - WINSIZEY;
-		}
-	}
-	else if (curPos.y - mycam->camPoint.y<WINSIZEY / 4) {
-		mycam->camPoint.y -= 3.f;
-		if (mycam->camPoint.y < 0) {
-			mycam->camPoint.y = 0;
-		}
-	}
-	if (curPos.x - mycam->camPoint.x + width / 2 < WINSIZEX / 2) {//왼쪽이라면
-		mycam->camPoint.x -= 3.f;
-		if (mycam->camPoint.x < 0.f) mycam->camPoint.x = 0.f;
-	}
-	else if (curPos.x - mycam->camPoint.x - width / 2 > WINSIZEX / 2) {//오른쪽이라면
-		mycam->camPoint.x += 3.f;
-		if (mycam->camPoint.x + mycam->width > backStage->getWidth()) {
-			mycam->camPoint.x=backStage->getWidth() - mycam->width;
-		}
-	}
+	
 
 	//모든 연산이 끝난 후 렉트를 생성
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
