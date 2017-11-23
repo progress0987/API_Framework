@@ -41,4 +41,6 @@ public:
 	image* getFront() { return front; }
 	image* getBack() { return back; }
 	void setCam(Camera* camera) { cam = camera; }
+	vector<tagrect> getPortals() { return PORTAL; }
+	int getIndex() { return myIndex; }
 };

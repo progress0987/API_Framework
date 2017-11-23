@@ -13,12 +13,13 @@ StoreMap::~StoreMap()
 
 HRESULT StoreMap::init()
 {
-
+	front = IMAGEMANAGER->findImage("store");
+	back = IMAGEMANAGER->findImage("pixelstore");
 	portal.x = 900;
 	portal.y = 530;
 	portal.rc = RectMakeCenter(portal.x, portal.y, 5, 20);
-	portal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
-	_npc = IMAGEMANAGER->addFrameImage("npc", "image/store/storeNPC.bmp", 457, 71, 8, 1, true, RGB(255, 0, 255));
+	portal._img = IMAGEMANAGER->findImage("portal");
+	_npc = IMAGEMANAGER->findImage("npc");
 
 	//NPC
 	
@@ -47,7 +48,7 @@ void StoreMap::update()
 }
 void StoreMap::render()
 {
-	IMAGEMANAGER->findImage("store")->render(getMemDC(), 0, 0);
+	front->render(getMemDC(), 0, 0);
 
 	Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
 	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), portal.x - 50, portal.y - 50, currentX, 0, 150);

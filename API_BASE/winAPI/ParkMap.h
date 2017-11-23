@@ -1,8 +1,8 @@
 #pragma once
-#include"gameNode.h"
+#include"mapFrame.h"
 #include"VillageMap.h"
 
-class ParkMap:public gameNode
+class ParkMap:public mapFrame
 {
 	//Æ÷Å»
 	tagrect portal;

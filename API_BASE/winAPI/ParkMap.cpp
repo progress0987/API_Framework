@@ -15,23 +15,27 @@ ParkMap::~ParkMap()
 HRESULT ParkMap::init()
 {
 
+	front = IMAGEMANAGER->findImage("park");
+	back = IMAGEMANAGER->findImage("pixelpark");
 	////////////////////////////////////////////////////////////////////////////////Æ÷Å»
 	//¿ÞÂÊ¿¡ ÀÖ´Â Æ÷Å»
 	portal.x = 50;
 	portal.y = 500;
 	portal.rc = RectMake(portal.x, portal.y, 50, 80);
-	portal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
+	portal._img = IMAGEMANAGER->findImage("portal");
 	portal.currentX = 0;
+	portal.pattern = 0;
 	//¿À¸¥ÂÊ¿¡ ÀÖ´Â º¸½º ¸¸³ª·¯°¡´Â Æ÷Å»
 	rightportal.x = 1880;
 	rightportal.y = 610;
 	rightportal.rc = RectMake(rightportal.x, rightportal.y, 50, 80);
-	rightportal._img = IMAGEMANAGER->addFrameImage("portal", "image/store/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
+	rightportal._img = IMAGEMANAGER->findImage("portal");
 	rightportal.currentX = 0;
+	rightportal.pattern = 1;
 
-	//¹è°æ ¿òÁ÷ÀÌ´Â º¯¼ö
-	moveX = 0;
-	moveY = 190;
+	PORTAL.push_back(portal);
+	PORTAL.push_back(rightportal);
+
 
 	return S_OK;
 }
@@ -41,11 +45,9 @@ void ParkMap::release()
 }
 void ParkMap::update()
 {
-	portal.rc = RectMakeCenter(portal.x, portal.y, 5, 20);
-	rightportal.rc = RectMakeCenter(rightportal.x, rightportal.y, 5, 20);
 
-	//Å°¸Å´ÏÀú
-	Keymanager();
+
+
 	//ÇÁ·¹ÀÓ
 	Frame();
 	
@@ -54,46 +56,15 @@ void ParkMap::update()
 void ParkMap::render()
 {
 	//¹è°æ
-	IMAGEMANAGER->findImage("park")->render(getMemDC(), 0, 0, moveX, moveY, WINSIZEX, WINSIZEY);
+	front->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
 	//Æ÷Å»
-	Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), portal.x - 50 , portal.y - 50, portal.currentX, 0, 150);
-	Rectangle(getMemDC(), rightportal.rc.left, rightportal.rc.top, rightportal.rc.right, rightportal.rc.bottom);
-	IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), rightportal.x - 50, rightportal.y - 50, portal.currentX, 0, 150);
+
+	for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++) {
+		i->_img->alphaFrameRender(getMemDC(), i->x - 50 - cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
+	}
+
 }
 
-void ParkMap::Keymanager()
-{
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && moveX > 0)
-	{
-		moveX -= 3;
-
-		//Æ÷Å»
-		portal.x += 3;
-		rightportal.x += 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && moveX < 580)
-	{
-		moveX += 3;
-		//Æ÷Å»
-		portal.x -= 3;
-		rightportal.x -= 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && moveY > 0)
-	{
-		moveY -= 3;
-		//Æ÷Å»
-		portal.y += 3;
-		rightportal.y += 3;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && moveY < 255)
-	{
-		moveY += 3;
-		//Æ÷Å»
-		portal.y -= 3;
-		rightportal.y -= 3;
-	}
-}
 
 void ParkMap::Frame()
 {
@@ -102,8 +73,9 @@ void ParkMap::Frame()
 	//Æ÷Å»
 	if (count % 15 == 0)
 	{
-		portal._img->setFrameX(portal._img->getFrameX());
-		portal.currentX++;
-		if (portal.currentX > portal._img->getMaxFrameX())portal.currentX = 0;
+		for (vector<tagrect>::iterator i = PORTAL.begin(); i != PORTAL.end(); i++) {
+			i->currentX++;
+			if (i->currentX > IMAGEMANAGER->findImage("portal")->getMaxFrameX())i->currentX = 0;
+		}
 	}
 }

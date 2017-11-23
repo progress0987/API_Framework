@@ -1,8 +1,8 @@
 #pragma once
-#include"gameNode.h"
+#include"mapFrame.h"
 #include"VillageMap.h"
 
-class StoreMap :public gameNode
+class StoreMap :public mapFrame
 {
 	tagrect portal;
 

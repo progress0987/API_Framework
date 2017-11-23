@@ -69,7 +69,7 @@ bool inventory::useItem(int index)
 void inventory::show()
 {
 	//Rectangle(getMemDC(), inventoryFrame.left, inventoryFrame.top, inventoryFrame.right, inventoryFrame.bottom);
-	invFrame->alphaRender(getMemDC(), x,y, 0xE0);
+	invFrame->alphaRender(getMemDC(), x, y, 0xE0);
 	//int count;
 	//for (int i = 0; i < 7; i++) {
 	//	for (int j = 0; j < 10; j++) {

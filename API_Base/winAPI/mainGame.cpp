@@ -38,8 +38,17 @@ HRESULT mainGame::init(void)
 	_village = new VillageMap;
 	_village->init();
 	_village->setCam(cam);
+
+	_map = new StoreMap;
+	_map->init();
+	_map->setCam(cam);
+
+	_park = new ParkMap;
+	_park->init();
+	_park->setCam(cam);
+
 	curScene = _village;
-	_player->init(pointMake(500, 500), curScene);
+	_player->init(pointMake(1660, 400), curScene);
 
 	return S_OK;
 }
@@ -56,7 +65,35 @@ void mainGame::update(void)
 
 	curScene->update();
 	_player->update();
+	if (_player->sceneChange) {
+		onSceneChange = true;
+	}
 	//em->update();
+	/////////////////////////테스트////////////////////////////
+	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) {
+	//	onSceneChange = true;
+	//}
+
+	if (onSceneChange) {
+		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
+		fadeAlpha+=10;
+		if (fadeAlpha >= 255) {
+			fadeAlpha = 255;
+			onSceneChange = false;
+			//씬 체인지
+			SceneChange(getNextNode());
+			SceneChanged = true;
+		}
+	}
+	if (SceneChanged) {
+		fadeAlpha-=10;
+		if (fadeAlpha <= 0) {
+			fadeAlpha = 0;
+			SceneChanged = false;
+			
+		}
+	}
+	
 }
 //여기가 그려주는 곳
 void mainGame::render()
@@ -73,6 +110,12 @@ void mainGame::render()
 	curScene->render();
 	_player->render();
 	//em->render();
+	if (onSceneChange) {
+		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
+	}
+	if (SceneChanged) {
+		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
+	}
 
 
 	IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
@@ -86,22 +129,206 @@ void mainGame::render()
 void mainGame::imgInit()
 {
 
-	IMAGEMANAGER->addImage("인터페이스", "sprites/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("캐릭터", "sprites/character.bmp", 400, 1000, 4, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("캐릭터공격", "sprites/attack.bmp", 700, 200, 7, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("인터페이스", "sprites/UI/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("fade", "sprites/fade.bmp", WINSIZEX, WINSIZEY, false, RGB(0, 0, 0));
+	/////////////////////////////////////////////////////////몬스터//////////////////////////////////////////////////
 	IMAGEMANAGER->addFrameImage("harpM", "sprites/monster/HarpM.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpS", "sprites/monster/HarpS.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpD", "sprites/monster/HarpD.bmp", 81, 206, 1, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("캐릭터", "sprites/character.bmp", 400, 1000, 4, 10, true, RGB(255, 0, 255));
 
 	//////////////////////////////포탈 이미지//////////////////////////////////
-	IMAGEMANAGER->addFrameImage("portal", "sprites/map/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("portal",		"sprites/map/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
 	///////////////////////////NPC//////////////////////////////
 	IMAGEMANAGER->addFrameImage("gujigirl",		"sprites/npc/gujiGirl.bmp", 352, 71, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("lina",			"sprites/npc/Lina.bmp", 600, 67, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("orange",		"sprites/npc/OrangeHair.bmp", 322, 66, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ming",			"sprites/npc/MingMing.bmp", 432, 276, 9, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("npc", "sprites/npc/storeNPC.bmp", 457, 71, 8, 1, true, RGB(255, 0, 255));
 
 	/////////////////////////////////////////지도/////////////////////////////////////////////////
 	IMAGEMANAGER->addImage("village",			"sprites/map/파괴된 헤네시스(원본).bmp", 3495, 947, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("pixelvillage",		"sprites/map/파괴된 헤네시스.bmp", 3495, 947, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("store",				"sprites/map/잡화상점(원본).bmp", WINSIZEX, WINSIZEY, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelstore",		"sprites/map/잡화상점.bmp", WINSIZEX, WINSIZEY, true, (255, 0, 0));
+	IMAGEMANAGER->addImage("park",				"sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));	//배경
+	IMAGEMANAGER->addImage("pixelpark",			"sprites/map/파헤공원.bmp", 1951, 1024, false, RGB(255, 0, 255));//픽셀충돌
+	IMAGEMANAGER->addImage("market",			"sprites/map/MarketMap(원본).bmp", 1807, 986, false, RGB(255, 0, 255));//배경
+	IMAGEMANAGER->addImage("pixelmarket",		"sprites/map/MarketMap.bmp", 1807, 986, false, RGB(255, 0, 255));//픽셀
+	IMAGEMANAGER->addImage("hill",				"sprites/map/HillMap(원본).bmp", 2075, 1047, false, RGB(255, 0, 255));	//배경
+	IMAGEMANAGER->addImage("pixelhill",			"sprites/map/HillMap.bmp", 2075, 1047, false, RGB(255, 0, 255));	//픽셀
+	IMAGEMANAGER->addImage("forest",			"sprites/map/ForestMap(원본).bmp", 1365, 1034, false, RGB(255, 0, 255));	//배경
+	IMAGEMANAGER->addImage("pixelforest",		"sprites/map/ForestMap.bmp", 1365, 1034, false, RGB(255, 0, 255));	//픽셀
+	IMAGEMANAGER->addImage("boss",				"sprites/map/BossMap(원본).bmp", 1684, 903, false, RGB(255, 0, 255));	//배경
+	IMAGEMANAGER->addImage("pixelboss",			"sprites/map/BossMap.bmp", 1684, 903, false, RGB(255, 0, 255));	//픽셀
+	////////////////////////////////////////////스킬//////////////////////////////////////////////////
+	IMAGEMANAGER->addFrameImage("skill1",		"sprites/skill/skill1.bmp", 5320, 278, 20, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill2",		"sprites/skill/skill2.bmp", 1080, 226, 6, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("skill3",		"sprites/skill/skill3.bmp", 2375, 83, 5, 1, true, RGB(255, 0, 255));
 
+
+	////////////////////////////////////////////////아이템//////////////////////////////////////////////////////
+	IMAGEMANAGER->addImage("쭈쭈바", "쭈쭈바.bmp", 31, 31, true, NULL);
+	IMAGEMANAGER->addImage("파란포션", "파란포션.bmp", 27, 27, true, NULL);
+	IMAGEMANAGER->addImage("팥빙수", "팥빙수.bmp", 26, 30, true, NULL);
+	IMAGEMANAGER->addImage("하얀포션", "하얀포션.bmp", 27, 27, true, NULL);
+
+
+	//////////////////////////////////////////////UI//////////////////////////////////////////////////////
+	IMAGEMANAGER->addImage("아이템정보창",	"sprites/UI/아이템정보창.bmp", 220, 300, false, NULL);
+	//------------------------------------공용-----------------------------------------------
+	IMAGEMANAGER->addImage("닫기",			"sprites/UI/닫기.bmp", 13, 13, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("닫기마우스온",	"sprites/UI/닫기(MouseOn).bmp", 13, 13, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("닫기클릭",		"sprites/UI/닫기(clicked).bmp", 13, 13, true, RGB(0, 0, 0));
+
+	//-------------------------------------인벤토리------------------------------------------
+	IMAGEMANAGER->addImage("인벤토리창",		"sprites/UI/아이템인벤토리.bmp", 172, 335, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("장비탭",			"sprites/UI/장비탭.bmp", 30, 19, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("소비탭",			"sprites/UI/소비탭.bmp", 30, 19, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("기타탭",			"sprites/UI/기타탭.bmp", 30, 19, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("그림자",			"sprites/UI/shadow.bmp", 26, 6, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("0",					"sprites/UI/0.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("1",					"sprites/UI/1.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("2",					"sprites/UI/2.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("3",					"sprites/UI/3.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("4",					"sprites/UI/4.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("5",					"sprites/UI/5.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("6",					"sprites/UI/6.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("7",					"sprites/UI/7.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("8",					"sprites/UI/8.bmp", 8, 11, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addImage("9",					"sprites/UI/9.bmp", 8, 11, true, RGB(0, 0, 0));
+
+
+
+	//-----------------------------------장비창-----------------------------------------------
+	IMAGEMANAGER->addImage("장비창",			"sprites/UI/장비인벤토리.bmp", 232, 330, true, RGB(255, 0, 255));
+
+	//-------------------------------------스텟창--------------------------------------------
+
+	IMAGEMANAGER->addImage("스텟창",			"sprites/UI/스텟창.bmp", 212, 318, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("업",				"sprites/UI/업.bmp", 12, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("업마우스온",		"sprites/UI/업(MouseOn).bmp", 12, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("업클릭",			"sprites/UI/업(clicked).bmp", 12, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("자동배분버튼활성화","sprites/UI/자동배분버튼활성화.bmp", 67, 34, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("자동배분버튼눌림",	"sprites/UI/자동배분버튼눌림.bmp", 67, 34, true, RGB(255, 0, 255));
+
+	//------------------------------------인터페이스-----------------------------------------
+
+	//체력, 아이디, 레벨 사각형
+	IMAGEMANAGER->addImage("게이지테두리",		"sprites/UI/게이지테두리(비트).bmp", 204, 70, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("마나",				"sprites/UI/마나바(비트).bmp", 171, 13, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("체력",				"sprites/UI/체력바(비트).bmp", 171, 13, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Lv",				"sprites/UI/Lv.bmp", 15, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자0",			"sprites/UI/레벨숫자0.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자1",			"sprites/UI/레벨숫자1.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자2",			"sprites/UI/레벨숫자2.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자3",			"sprites/UI/레벨숫자3.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자4",			"sprites/UI/레벨숫자4.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자5",			"sprites/UI/레벨숫자5.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자6",			"sprites/UI/레벨숫자6.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자7",			"sprites/UI/레벨숫자7.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자8",			"sprites/UI/레벨숫자8.bmp", 7, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("레벨숫자9",			"sprites/UI/레벨숫자9.bmp", 7, 10, true, RGB(255, 255, 255));
+
+	//경험치바
+	IMAGEMANAGER->addImage("경험치0",			"sprites/UI/경험치(0)비트.bmp", 1366, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("경험치2",			"sprites/UI/경험치(2)비트.bmp", 1350, 7, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("경험치3",			"sprites/UI/경험치(3)비트.bmp", 1082, 7, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("경험치4",			"sprites/UI/경험치이펙트(3)비트.bmp", 13, 17, true, RGB(255, 0, 255));
+
+	//퀵슬롯
+	IMAGEMANAGER->addImage("퀵슬롯0",			"sprites/UI/퀵슬롯(0).bmp", 350, 67, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("퀵슬롯왼쪽테두리",	"sprites/UI/퀵슬롯왼쪽테두리.bmp", 13, 71, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("퀵슬롯커버",		"sprites/UI/퀵슬롯커버.bmp", 351, 73, true, RGB(255, 255, 255));
+
+	//퀵슬롯단축키
+	IMAGEMANAGER->addImage("퀵1",				"sprites/UI/퀵1.bmp", 7, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("퀵2",				"sprites/UI/퀵2.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("퀵3",				"sprites/UI/퀵3.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("퀵4",				"sprites/UI/퀵4.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("퀵5",				"sprites/UI/퀵5.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("퀵6",				"sprites/UI/퀵6.bmp", 10, 9, true, RGB(255, 255, 255));
+
+
+	IMAGEMANAGER->addImage("pgup",				"sprites/UI/pgup.bmp", 22, 11, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("pgdn",				"sprites/UI/pgdn.bmp", 22, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("inst",				"sprites/UI/insert.bmp", 18, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("hm",				"sprites/UI/hm.bmp", 19, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("end",				"sprites/UI/end.bmp", 22, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("del",				"sprites/UI/delete.bmp", 19, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("ctrl",				"sprites/UI/ctrl.bmp", 23, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("shift",				"sprites/UI/Shift.bmp", 28, 9, true, RGB(255, 255, 255));
+
+
+	IMAGEMANAGER->addImage("Q",					"sprites?UI/Q.bmp", 10, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("W",					"sprites?UI/W.bmp", 12, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("E",					"sprites?UI/E.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("R",					"sprites?UI/R.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("T",					"sprites?UI/T.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("A",					"sprites?UI/A.bmp", 10, 9, true, RGB(255, 255, 255));
+}
+
+void mainGame::SceneChange(mapFrame * next)
+{
+	//잘못된 좌표라면 그냥 나옴
+	if (next == nullptr)return;
+	//다음 갈 포탈 좌표위쪽에 좌표 정해주고 씬을 바꾸며 init을 해줌
+	_player->init(playerNextPoint, next);
+}
+
+//현재 있는 곳의 좌표를 찾아주고 다음 움직일 맵의 정보를 받아옴
+mapFrame * mainGame::getNextNode()
+{
+	mapFrame* nextMap;
+	int mapindex=-1, portalindex=-1;
+	for (vector<tagrect>::iterator i = curScene->getPortals().begin(); i != curScene->getPortals().end(); i++) {
+		if (IntersectRect(&RECT(), &i->rc, &_player->getHitRC())) {
+			mapindex = curScene->getIndex();
+			portalindex = i->pattern;
+			break;
+		}
+	}
+	if(mapindex<0||portalindex<0){//맵이나 포탈 하나라도 에러가 있으면 에러 출력
+		return nullptr;
+	}
+	//현재 플레이어가 있는 좌표에서 갈 다음 맵을 찾는다 - PlayerNextPoint에 좌표 저장해줌
+	switch (mapindex) {
+	case MapIndex::MVillage:																			//마을
+		switch (portalindex) {
+
+		}
+		break;
+	case MapIndex::MStore:																				//상점
+		switch (portalindex) {
+
+		}
+		break;
+	case MapIndex::MPark:																				//공원
+		switch (portalindex) {
+
+		}
+		break;
+	case MapIndex::MMarket:																				//시장
+		switch (portalindex) {
+
+		}
+		break;
+	case MapIndex::MHill:																				//언덕
+		switch (portalindex) {
+
+		}
+		break;
+	case MapIndex::MForest:																				//숲
+		switch (portalindex) {
+
+		}
+		break;
+	case MapIndex::MBoss:																				//보스
+		switch (portalindex) {
+
+		}
+		break;
+	}
+	return nextMap;
 }
