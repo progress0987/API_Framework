@@ -12,10 +12,12 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 {
 	curScene = Scene;
 	_human = IMAGEMANAGER->findImage("캐릭터");
+	attackMotion = IMAGEMANAGER->findImage("캐릭터공격");
 	backStage = curScene->getBack();
 	curStatus = onJump;
 	curDir = false;
 	curPos = pos;
+	onAttack = false;
 
 	mycam->camPoint.x = pos.x-mycam->width/2;
 	mycam->camPoint.y = pos.y-mycam->height/2;
@@ -193,10 +195,6 @@ void player::update(void)
 			break;
 		}
 		curPos.x += moveVel;
-		if (curPos.x - (width / 2 - (hitRC.left - rc.left)) < 0) {
-			curPos.x = width / 2 - (hitRC.left - rc.left);
-			moveVel = 0;
-		}
 	}
 	//왼쪽키 뗐을때
 	if (KEYMANAGER->isOnceKeyUp(VK_LEFT)) {
@@ -265,10 +263,7 @@ void player::update(void)
 				break;
 			}
 			curPos.x += moveVel;
-			if (curPos.x + (width / 2 - (rc.right - hitRC.right)) > curScene->getBack()->getWidth()) {
-				curPos.x = curScene->getBack()->getWidth() - (width / 2 - (rc.right - hitRC.right));
-				moveVel = 0;
-			}
+
 		}
 	}
 	//오른쪽키 뗐을때
@@ -321,6 +316,7 @@ void player::update(void)
 			}
 			else {
 				curStatus = Status::onDown;
+				moveVel = 0;
 				curFrameY = 2 * 2 + curDir;
 			}
 		}
@@ -388,9 +384,37 @@ void player::update(void)
 			//점프 후 스킬쓸때
 		}
 	}
+	///////////////////////////////////////////////////////기본공격
+	if (KEYMANAGER->isOnceKeyDown('X')) {
+		if (!onAttack) {
+			attFrame = 0;
+			attX = 0;
+			playAttMotion();
+		}
+	}
 	
+	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
+		attFrame++;
+		if (attFrame % 15 == 0) {
+			attX++;
+			if (attX > attackMotion->getMaxFrameX()) {
+				attX = 0;
+				attFrame = 0;
+				onAttack = false;
+			}
+		}
+	}
 
 	//모든 연산이 끝난 후 렉트를 생성
+
+	if (curPos.x - (width / 2 - (hitRC.left - rc.left)) < 0) {
+		curPos.x = width / 2 - (hitRC.left - rc.left);
+		moveVel = 0;
+	}
+	if (curPos.x + (width / 2 - (rc.right - hitRC.right)) > curScene->getBack()->getWidth()) {
+		curPos.x = curScene->getBack()->getWidth() - (width / 2 - (rc.right - hitRC.right));
+		moveVel = 0;
+	}
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
 }
@@ -401,19 +425,32 @@ void player::render(void)
 	//Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
 	//curScene->getFront()->render(getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, mycam->width, mycam->height);
 	//curScene->getBack()->render(getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, mycam->width, mycam->height);
-	_human->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY);
+	if (!onAttack) {
+		_human->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY);
+	}
+	else {
+		attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
+	}
 
 	char tmp[128];
 	sprintf(tmp, "Cam : %d,%d / curPos : %d,%d", mycam->camPoint.x, mycam->camPoint.y, curPos.x, curPos.y);
 	TextOut(getMemDC(), 50, 100, tmp, strlen(tmp));
-	EllipseMakeCenter(getMemDC(), curPos.x-mycam->camPoint.x, hitRC.bottom + 10 - mycam->camPoint.y, 35, 35);
-	Rectangle(getMemDC(), hitRC.left- mycam->camPoint.x, hitRC.top - mycam->camPoint.y, hitRC.right - mycam->camPoint.x, hitRC.bottom - mycam->camPoint.y);
+	//EllipseMakeCenter(getMemDC(), curPos.x-mycam->camPoint.x, hitRC.bottom + 10 - mycam->camPoint.y, 35, 35);
+	//Rectangle(getMemDC(), hitRC.left- mycam->camPoint.x, hitRC.top - mycam->camPoint.y, hitRC.right - mycam->camPoint.x, hitRC.bottom - mycam->camPoint.y);
+}
+
+void player::playAttMotion()
+{
+	if (!onAttack) {
+		onAttack = true;
+	}
 }
 
 
 //캐릭터를 비춰주는 카메라 함수. 렌더링은 렌더함수 부분에서 처리.
 //진행방향과 캐릭터좌표정보를 받아서 mapx, mapy를 조정해준다.
 
+//////////////////////////////////////////////////////////스킬
 player::player()
 {
 }
@@ -421,4 +458,44 @@ player::player()
 
 player::~player()
 {
+}
+
+HRESULT skill::init(char * skillImg, int dPf, int dmg, int range)
+{
+	img = IMAGEMANAGER->findImage(skillImg);
+	rc = { 0,0,img->getFrameWidth(),img->getFrameHeight() };
+	delayPerFrames = dPf;
+	this->dmg = dmg;
+	this->range = range;
+	for (int i = 0; i < img->getMaxFrameX(); i++) {
+		dmgRCList.push_back(RECT());
+	}
+	return S_OK;
+}
+
+void skill::release(void)
+{
+}
+
+void skill::update(void)
+{
+	if (onAttack) {
+		frame++;
+		if (frame%delayPerFrames == 0) {
+			frameX++;
+			if (frameX > img->getMaxFrameX()) {
+				onAttack = false;
+
+			}
+		}
+	}
+}
+
+void skill::render(void)
+{
+}
+
+void skill::setSkillRect(int index, RECT skillRC)
+{
+	dmgRCList[index] = skillRC;
 }

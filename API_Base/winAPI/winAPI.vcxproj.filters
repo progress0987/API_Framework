@@ -67,6 +67,9 @@
     <Filter Include="MainGame\Maps">
       <UniqueIdentifier>{bf3bf0c5-11d4-4fea-aba3-0bd890dad0af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\Items">
+      <UniqueIdentifier>{fc0df6f5-d910-4388-b0f7-85e20a31d3e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -198,6 +201,9 @@
     <ClInclude Include="mapFrame.h">
       <Filter>MainGame\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="items.h">
+      <Filter>2DGameFramework\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -307,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="mapFrame.cpp">
       <Filter>MainGame\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="items.cpp">
+      <Filter>2DGameFramework\Items</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

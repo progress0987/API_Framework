@@ -27,6 +27,9 @@ private:
 	HillMap* _hill;//¾ð´ö
 	MarketMap* _market;//½ÃÀå
 
+	bool onSceneChange=false,SceneChanged=false;
+	int fadeAlpha = 0, fadeCount=0;
+	POINT playerNextPoint;
 
 public:
 
@@ -35,6 +38,8 @@ public:
 	virtual void update(void);
 	virtual void render();
 	void imgInit();
+	void SceneChange(mapFrame* next);
+	mapFrame* getNextNode();
 
 	mainGame();
 	~mainGame();
