@@ -24,8 +24,7 @@ HRESULT mainGame::init(void)
 	_player = new player;
 	em = new enemyManager;
 
-
-	_player->init(cam);
+	_player->setCamera(cam);
 	em->init(cam);
 
 
@@ -35,6 +34,12 @@ HRESULT mainGame::init(void)
 	test1->SetCam(cam);
 	test1->init(test);
 	em->addMonster(test1);
+
+	_village = new VillageMap;
+	_village->init();
+	_village->setCam(cam);
+	curScene = _village;
+	_player->init(pointMake(500, 500), curScene);
 
 	return S_OK;
 }
@@ -49,6 +54,7 @@ void mainGame::update(void)
 {
 	gameNode::update();
 
+	curScene->update();
 	_player->update();
 	//em->update();
 }
@@ -62,9 +68,9 @@ void mainGame::render()
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	//getmemdc에 넣어줌
 
-	IMAGEMANAGER->render("맵", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
-	IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
-
+	//IMAGEMANAGER->render("맵", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
+	//IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
+	curScene->render();
 	_player->render();
 	//em->render();
 
@@ -79,13 +85,23 @@ void mainGame::render()
 
 void mainGame::imgInit()
 {
-	IMAGEMANAGER->addImage("미니맵", "sprites/map/파헤공원(원본).bmp", 1951 / 10, 1024 / 10, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("맵", "sprites/map/파헤공원(원본).bmp", 1951, 1024, false, RGB(255, 0, 255));
-	//IMAGEMANAGER->addImage("지형", "sprites/map/파헤버섯숲.bmp", 1951, 1024, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("지형", "sprites/map/파헤버섯숲.bmp", 1365, 1034, false, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addImage("인터페이스", "sprites/인터페이스.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpM", "sprites/monster/HarpM.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpS", "sprites/monster/HarpS.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpD", "sprites/monster/HarpD.bmp", 81, 206, 1, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("캐릭터", "sprites/character.bmp", 400, 1000, 4, 10, true, RGB(255, 0, 255));
+
+	//////////////////////////////포탈 이미지//////////////////////////////////
+	IMAGEMANAGER->addFrameImage("portal", "sprites/map/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
+	///////////////////////////NPC//////////////////////////////
+	IMAGEMANAGER->addFrameImage("gujigirl",		"sprites/npc/gujiGirl.bmp", 352, 71, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("lina",			"sprites/npc/Lina.bmp", 600, 67, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("orange",		"sprites/npc/OrangeHair.bmp", 322, 66, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ming",			"sprites/npc/MingMing.bmp", 432, 276, 9, 4, true, RGB(255, 0, 255));
+
+	/////////////////////////////////////////지도/////////////////////////////////////////////////
+	IMAGEMANAGER->addImage("village",			"sprites/map/파괴된 헤네시스(원본).bmp", 3495, 947, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("pixelvillage",		"sprites/map/파괴된 헤네시스.bmp", 3495, 947, false, RGB(255, 0, 255));
+
 }

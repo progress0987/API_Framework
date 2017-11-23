@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "mapFrame.h"
 
 //방향.
 enum Direction
@@ -20,6 +21,7 @@ enum Status {
 class player :public gameNode
 {
 private:
+	mapFrame* curScene;
 	image *_human;
 	image *backStage;
 	Camera* mycam;
@@ -48,11 +50,12 @@ private:
 
 
 public:
-	virtual HRESULT init(Camera* cam);
+	virtual HRESULT init(POINT position,mapFrame* Scene);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);
 	void setBackStage(image* backstage) { this->backStage = backstage; }
+	void setCamera(Camera* cam) { this->mycam = cam; }
 
 	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.
 
