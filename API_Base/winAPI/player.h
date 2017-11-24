@@ -91,6 +91,7 @@ public:
 	void playAttMotion();
 	RECT getHitRC() { return hitRC; }
 	RECT getDmgRC() { return dmgRC; }
+	RECT getRc() { return rc; }
 
 
 	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.

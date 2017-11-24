@@ -14,6 +14,7 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
+	srand(time(NULL));
 	//IMAGEMANAGER->findImage("¸Ê")->render(IMAGEMANAGER->findImage("¸Ê")->getMemDC());
 	imgInit();
 	cam = new Camera;
@@ -26,15 +27,7 @@ HRESULT mainGame::init(void)
 
 	_player->setCamera(cam);
 	em->init(cam);
-
-
-	Harp* test1;
-	POINT test = { 200,100 };
-	test1 = new Harp;
-	test1->SetCam(cam);
-	test1->init(test);
-	em->addMonster(test1);
-
+	em->addMonster();
 	_village = new VillageMap;
 	_village->init();
 	_village->setCam(cam);
@@ -65,7 +58,7 @@ HRESULT mainGame::init(void)
 
 	curScene = _village;
 	_player->init(pointMake(1660, 400), curScene);
-
+	
 	return S_OK;
 }
 //ÇØÁ¦
@@ -78,7 +71,9 @@ void mainGame::release(void)
 void mainGame::update(void)
 {
 	gameNode::update();
-
+	em->SharePlayer(_player->getRc(), curScene->getIndex());
+	em->colling(_player->getDmgRC(), 100, curScene->getIndex());
+	em->update(curScene->getIndex());
 	curScene->update();
 	_player->update();
 	if (_player->sceneChange) {
@@ -124,8 +119,8 @@ void mainGame::render()
 	//IMAGEMANAGER->render("¸Ê", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
 	//IMAGEMANAGER->findImage("¹Ì´Ï¸Ê")->alphaRender(getMemDC(), 0, 0, 150);
 	curScene->render();
+	em->render(curScene->getIndex());
 	_player->render();
-	//em->render();
 	if (onSceneChange) {
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
@@ -133,7 +128,7 @@ void mainGame::render()
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
 
-
+	
 	IMAGEMANAGER->render("ÀÎÅÍÆäÀÌ½º", getMemDC(), 0, 0);
 
 	TIMEMANAGER->render(getMemDC());
@@ -153,6 +148,56 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addFrameImage("harpM", "sprites/monster/HarpM.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpS", "sprites/monster/HarpS.bmp", 486, 206, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("harpD", "sprites/monster/HarpD.bmp", 81, 206, 1, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("GrupinM", "sprites/monster/GrupinM.bmp", 180, 126, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("GrupinS", "sprites/monster/GrupinS.bmp", 240, 126, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("GrupinD", "sprites/monster/GrupinD.bmp", 180, 126, 3, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("CellionM", "sprites/monster/CellionM.bmp", 180, 126, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("CellionS", "sprites/monster/CellionS.bmp", 240, 126, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("CellionD", "sprites/monster/CellionD.bmp", 180, 126, 3, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("LionerM", "sprites/monster/LionerM.bmp", 180, 126, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LionerS", "sprites/monster/LionerS.bmp", 240, 126, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LionerD", "sprites/monster/LionerD.bmp", 180, 126, 3, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("LucidaM", "sprites/monster/LucidaM.bmp", 186, 168, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LucidaS", "sprites/monster/LucidaS.bmp", 248, 168, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LucidaD", "sprites/monster/LucidaD.bmp", 186, 168, 3, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("Jr YetiM", "sprites/monster/LeattyM.bmp", 156, 80, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Jr YetiS", "sprites/monster/LeattyS.bmp", 312, 80, 8, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Jr YetiD", "sprites/monster/LeattyD.bmp", 39, 80, 1, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("PePeM", "sprites/monster/PePeM.bmp", 219, 166, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("PePeS", "sprites/monster/PePeS.bmp", 438, 166, 6, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("PePeD", "sprites/monster/PePeD.bmp", 146, 166, 2, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("SheepM", "sprites/monster/SheepM.bmp", 368, 122, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SheepS", "sprites/monster/SheepS.bmp", 368, 122, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SheepD", "sprites/monster/SheepD.bmp", 276, 122, 3, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("JCellionM", "sprites/monster/JCellionM.bmp", 172, 94, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JCellionS", "sprites/monster/JCellionS.bmp", 172, 94, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JCellionD", "sprites/monster/JCellionD.bmp", 86, 94, 2, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("JGrupinM", "sprites/monster/JGrupinM.bmp", 172, 94, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JGrupinS", "sprites/monster/JGrupinS.bmp", 172, 94, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JGrupinD", "sprites/monster/JGrupinD.bmp", 86, 94, 2, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("JLionerM", "sprites/monster/JLionerM.bmp", 172, 94, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JLionerS", "sprites/monster/JLionerS.bmp", 172, 94, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JLionerD", "sprites/monster/JLionerD.bmp", 86, 94, 2, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("JLucidaM", "sprites/monster/JLucidaM.bmp", 180, 114, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JLucidaS", "sprites/monster/JLucidaS.bmp", 180, 114, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("JLucidaD", "sprites/monster/JLucidaD.bmp", 90, 114, 2, 2, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("ElizaM", "sprites/monster/ElizaM.bmp", 1200, 322, 6, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ElizaS", "sprites/monster/ElizaS.bmp", 1200, 322, 6, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ElizaD", "sprites/monster/ElizaD.bmp", 200, 322, 1, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ElizaSkill1", "sprites/monster/skill1.bmp", 1488, 222, 8, 1, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("ElizaSkill2", "sprites/monster/skill2.bmp", 5115, 286, 15, 1, true, RGB(0, 0, 0));
 
 	//////////////////////////////Æ÷Å» ÀÌ¹ÌÁö//////////////////////////////////
 	IMAGEMANAGER->addFrameImage("portal",		"sprites/map/Portal.bmp", 728, 138, 7, 1, true, RGB(255, 0, 255));
