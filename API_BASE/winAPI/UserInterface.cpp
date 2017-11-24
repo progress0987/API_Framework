@@ -4,6 +4,10 @@
 
 HRESULT UserInterface::init(void)
 {
+	//------------------------------------커서----------------------------------------------
+	IMAGEMANAGER->addFrameImage("커서", "Cursor.bmp", 120, 120, 4, 4, true, RGB(255, 255, 255));
+
+
 	//------------------------------------공용-----------------------------------------------
 	IMAGEMANAGER->addImage("닫기", "닫기.bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기마우스온", "닫기(MouseOn).bmp", 13, 13, true, RGB(0, 0, 0));
@@ -95,6 +99,19 @@ HRESULT UserInterface::init(void)
 	IMAGEMANAGER->addImage("T", "T.bmp", 10, 9, true, RGB(255, 255, 255));
 	IMAGEMANAGER->addImage("A", "A.bmp", 10, 9, true, RGB(255, 255, 255));
 
+
+
+	//-------------------------------------이미지 로드 끝----------------------------------------
+
+
+	//-----------------------------초기설정--------------------------
+	// 
+	finger = IMAGEMANAGER->findImage("커서");
+	finger->setFrameY(0);
+	finger->setFrameX(0);
+
+
+
 	return S_OK;
 }
 
@@ -104,12 +121,32 @@ void UserInterface::release(void)
 
 void UserInterface::update(void)
 {
+	//인벤토리창 띄우기.
+	if (KEYMANAGER->isOnceKeyDown('I'))
+	{
 
+	}
+
+	//스텟창 띄우기
+	if (KEYMANAGER->isOnceKeyDown('S'))
+	{
+
+	}
+
+
+	//장비창 띄우기
+	if (KEYMANAGER->isOnceKeyDown('E'))
+	{
+
+	}
 
 }
 
 void UserInterface::render(void)
 {
+	//마우스 커서 숨기기
+	SetCursor(NULL);
+	ShowCursor(false);
 }
 
 UserInterface::UserInterface()
