@@ -85,17 +85,14 @@ void mainGame::update(void)
 		onSceneChange = true;
 	}
 	//em->update();
-	/////////////////////////테스트////////////////////////////
-	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) {
-	//	onSceneChange = true;
-	//}
+
 
 	if (onSceneChange) {
-		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 		fadeAlpha+=10;
 		if (fadeAlpha >= 255) {
 			fadeAlpha = 255;
 			onSceneChange = false;
+		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 			//씬 체인지
 			SceneChange(getNextNode());
 			SceneChanged = true;
@@ -125,7 +122,7 @@ void mainGame::render()
 	//IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
 	curScene->render();
 	_player->render();
-	//em->render();
+	//em->render();`
 	if (onSceneChange) {
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
