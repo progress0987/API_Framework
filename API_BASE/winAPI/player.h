@@ -18,6 +18,8 @@ enum Status {
 	onDead,
 };
 
+
+
 class skill :public gameNode{
 	RECT rc;	//플레이어 좌표 갖고 생성시킴
 	RECT dmgRC;//rc와 비례해서 생성,(rc의 왼쪽위를 0,0이라고 생각하고 추가)
@@ -39,7 +41,18 @@ public:
 	void fire(POINT pos, bool dir);
 };
 
-
+struct status
+{
+	int HP = 2000;    //체력
+	int MP = 1000;    //마나
+	int Str = 0;      //힘
+	int Dex = 0;      //민첩
+	int Int = 0;      //지력
+	int Luk = 0;      //운
+	int Att = 0;      //공격력
+	int Like = 0;     //인기도
+	int Exp = 0;      //경험치
+};
 
 class player :public gameNode
 {
@@ -57,6 +70,8 @@ private:
 	skill* SSkill;
 	skill* DSkill;
 	vector<skill*> skillList;
+
+	status stat;
 
 	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
 
@@ -92,6 +107,18 @@ public:
 	RECT getHitRC() { return hitRC; }
 	RECT getDmgRC() { return dmgRC; }
 
+
+	status getstatus() { return stat; }
+	
+	int setHP(int hp) { stat.HP = hp; }
+	int setMP(int mp) { stat.MP = mp; }
+	int setStr(int str) { stat.Str = str; }
+	int setDex(int dex) { stat.Dex = dex; }
+	int setInt(int intt) { stat.Int = intt; }
+	int setLuk(int luk) { stat.Luk = luk; }
+	int setAtt(int att) { stat.Att = att; }
+	int setLike(int like) { stat.Like = like; }
+	int setExp(int exp) { stat.Exp = exp; }
 
 	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.
 
