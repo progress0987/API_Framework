@@ -138,140 +138,142 @@ void player::update(void)
 		}
 	}
 	//////////////////////////////////////////////////////////////왼쪽
-	//왼쪽키 처음눌렸을때
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
-		curDir = false;
-		if (curStatus != Status::onDown) {
-			if (curStatus == Status::onIdle) {
-				curStatus = Status::onWalk;
-				curFrameY = 2;
-				count = 0;
+	if (!sceneChange) {
+		//왼쪽키 처음눌렸을때
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
+			curDir = false;
+			if (curStatus != Status::onDown) {
+				if (curStatus == Status::onIdle) {
+					curStatus = Status::onWalk;
+					curFrameY = 2;
+					count = 0;
+				}
 			}
 		}
-	}
-	//왼쪽키 계속 눌렀을때
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) {
-		switch (curStatus) {
-		case Status::onIdle:
-			curStatus = onWalk;
-			curFrameY = 2;
-		case Status::onWalk:
-			count++;
-			if (count % 30 == 0) {
-				curFrameX++;
-				if (curFrameX > _human->getMaxFrameX()) curFrameX = 0;
-			}
-			if (GetPixel(backStage->getMemDC(), hitRC.left, hitRC.bottom) != RGB(255, 255, 0)) {
-				moveVel -= 0.1f;
-				if (moveVel < -2.f) moveVel = -2.f;
-			}
-			else {
-				moveVel = 0;
-			}
-			///////////화면이동부분
-			//if (curPos.x + >0)
-			//	curPos.x += moveVel;
-			//else {
-			//	mycam->camPoint.x += moveVel;
-			//	if (mycam->camPoint.x < 0) {
-			//		mycam->camPoint.x = 0;
-			//		curPos.x += moveVel;
-			//		if (curPos.x - width / 2 < 0)curPos.x = width / 2;
-			//	}
-			//}
-			break;
-		case Status::onJump:
-			moveVel -= 0.1f;
-			if (moveVel < -2.f) moveVel = -2.f;
-			//if (curPos.x >WINSIZEX / 2 - width / 2)
-			//	curPos.x += moveVel;
-			//else {
-			//	mycam->camPoint.x += moveVel;
-			//	if (mycam->camPoint.x < 0) {
-			//		mycam->camPoint.x = 0;
-			//		curPos.x += moveVel;
-			//		if (curPos.x - width / 2 < 0)curPos.x = width / 2;
-			//	}
-			//}
-			break;
-		}
-		curPos.x += moveVel;
-	}
-	//왼쪽키 뗐을때
-	if (KEYMANAGER->isOnceKeyUp(VK_LEFT)) {
-		if (curStatus == Status::onWalk) {
-			curStatus = Status::onIdle;
-			curFrameY = 0;
-		}
-	}
-
-	//////////////////////////////////////////////////////////////오른쪽
-	//오른쪽키 처음눌렸을때
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT)) {
-		curDir = true;
-		if (curStatus != Status::onDown) {
-			if (curStatus == Status::onIdle) {
-				curStatus = Status::onWalk;
-				curFrameY = 3;
-				count = 0;
-			}
-		}
-	}
-	//오른쪽키 계속 눌렀을때
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) {
-		if (curStatus != onDown) {
+		//왼쪽키 계속 눌렀을때
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT)) {
 			switch (curStatus) {
 			case Status::onIdle:
 				curStatus = onWalk;
-				curFrameY = 3;
+				curFrameY = 2;
 			case Status::onWalk:
 				count++;
 				if (count % 30 == 0) {
 					curFrameX++;
 					if (curFrameX > _human->getMaxFrameX()) curFrameX = 0;
 				}
-				if (GetPixel(backStage->getMemDC(), hitRC.right, hitRC.bottom) != RGB(255, 255, 0)) {
-					moveVel += 0.1f;
-					if (moveVel > 2.f) moveVel = 2.f;
+				if (GetPixel(backStage->getMemDC(), hitRC.left, hitRC.bottom) != RGB(255, 255, 0)) {
+					moveVel -= 0.1f;
+					if (moveVel < -2.f) moveVel = -2.f;
 				}
 				else {
 					moveVel = 0;
 				}
-				//if (curPos.x < WINSIZEX / 2 - width / 2)
+				///////////화면이동부분
+				//if (curPos.x + >0)
 				//	curPos.x += moveVel;
 				//else {
 				//	mycam->camPoint.x += moveVel;
-				//	if (mycam->camPoint.x > backStage->getWidth() - mycam->width) {
-				//		mycam->camPoint.x = backStage->getWidth() - mycam->width;
+				//	if (mycam->camPoint.x < 0) {
+				//		mycam->camPoint.x = 0;
 				//		curPos.x += moveVel;
-				//		if (curPos.x + width / 2 > WINSIZEX)curPos.x = WINSIZEX - width / 2;
+				//		if (curPos.x - width / 2 < 0)curPos.x = width / 2;
 				//	}
 				//}
 				break;
 			case Status::onJump:
-				moveVel += 0.1f;
-				if (moveVel > 2.f) moveVel = 2.f;
-				//if (curPos.x < WINSIZEX / 2 - width / 2)
+				moveVel -= 0.1f;
+				if (moveVel < -2.f) moveVel = -2.f;
+				//if (curPos.x >WINSIZEX / 2 - width / 2)
 				//	curPos.x += moveVel;
 				//else {
 				//	mycam->camPoint.x += moveVel;
-				//	if (mycam->camPoint.x > backStage->getWidth() - mycam->width) {
-				//		mycam->camPoint.x = backStage->getWidth() - mycam->width;
+				//	if (mycam->camPoint.x < 0) {
+				//		mycam->camPoint.x = 0;
 				//		curPos.x += moveVel;
-				//		if (curPos.x + width / 2 > WINSIZEX)curPos.x = WINSIZEX - width / 2;
+				//		if (curPos.x - width / 2 < 0)curPos.x = width / 2;
 				//	}
 				//}
 				break;
 			}
 			curPos.x += moveVel;
-
 		}
-	}
-	//오른쪽키 뗐을때
-	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT)) {
-		if (curStatus == Status::onWalk) {
-			curStatus = Status::onIdle;
-			curFrameY = 1;
+		//왼쪽키 뗐을때
+		if (KEYMANAGER->isOnceKeyUp(VK_LEFT)) {
+			if (curStatus == Status::onWalk) {
+				curStatus = Status::onIdle;
+				curFrameY = 0;
+			}
+		}
+
+		//////////////////////////////////////////////////////////////오른쪽
+		//오른쪽키 처음눌렸을때
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT)) {
+			curDir = true;
+			if (curStatus != Status::onDown) {
+				if (curStatus == Status::onIdle) {
+					curStatus = Status::onWalk;
+					curFrameY = 3;
+					count = 0;
+				}
+			}
+		}
+		//오른쪽키 계속 눌렀을때
+		if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) {
+			if (curStatus != onDown) {
+				switch (curStatus) {
+				case Status::onIdle:
+					curStatus = onWalk;
+					curFrameY = 3;
+				case Status::onWalk:
+					count++;
+					if (count % 30 == 0) {
+						curFrameX++;
+						if (curFrameX > _human->getMaxFrameX()) curFrameX = 0;
+					}
+					if (GetPixel(backStage->getMemDC(), hitRC.right, hitRC.bottom) != RGB(255, 255, 0)) {
+						moveVel += 0.1f;
+						if (moveVel > 2.f) moveVel = 2.f;
+					}
+					else {
+						moveVel = 0;
+					}
+					//if (curPos.x < WINSIZEX / 2 - width / 2)
+					//	curPos.x += moveVel;
+					//else {
+					//	mycam->camPoint.x += moveVel;
+					//	if (mycam->camPoint.x > backStage->getWidth() - mycam->width) {
+					//		mycam->camPoint.x = backStage->getWidth() - mycam->width;
+					//		curPos.x += moveVel;
+					//		if (curPos.x + width / 2 > WINSIZEX)curPos.x = WINSIZEX - width / 2;
+					//	}
+					//}
+					break;
+				case Status::onJump:
+					moveVel += 0.1f;
+					if (moveVel > 2.f) moveVel = 2.f;
+					//if (curPos.x < WINSIZEX / 2 - width / 2)
+					//	curPos.x += moveVel;
+					//else {
+					//	mycam->camPoint.x += moveVel;
+					//	if (mycam->camPoint.x > backStage->getWidth() - mycam->width) {
+					//		mycam->camPoint.x = backStage->getWidth() - mycam->width;
+					//		curPos.x += moveVel;
+					//		if (curPos.x + width / 2 > WINSIZEX)curPos.x = WINSIZEX - width / 2;
+					//	}
+					//}
+					break;
+				}
+				curPos.x += moveVel;
+
+			}
+		}
+		//오른쪽키 뗐을때
+		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT)) {
+			if (curStatus == Status::onWalk) {
+				curStatus = Status::onIdle;
+				curFrameY = 1;
+			}
 		}
 	}
 	////////////////////////////////////////////////아래 눌렀을때
