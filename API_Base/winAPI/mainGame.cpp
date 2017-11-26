@@ -83,11 +83,6 @@ void mainGame::update(void)
 	if (_player->sceneChange) {
 		onSceneChange = true;
 	}
-	//em->update();
-	/////////////////////////Å×½ºÆ®////////////////////////////
-	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) {
-	//	onSceneChange = true;
-	//}
 
 	if (onSceneChange) {
 		fadeAlpha+=10;
