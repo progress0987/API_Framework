@@ -73,6 +73,9 @@
     <Filter Include="2DGameFramework\UserInterface">
       <UniqueIdentifier>{183c7891-58bc-4b43-9f0f-08f4e2ae6252}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Item">
+      <UniqueIdentifier>{dad1d59d-9137-4ea4-ab91-49b8b5ea68ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -210,6 +213,9 @@
     <ClInclude Include="UserInterface.h">
       <Filter>2DGameFramework\UserInterface</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -325,6 +331,9 @@
     </ClCompile>
     <ClCompile Include="UserInterface.cpp">
       <Filter>2DGameFramework\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>MainGame\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

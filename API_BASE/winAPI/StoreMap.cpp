@@ -13,7 +13,7 @@ StoreMap::~StoreMap()
 
 HRESULT StoreMap::init()
 {
-	bgm = "store";
+	bgm = "Store";
 
 	front = IMAGEMANAGER->findImage("store");
 	back = IMAGEMANAGER->findImage("pixelstore");
@@ -66,6 +66,11 @@ void StoreMap::update()
 			if (i->currentX > i->_img->getMaxFrameX())i->currentX = 0;
 		}
 	}
+	//npc누르면 상점 뜨게
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&storenpc.rc, ptMouse))
+	{
+		storewindow.rc = RectMake(500, 100, 500, 500);
+	}
 }
 void StoreMap::render()
 {
@@ -84,4 +89,6 @@ void StoreMap::render()
 		i->_img->frameRender(getMemDC(), i->rc.left - cam->camPoint.x, i->rc.top - cam->camPoint.y, i->currentX, 0);
 	}
 	Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
+
+	Rectangle(getMemDC(), storewindow.rc.left, storewindow.rc.top, storewindow.rc.right, storewindow.rc.bottom);
 }

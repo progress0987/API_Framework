@@ -344,18 +344,27 @@ void mainGame::imgInit()
 
 void mainGame::soundInit()
 {
-	SOUNDMANAGER->addSound("Village", "VillageBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("boss", "BossBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("forest", "ForestBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("hill", "HillBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("market", "MarketBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("store", "StoreBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("park", "ParkBgm.mp3", true, true);
-
+	//맵 사운드
+	SOUNDMANAGER->addSound("Boss", "sound/BossBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Hill", "sound/HillBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Forest", "sound/ForestBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Store", "sound/StoreBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);
 }
+
+
 
 void mainGame::SceneChange(mapFrame * next)
 {
+	curScene->soundoff(_village);
+	curScene->soundoff(_park);
+	curScene->soundoff(_market);
+	curScene->soundoff(_boss);
+	curScene->soundoff(_hill);
+	curScene->soundoff(_forest);
+	curScene->soundoff(_map);
 	//잘못된 좌표라면 그냥 나옴
 	if (next == nullptr)return;
 	//다음 갈 포탈 좌표위쪽에 좌표 정해주고 씬을 바꾸며 init을 해줌
