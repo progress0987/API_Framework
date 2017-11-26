@@ -126,6 +126,13 @@ void monster::Setbody(int i)
 	body.bottom = i;
 	body.top = body.bottom - Num;
 }
+RECT monster::getbody(void)
+{
+	if (NowHp >= 1)
+	{
+		return body;
+	}
+}
 Harp::Harp()
 {
 }
@@ -610,11 +617,26 @@ void Grupin::SubHp(int Atk)
 }
 void Grupin::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void Grupin::update(void)
 {
 	moving();
+	dead();
 }
 void Grupin::render(void)
 {
@@ -880,11 +902,26 @@ void Cellion::SubHp(int Atk)
 }
 void Cellion::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void Cellion::update(void)
 {
 	moving();
+	dead();
 }
 void Cellion::render(void)
 {
@@ -1150,11 +1187,26 @@ void Lioner::SubHp(int Atk)
 }
 void Lioner::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void Lioner::update(void)
 {
 	moving();
+	dead();
 }
 void Lioner::render(void)
 {
@@ -1420,11 +1472,26 @@ void Lucida::SubHp(int Atk)
 }
 void Lucida::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void Lucida::update(void)
 {
 	moving();
+	dead();
 }
 void Lucida::render(void)
 {
@@ -1697,11 +1764,26 @@ void JrYeti::SubHp(int Atk)
 }
 void JrYeti::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void JrYeti::update(void)
 {
 	moving();
+	dead();
 }
 void JrYeti::render(void)
 {
@@ -1967,11 +2049,26 @@ void PePe::SubHp(int Atk)
 }
 void PePe::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void PePe::update(void)
 {
 	moving();
+	dead();
 }
 void PePe::render(void)
 {
@@ -2236,11 +2333,26 @@ void Sheep::SubHp(int Atk)
 }
 void Sheep::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void Sheep::update(void)
 {
 	moving();
+	dead();
 }
 void Sheep::render(void)
 {
@@ -2505,11 +2617,26 @@ void JCellion::SubHp(int Atk)
 }
 void JCellion::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void JCellion::update(void)
 {
 	moving();
+	dead();
 }
 void JCellion::render(void)
 {
@@ -2775,11 +2902,26 @@ void JGrupin::SubHp(int Atk)
 }
 void JGrupin::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void JGrupin::update(void)
 {
 	moving();
+	dead();
 }
 void JGrupin::render(void)
 {
@@ -3045,11 +3187,26 @@ void JLioner::SubHp(int Atk)
 }
 void JLioner::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void JLioner::update(void)
 {
 	moving();
+	dead();
 }
 void JLioner::render(void)
 {
@@ -3315,15 +3472,31 @@ void JLucida::SubHp(int Atk)
 }
 void JLucida::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void JLucida::update(void)
 {
 	moving();
+	dead();
 }
 void JLucida::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -3363,7 +3536,6 @@ void JLucida::render(void)
 			IMAGEMANAGER->findImage("JLucidaS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0);
 		}
 	}
-	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
 	char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
 	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
@@ -3582,7 +3754,6 @@ void Eliza::SubHp(int Atk)
 	if (SkillOne == false)
 	{
 		SkillOne = true;
-		skill1();
 	}
 	NowHp -= Atk;
 	if (moveDir == true)
@@ -3605,7 +3776,6 @@ void Eliza::update(void)
 	{
 		if (Timer % 15 == 0)
 		{
-
 			SkillTwoF++;
 			if (SkillTwoF > IMAGEMANAGER->findImage("ElizaSkill2")->getMaxFrameX())
 			{
@@ -3616,24 +3786,6 @@ void Eliza::update(void)
 					SkillTwoRect[i] = { 0,0,0,0 };
 				}
 			}
-		}
-	}
-	if (SkillOne == true)
-	{
-		int count = 0;
-		for (int i = 0; i < 6; i++)
-		{
-			Sarbant[i]->SetCam(cam);
-			Sarbant[i]->update();
-			Sarbant[i]->collRect(PlayerBase, PlayerDamge);
-			if (Sarbant[i]->ZeroHp() == true)
-			{
-				count++;
-			}
-		}
-		if (count == 6)
-		{
-			SkillOne = false;
 		}
 	}
 	if (SkillTwoF >= 9)
@@ -3647,13 +3799,6 @@ void Eliza::update(void)
 void Eliza::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
-	if (SkillOne == true)
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			Sarbant[i]->render();
-		}
-	}
 	if (SkillTwo == true)
 	{
 		for (int i = 0; i < 4; i++)
@@ -3718,56 +3863,6 @@ void Eliza::collRect(RECT player, int demage)
 		{
 			SubHp(demage);
 		}
-	}
-}
-
-void Eliza::skill1(void)
-{
-	int Num;
-	int setX;
-	POINT position;
-	for (int i = 0; i < 6; i++)
-	{
-		if (i == 0)
-		{
-			setX = 740;
-		}
-		else if (i == 1)
-		{
-			setX = 950;
-		}
-		else if (i == 2)
-		{
-			setX = 1430;
-		}
-		else if (i == 3)
-		{
-			setX = 78;
-		}
-		else if (i == 4)
-		{
-			setX = 680;
-		}
-		else if (i == 5)
-		{
-			setX = 1180;
-		}
-		Num = rand() % 2;
-		if (Num == 0)
-		{
-			setJLucida = new JLucida;
-			position = { setX,787 - IMAGEMANAGER->findImage("JLucidaD")->getWidth() / 4 };
-			setJLucida->init(position);
-			Sarbant[i] = setJLucida;
-		}
-		else
-		{
-			setLucida = new Lucida;
-			position = { setX,787 - IMAGEMANAGER->findImage("LucidaD")->getWidth() / 4 };
-			setLucida->init(position);
-			Sarbant[i] = setLucida;
-		}
-			Sarbant[i]->SetCam(cam);
 	}
 }
 

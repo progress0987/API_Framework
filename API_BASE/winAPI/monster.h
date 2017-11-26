@@ -30,6 +30,7 @@ public:
 	virtual void update();
 	virtual void render();
 	virtual void collRect(RECT player, int demage);
+	virtual RECT getbody(void);//몬스터 체크 렉트 가져오기
 	bool hit(void);				//공격당한것 확인
 	void MonsterMoving(int move);	//몬스터 좌우 움직임
 	bool ZeroHp(void);				//체력이 0 이하인지 확인
@@ -44,7 +45,6 @@ public:
 	void SetCam(Camera* c) { cam = c; }//카메라 세팅
 
 	int getIndex(void) { return MyIndex; }//인덱스 가져오기
-	RECT getbody(void) { return body; }//몬스터 체크 렉트 가져오기
 };
 //Harp의 관리 클래스
 class Harp :public monster
@@ -377,7 +377,6 @@ class Eliza :public monster
 	int SkillTime = 0;
 	RECT PlayerBase;
 	int PlayerDamge;
-	monster* Sarbant[6];
 	JLucida* setJLucida;
 	Lucida* setLucida;
 public:
@@ -395,7 +394,6 @@ public:
 	void render(void);
 	//몬스터가 플레이어에게 공격당했는가(공격력도 입력해주셔야 합니다)
 	void collRect(RECT player, int demage);
-	void skill1(void);
 	void skill2(void);
 //	void SetCam(Camera* c);
 };
