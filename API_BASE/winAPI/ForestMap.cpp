@@ -14,7 +14,7 @@ ForestMap::~ForestMap()
 
 HRESULT ForestMap::init()
 {
-	bgm = "forest";
+	bgm = "Forest";
 
 	front = IMAGEMANAGER->findImage("forest");
 	back = IMAGEMANAGER->findImage("pixelforest");

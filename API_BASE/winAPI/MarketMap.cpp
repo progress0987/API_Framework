@@ -15,7 +15,7 @@ MarketMap::~MarketMap()
 
 HRESULT MarketMap::init()
 {
-	bgm = "market";
+	bgm = "Market";
 
 	front = IMAGEMANAGER->findImage("market");
 	back = IMAGEMANAGER->findImage("pixelmarket");
