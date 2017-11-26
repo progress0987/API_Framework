@@ -14,6 +14,12 @@ HRESULT enemyManager::init(Camera* plCam)
 		}
 	}
 	setmonster[4][0] = { 1340,787 };
+	setmonster[4][1] = { 740,787 };
+	setmonster[4][2] = { 950,787 };
+	setmonster[4][3] = { 1430,787 };
+	setmonster[4][4] = { 78,787 };
+	setmonster[4][5] = { 680,787 };
+	setmonster[4][6] = { 1180,787 };
 	setmonster[3][0]={450,423};
 	setmonster[3][1]={610,423};
 	setmonster[3][2]={800,423};
@@ -67,7 +73,8 @@ void enemyManager::release()
 
 void enemyManager::update(int Index)
 {
-	for (vector<monster*>::iterator i = Monsters.begin(); i != Monsters.end(); i++) {
+	for (vector<monster*>::iterator i = Monsters.begin(); i != Monsters.end(); i++)
+	{
 		if ((*i)->getIndex() == Index)
 		{
 			(*i)->update();
@@ -178,6 +185,32 @@ void enemyManager::addMonster(void)
 			Monsters.push_back(monster);
 		}
 		//hill 몬스터 셋팅
+		if (i >= 1 && i <= 6)
+		{
+		RandomMonster = rand() % 2;
+			if (RandomMonster == 1)
+			{
+				JLucida* monster;
+				monster = new JLucida;
+				monster->SetCam(playerCam);
+				monster->init(setmonster[4][i]);
+				Monsters.push_back(monster);
+//				position = { setX,787 - IMAGEMANAGER->findImage("JLucidaD")->getWidth() / 4 };
+//				setJLucida->init(position);
+//				Sarbant[i] = setJLucida;
+			}
+			else
+			{
+				Lucida* monster;
+				monster = new Lucida;
+				monster->SetCam(playerCam);
+				monster->init(setmonster[4][i]);
+				Monsters.push_back(monster);
+//				position = { setX,787 - IMAGEMANAGER->findImage("LucidaD")->getWidth() / 4 };
+//				setLucida->init(position);
+//				Sarbant[i] = setLucida;
+			}
+		}
 	}
 	Eliza* monster;
 	monster = new Eliza;
