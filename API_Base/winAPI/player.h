@@ -1,6 +1,10 @@
 #pragma once
 #include "gameNode.h"
 #include "mapFrame.h"
+#include "UserInterface.h"
+#include "enemyManager.h"
+
+class enemyManager;
 
 //방향.
 enum Direction
@@ -25,20 +29,32 @@ class skill :public gameNode{
 	RECT dmgRC;//rc와 비례해서 생성,(rc의 왼쪽위를 0,0이라고 생각하고 추가)
 	image* img;
 	int dmg;
+	int range;
 	int skillIndex;//스킬인덱스(enum으로 하던가 할 것)
 	int frameX=0;
 	int frame=0;
-	int range;
-	bool onAttack;
 	int delayPerFrames;
 	vector<RECT> dmgRCList;
+	Camera* cam;
 public:
-	HRESULT init(char* skillImg,int dPf,int dmg, int range);
+	bool onAttack;
+	HRESULT init(char* skillImg,int dPf,int dmg,int range);
 	void release(void);
 	void update(void);
 	void render(void);
-	void setSkillRect(int index, RECT skillRC);
-	void fire(POINT pos, bool dir);
+	void setSkillRect(RECT skillRC);
+	void fire(POINT pos);
+	int getRange() { return range; }
+	RECT getCurSkillRC() {
+		RECT tmpRC=dmgRC;
+		tmpRC.left += rc.left;
+		tmpRC.right += rc.left;
+		tmpRC.top += rc.top;
+		tmpRC.bottom += rc.top;
+		return tmpRC;
+	}
+	void setCam(Camera* glcam) { cam = glcam; }
+	int getDmg() {return dmg;}
 };
 
 struct status
@@ -66,13 +82,15 @@ private:
 	RECT rc;
 	RECT hitRC;
 	RECT dmgRC;
-	skill* ASkill;
-	skill* SSkill;
-	skill* DSkill;
+	skill* ASkill = nullptr;
+	skill* SSkill = nullptr;
+	skill* DSkill = nullptr;
+	skill* curCast=nullptr;
 	vector<skill*> skillList;
 
-	status stat;
-
+	status* stat;
+	UserInterface* UI;
+	enemyManager* em;
 	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
 
 
@@ -107,19 +125,20 @@ public:
 	RECT getHitRC() { return hitRC; }
 	RECT getDmgRC() { return dmgRC; }
 	RECT getRc() { return rc; }
+	void linkEnemyManager(enemyManager* em) { this->em = em; }
 
 
-	status getstatus() { return stat; }
+	status* getstatus() { return stat; }
 	
-	int setHP(int hp) { stat.HP = hp; }
-	int setMP(int mp) { stat.MP = mp; }
-	int setStr(int str) { stat.Str = str; }
-	int setDex(int dex) { stat.Dex = dex; }
-	int setInt(int intt) { stat.Int = intt; }
-	int setLuk(int luk) { stat.Luk = luk; }
-	int setAtt(int att) { stat.Att = att; }
-	int setLike(int like) { stat.Like = like; }
-	int setExp(int exp) { stat.Exp = exp; }
+	int setHP(int hp) {		stat->HP = hp; }
+	int setMP(int mp) {		stat->MP = mp; }
+	int setStr(int str) {	stat->Str = str; }
+	int setDex(int dex) {	stat->Dex = dex; }
+	int setInt(int intt) {	stat->Int = intt; }
+	int setLuk(int luk) {	stat->Luk = luk; }
+	int setAtt(int att) {	stat->Att = att; }
+	int setLike(int like) { stat->Like = like; }
+	int setExp(int exp) {	stat->Exp = exp; }
 
 	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.
 
