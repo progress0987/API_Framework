@@ -355,6 +355,7 @@ void mainGame::SceneChange(mapFrame * next)
 	if (next == nullptr)return;
 	//´ÙÀ½ °¥ Æ÷Å» ÁÂÇ¥À§ÂÊ¿¡ ÁÂÇ¥ Á¤ÇØÁÖ°í ¾ÀÀ» ¹Ù²Ù¸ç initÀ» ÇØÁÜ
 	_player->init(playerNextPoint, next);
+
 	curScene->soundplay(next);
 }
 

@@ -38,6 +38,7 @@ public:
 	virtual void update(void);
 	virtual void render();
 	void imgInit();
+	void soundInit();
 	void SceneChange(mapFrame* next);
 	mapFrame* getNextNode();
 
