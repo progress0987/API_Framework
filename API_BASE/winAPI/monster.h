@@ -1,9 +1,11 @@
 #pragma once
 #include"gameNode.h"
+#include "items.h"
 //몬스터의 기본 구조 클래스
 class monster :public gameNode
 {
 protected:
+	vector<item> dropItems;
 	int MaxHp;
 	int NowHp;
 	int Atk;
