@@ -33,7 +33,6 @@ void monster::update()
 
 void monster::render()
 {
-	Rectangle(getMemDC(), colBody.left - cam->camPoint.x, colBody.top - cam->camPoint.y, colBody.right - cam->camPoint.x, colBody.bottom - cam->camPoint.y);
 }
 
 void monster::collRect(RECT player, int demage)
@@ -135,10 +134,9 @@ Harp::~Harp()
 }
 HRESULT Harp::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("harpM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 81, 103);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("harpM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 81, 103);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -327,11 +325,26 @@ void Harp::SubHp(int Atk)
 }
 void Harp::dead(void)
 {
-
+	if (ZeroHp() == true)
+	{
+		if (Timer % 10 == 0)
+		{
+			Gentime--;
+			if (Gentime == 0)
+			{
+				pt = GenPoint;
+				NowHp = MaxHp;
+				Gentime = 50;
+				alpha = 250;
+				hit = false;
+			}
+		}
+	}
 }
 void Harp::update(void)
 {
 	moving();
+	dead();
 }
 void Harp::render(void)
 {
@@ -375,7 +388,7 @@ void Harp::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-		Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
 //	char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
 //	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
@@ -386,7 +399,7 @@ void Harp::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -402,10 +415,9 @@ Grupin::~Grupin()
 }
 HRESULT Grupin::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("GrupinM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 60, 63);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("GrupinM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -657,7 +669,7 @@ void Grupin::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -673,10 +685,9 @@ Cellion::~Cellion()
 }
 HRESULT Cellion::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("CellionM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 60, 63);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("CellionM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -928,7 +939,7 @@ void Cellion::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -944,10 +955,9 @@ Lioner::~Lioner()
 }
 HRESULT Lioner::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("LionerM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 60, 63);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("LionerM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1199,7 +1209,7 @@ void Lioner::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -1215,10 +1225,9 @@ Lucida::~Lucida()
 }
 HRESULT Lucida::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("LucidaM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 62, 84);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("LucidaM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 62, 84);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1470,7 +1479,7 @@ void Lucida::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -1486,10 +1495,9 @@ JrYeti::~JrYeti()
 }
 HRESULT JrYeti::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("Jr YetiM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 39, 40);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("Jr YetiM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 39, 40);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1748,7 +1756,7 @@ void JrYeti::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -1764,10 +1772,9 @@ PePe::~PePe()
 }
 HRESULT PePe::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("PePeM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 73, 63);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("PePeM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 73, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2019,7 +2026,7 @@ void PePe::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -2034,10 +2041,9 @@ Sheep::~Sheep()
 }
 HRESULT Sheep::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("SheepM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 92, 61);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("SheepM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 92, 61);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2289,7 +2295,7 @@ void Sheep::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -2304,10 +2310,9 @@ JCellion::~JCellion()
 }
 HRESULT JCellion::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("JCellionM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 43, 47);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JCellionM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2559,7 +2564,7 @@ void JCellion::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -2575,10 +2580,9 @@ JGrupin::~JGrupin()
 }
 HRESULT JGrupin::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("JGrupinM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 43, 47);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JGrupinM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2830,7 +2834,7 @@ void JGrupin::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -2846,10 +2850,9 @@ JLioner::~JLioner()
 }
 HRESULT JLioner::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("JLionerM")->getHeight() / 4;
-	monster::init(500, 30, 10, ex, 43, 47);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JLionerM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3101,7 +3104,7 @@ void JLioner::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -3117,10 +3120,9 @@ JLucida::~JLucida()
 }
 HRESULT JLucida::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("JLucidaM")->getHeight() / 4;
-	monster::init(500, 30, 10, pos, 45, 57);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JLucidaM")->getHeight() / 4;
+	monster::init(500, 30, 10, GenPoint, 45, 57);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3372,7 +3374,7 @@ void JLucida::collRect(RECT player, int demage)
 	RECT rc;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -3387,10 +3389,9 @@ Eliza::~Eliza()
 }
 HRESULT Eliza::init(POINT pos)
 {
-	POINT ex;
-	ex.x = pos.x;
-	ex.y = pos.y - IMAGEMANAGER->findImage("ElizaM")->getHeight() / 4;
-	monster::init(3000, 30, 10, ex, 200, 161);
+	GenPoint.x = pos.x;
+	GenPoint.y = pos.y - IMAGEMANAGER->findImage("ElizaM")->getHeight() / 4;
+	monster::init(3000, 30, 10, GenPoint, 200, 161);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3701,11 +3702,10 @@ void Eliza::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
-	//char tmp[128];
-	////sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	char tmp[128];
+	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
+	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Eliza::collRect(RECT player, int demage)
 {
@@ -3714,7 +3714,7 @@ void Eliza::collRect(RECT player, int demage)
 	PlayerDamge = demage;
 	if (hit == false)
 	{
-		if (IntersectRect(&rc, &player, &colBody))
+		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
 		}
@@ -3767,6 +3767,7 @@ void Eliza::skill1(void)
 			setLucida->init(position);
 			Sarbant[i] = setLucida;
 		}
+			Sarbant[i]->SetCam(cam);
 	}
 }
 

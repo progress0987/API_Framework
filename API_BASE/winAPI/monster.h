@@ -13,10 +13,12 @@ protected:
 	RECT playerBody;
 	RECT SkillTwoRect[4];
 	POINT pt;
+	POINT GenPoint;
 	bool dead;
 	bool moveDir;//true - 오른쪽
 	int bodyW, bodyH;
 	int MyIndex;
+	int Gentime=50;
 
 	Camera* cam;
 public:
@@ -42,6 +44,7 @@ public:
 	void SetCam(Camera* c) { cam = c; }//카메라 세팅
 
 	int getIndex(void) { return MyIndex; }//인덱스 가져오기
+	RECT getbody(void) { return body; }//몬스터 체크 렉트 가져오기
 };
 //Harp의 관리 클래스
 class Harp :public monster
