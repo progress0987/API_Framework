@@ -15,7 +15,6 @@ HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
 	srand(time(NULL));
-	//IMAGEMANAGER->findImage("맵")->render(IMAGEMANAGER->findImage("맵")->getMemDC());
 	imgInit();
 	soundInit();
 	cam = new Camera;
@@ -30,6 +29,7 @@ HRESULT mainGame::init(void)
 	_player->linkEnemyManager(em);
 	em->init(cam);
 	em->addMonster();
+
 	_village = new VillageMap;
 	_village->init();
 	_village->setCam(cam);
@@ -83,11 +83,6 @@ void mainGame::update(void)
 	if (_player->sceneChange) {
 		onSceneChange = true;
 	}
-	//em->update();
-	/////////////////////////테스트////////////////////////////
-	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) {
-	//	onSceneChange = true;
-	//}
 
 	if (onSceneChange) {
 		fadeAlpha+=10;
@@ -108,6 +103,9 @@ void mainGame::update(void)
 			
 		}
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
+		debug = !debug;
+	}
 	
 }
 //여기가 그려주는 곳
@@ -123,6 +121,9 @@ void mainGame::render()
 	//IMAGEMANAGER->render("맵", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
 	//IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
 	curScene->render();
+	if (debug) {
+		curScene->getBack()->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y,cam->width,cam->height);
+	}
 	em->render(curScene->getIndex());
 	_player->render();
 	if (onSceneChange) {
@@ -132,10 +133,13 @@ void mainGame::render()
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
 
-	
 	IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
 
 	TIMEMANAGER->render(getMemDC());
+
+
+
+
 	/////////////////////그려주는부분 - 건들지말것//////////////////
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 	////////////////////////////////////////////////////////////////
