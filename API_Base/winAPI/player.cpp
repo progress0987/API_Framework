@@ -45,7 +45,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	//////////////////////////////////////////스킬 초기화
 	skill* sk1;
 	sk1 = new skill;
-	sk1->init("skill1", 15, 10,500);
+	sk1->init("skill1", 5, 200,500);
 	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
@@ -457,6 +457,16 @@ void player::update(void)
 
 		}
 		em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+
+		vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+		for (int i = 0; i < monincurmap.size(); i++) {
+			if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+				curCast = ASkill;
+				curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+				break;
+			}
+		}
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('S')) {
 		if (!onAttack) {
@@ -574,7 +584,7 @@ HRESULT skill::init(char * skillImg, int dPf, int dmg,int range)
 	delayPerFrames = dPf;
 	this->range = range;
 	this->dmg = dmg;
-	for (int i = 0; i < img->getMaxFrameX(); i++) {
+	for (int i = 0; i <= img->getMaxFrameX(); i++) {
 		dmgRCList.push_back(RECT());
 	}
 	return S_OK;
@@ -590,10 +600,11 @@ void skill::update(void)
 		frame++;
 		if (frame%delayPerFrames == 0) {
 			frameX++;
-			dmgRC = dmgRCList[frameX];
 			if (frameX > img->getMaxFrameX()) {
 				onAttack = false;
+				frameX = 0;
 			}
+			dmgRC = dmgRCList[frameX];
 		}
 	}
 }
@@ -601,8 +612,9 @@ void skill::update(void)
 void skill::render(void)
 {
 	if (onAttack) {
+		if(frameX<img->getMaxFrameX())
 		img->frameRender(getMemDC(), rc.left-cam->camPoint.x, rc.top-cam->camPoint.y, frameX, 0);
-		Rectangle(getMemDC(), rc.left - cam->camPoint.x, rc.top - cam->camPoint.y, rc.right - cam->camPoint.x, rc.bottom - cam->camPoint.y);
+		//Rectangle(getMemDC(), rc.left - cam->camPoint.x, rc.top - cam->camPoint.y, rc.right - cam->camPoint.x, rc.bottom - cam->camPoint.y);
 	}
 }
 
