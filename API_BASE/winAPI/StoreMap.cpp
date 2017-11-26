@@ -13,6 +13,7 @@ StoreMap::~StoreMap()
 
 HRESULT StoreMap::init()
 {
+	bgm = "store";
 
 	front = IMAGEMANAGER->findImage("store");
 	back = IMAGEMANAGER->findImage("pixelstore");

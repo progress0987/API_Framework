@@ -15,6 +15,8 @@ HillMap::~HillMap()
 
 HRESULT HillMap::init()
 {
+	bgm = "hill";
+
 	front = IMAGEMANAGER->findImage("hill");
 	back = IMAGEMANAGER->findImage("pixelhill");
 

@@ -58,6 +58,8 @@ HRESULT mainGame::init(void)
 	_boss->setCam(cam);
 
 	curScene = _village;
+	curScene->soundplay(_village);
+
 	_player->init(pointMake(1660, 400), curScene);
 	
 	return S_OK;
@@ -335,12 +337,25 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("A",					"sprites?UI/A.bmp", 10, 9, true, RGB(255, 255, 255));
 }
 
+void mainGame::soundInit()
+{
+	SOUNDMANAGER->addSound("Village", "VillageBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("boss", "BossBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("forest", "ForestBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("hill", "HillBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("market", "MarketBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("store", "StoreBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("park", "ParkBgm.mp3", true, true);
+
+}
+
 void mainGame::SceneChange(mapFrame * next)
 {
 	//잘못된 좌표라면 그냥 나옴
 	if (next == nullptr)return;
 	//다음 갈 포탈 좌표위쪽에 좌표 정해주고 씬을 바꾸며 init을 해줌
 	_player->init(playerNextPoint, next);
+	curScene->soundplay(next);
 }
 
 //현재 있는 곳의 좌표를 찾아주고 다음 움직일 맵의 정보를 받아옴

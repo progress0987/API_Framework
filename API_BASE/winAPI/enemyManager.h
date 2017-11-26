@@ -20,7 +20,6 @@ public:
 	void addMonster(void);
 	void colling(RECT DamgeRect, int Demage, int Index);
 	void SharePlayer(RECT PlayerBase, int Index);
-	void getbody(int Index);
 
 	inline vector<enemy*>getMinionVector() { return Minions; }
 	inline vector<monster*>getMonsters() { return Monsters; }

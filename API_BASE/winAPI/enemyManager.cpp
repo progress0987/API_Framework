@@ -207,16 +207,6 @@ void enemyManager::SharePlayer(RECT PlayerBase, int Index)
 	}
 }
 
-void enemyManager::getbody(int Index)
-{
-	for (vector<monster*>::iterator i = Monsters.begin(); i != Monsters.end(); i++) {
-		if ((*i)->getIndex() == Index)
-		{
-			(*i)->getbody();
-		}
-	}
-}
-
 
 enemyManager::enemyManager()
 {
