@@ -26,6 +26,7 @@ HRESULT mainGame::init(void)
 	em = new enemyManager;
 
 	_player->setCamera(cam);
+	_player->linkEnemyManager(em);
 	em->init(cam);
 	em->addMonster();
 	_village = new VillageMap;
@@ -86,11 +87,11 @@ void mainGame::update(void)
 	//}
 
 	if (onSceneChange) {
-		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 		fadeAlpha+=10;
 		if (fadeAlpha >= 255) {
 			fadeAlpha = 255;
 			onSceneChange = false;
+		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 			//씬 체인지
 			SceneChange(getNextNode());
 			SceneChanged = true;

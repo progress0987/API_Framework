@@ -39,6 +39,41 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	_human->setFrameX(curFrameX);
 	_human->setFrameY(curFrameY);
 
+	stat = new status;
+
+
+	//////////////////////////////////////////스킬 초기화
+	skill* sk1;
+	sk1 = new skill;
+	sk1->init("skill1", 15, 10,500);
+	sk1->setCam(mycam);
+	skillList.push_back(sk1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/////////////////////////UI초기화
+	//UI = new UserInterface;
+	//UI->init();
+	//UI하고 stat하고 연결 ex) UI->setStat(stat);
+	//UI안에서는 
+	/*
+	void setStat(status* st){
+		this->playerStat = st;
+	}
+	*/
+
+	ASkill = skillList[0];
 	return S_OK;
 }
 
@@ -138,7 +173,7 @@ void player::update(void)
 		}
 	}
 	//////////////////////////////////////////////////////////////왼쪽
-	if (!sceneChange) {
+	if (!sceneChange&&!onAttack) {
 		//왼쪽키 처음눌렸을때
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
 			curDir = false;
@@ -403,22 +438,46 @@ void player::update(void)
 			playAttMotion();
 		}
 	}
+	//////////////////////////////////////////////////////스킬공격
+	if (KEYMANAGER->isOnceKeyDown('A')) {
+		if (!onAttack) {
+			attFrame = 0;
+			attX = 0;
+			playAttMotion();
+		}
+		RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
+		RECT hit;
+		if (curDir) {//오른쪽
+			skillRange.left += ASkill->getRange() / 2;
+			skillRange.right += ASkill->getRange() / 2;
+		}
+		else {//왼쪽
+			skillRange.left -= ASkill->getRange() / 2;
+			skillRange.right -= ASkill->getRange() / 2;
+
+		}
+		em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+	}
+	if (KEYMANAGER->isOnceKeyDown('S')) {
+		if (!onAttack) {
+			attFrame = 0;
+			attX = 0;
+			playAttMotion();
+		}
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('D')) {
+		if (!onAttack) {
+			attFrame = 0;
+			attX = 0;
+			playAttMotion();
+		}
+	}
 	
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
 		attFrame++;
 		if (attFrame % 15 == 0) {
 			attX++;
-			if (attX >=2&&attX<6) {
-				if (curDir) {//오른쪽
-					dmgRC = RectMakeCenter(curPos.x + 40 - mycam->camPoint.x, curPos.y+15 - mycam->camPoint.y, 20, 20);
-				}
-				else {//왼쪽
-					dmgRC = RectMakeCenter(curPos.x - 40 - mycam->camPoint.x, curPos.y+15 - mycam->camPoint.y, 20, 20);
-				}
-			}
-			if (attX == 6) {
-				dmgRC = RectMakeCenter(curPos.x, curPos.y, 0, 0);
-			}
 			if (attX > attackMotion->getMaxFrameX()) {
 				attX = 0;
 				attFrame = 0;
@@ -436,6 +495,26 @@ void player::update(void)
 	if (curPos.x + (width / 2 - (rc.right - hitRC.right)) > curScene->getBack()->getWidth()) {
 		curPos.x = curScene->getBack()->getWidth() - (width / 2 - (rc.right - hitRC.right));
 		moveVel = 0;
+	}
+
+	//UI 업데이트 혹은!!!!!
+	//키를 누를때 UI의 랜더상태를 변경하게(bool)
+	/*ex) if(keymananager->isoncekeydown('I')){
+		UI->toggleInventory();
+		//toggleInventory(){
+		showInv = !showInv;
+		}
+	}
+	*/
+	
+	//UI->update();
+
+	if (curCast != nullptr) {
+		curCast->update();
+		hitRC = curCast->getCurSkillRC();
+		if (curCast->onAttack == false) {
+			curCast = nullptr;
+		}
 	}
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
@@ -460,6 +539,11 @@ void player::render(void)
 	TextOut(getMemDC(), 50, 100, tmp, strlen(tmp));
 	//EllipseMakeCenter(getMemDC(), curPos.x-mycam->camPoint.x, hitRC.bottom + 10 - mycam->camPoint.y, 35, 35);
 	//Rectangle(getMemDC(), hitRC.left- mycam->camPoint.x, hitRC.top - mycam->camPoint.y, hitRC.right - mycam->camPoint.x, hitRC.bottom - mycam->camPoint.y);
+	if (curCast != nullptr) {
+		curCast->render();
+	}
+	//여기에 UI 출력--> 
+	//UI->render();
 }
 
 void player::playAttMotion()
@@ -483,13 +567,13 @@ player::~player()
 {
 }
 
-HRESULT skill::init(char * skillImg, int dPf, int dmg, int range)
+HRESULT skill::init(char * skillImg, int dPf, int dmg,int range)
 {
 	img = IMAGEMANAGER->findImage(skillImg);
 	rc = { 0,0,img->getFrameWidth(),img->getFrameHeight() };
 	delayPerFrames = dPf;
-	this->dmg = dmg;
 	this->range = range;
+	this->dmg = dmg;
 	for (int i = 0; i < img->getMaxFrameX(); i++) {
 		dmgRCList.push_back(RECT());
 	}
@@ -506,9 +590,9 @@ void skill::update(void)
 		frame++;
 		if (frame%delayPerFrames == 0) {
 			frameX++;
+			dmgRC = dmgRCList[frameX];
 			if (frameX > img->getMaxFrameX()) {
 				onAttack = false;
-
 			}
 		}
 	}
@@ -516,9 +600,19 @@ void skill::update(void)
 
 void skill::render(void)
 {
+	if (onAttack) {
+		img->frameRender(getMemDC(), rc.left-cam->camPoint.x, rc.top-cam->camPoint.y, frameX, 0);
+		Rectangle(getMemDC(), rc.left - cam->camPoint.x, rc.top - cam->camPoint.y, rc.right - cam->camPoint.x, rc.bottom - cam->camPoint.y);
+	}
 }
 
-void skill::setSkillRect(int index, RECT skillRC)
+void skill::setSkillRect(RECT skillRC)
 {
-	dmgRCList[index] = skillRC;
+	dmgRC = skillRC;
+}
+
+void skill::fire(POINT pos)
+{
+	rc = RectMakeCenter(pos.x, pos.y, img->getFrameWidth(), img->getFrameHeight());
+	onAttack = true;
 }

@@ -33,6 +33,7 @@ void monster::update()
 
 void monster::render()
 {
+	Rectangle(getMemDC(), colBody.left - cam->camPoint.x, colBody.top - cam->camPoint.y, colBody.right - cam->camPoint.x, colBody.bottom - cam->camPoint.y);
 }
 
 void monster::collRect(RECT player, int demage)
@@ -374,7 +375,7 @@ void Harp::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+		Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
 //	char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
 //	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
@@ -3700,10 +3701,11 @@ void Eliza::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
-	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	//char tmp[128];
+	////sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Eliza::collRect(RECT player, int demage)
 {
