@@ -14,10 +14,9 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
-	AddFontResource("Fonts/Maplestory Bold.ttf");
 	srand(time(NULL));
-	//IMAGEMANAGER->findImage("맵")->render(IMAGEMANAGER->findImage("맵")->getMemDC());
 	imgInit();
+	soundInit();
 	cam = new Camera;
 	cam->camPoint.x = 0;
 	cam->camPoint.y = 0;
@@ -30,6 +29,7 @@ HRESULT mainGame::init(void)
 	_player->linkEnemyManager(em);
 	em->init(cam);
 	em->addMonster();
+
 	_village = new VillageMap;
 	_village->init();
 	_village->setCam(cam);
@@ -108,6 +108,9 @@ void mainGame::update(void)
 			
 		}
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
+		debug = !debug;
+	}
 	
 }
 //여기가 그려주는 곳
@@ -115,7 +118,6 @@ void mainGame::render()
 {
 	HBRUSH brush;
 	HBITMAP hBitmap, OldBitmap;
-	HFONT oldFont, font1;
 	/////////////////////////////////////건들지 말것(?)//////////////////////////////////////////////
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +126,9 @@ void mainGame::render()
 	//IMAGEMANAGER->render("맵", getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y, WINSIZEX, WINSIZEY);
 	//IMAGEMANAGER->findImage("미니맵")->alphaRender(getMemDC(), 0, 0, 150);
 	curScene->render();
+	if (debug) {
+		curScene->getBack()->render(getMemDC(), 0, 0, cam->camPoint.x, cam->camPoint.y,cam->width,cam->height);
+	}
 	em->render(curScene->getIndex());
 	_player->render();
 	if (onSceneChange) {
@@ -138,75 +143,6 @@ void mainGame::render()
 	TIMEMANAGER->render(getMemDC());
 
 
-
-	/*
-	AddFontResourceA("./data/Fonts/XXXXX.ttf");
-	// 2. 정보 설정하기
-	LOGFONT lf;
-	memset(&lf, 0, sizeof(lf));
-	lf.lfHeight = -MulDiv(24, dc->GetDeviceCaps(LOGPIXELSY), 72);
-	lf.lfWeight = FW_NORMAL;
-	lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
-	strcpy(lf.lfFaceName, _T("Gesso"));
-	// 3. 폰트 만들기 CFont newFont;
-	if(!newFont.CreateFontIndirect(&lf)) return;
-	// 4. 사용할 폰트 선택하기
-	CFont *pFont = dc->SelectObject(&newFont);
-	// 5. 쓰고 폰트 이전껄로 돌리고 만든 폰트 지우기.
-	// 폰트 종류 하나면 그냥 최초 하나 만들고 끝날 때 지우면 되는데 지금테스트니까.
-	dc->TextOut(50, 40, "slway", 5);
-	dc->SelectObject(pFont); newFont.DeleteObject();
-	
-	*/
-
-	/*
-	HFONT oldFont, font1;
-	//CreateFont(
-	//	40,					//문자폭
-	//	0,					//문자 넓이
-	//	40,					//문자 기울기(각도)
-	//	0,					//문자 방향
-	//	600,				//문자 굵기
-	//	0,					//bool 문자 기울기 true/false
-	//	0,					//bool 문자 밑줄 true/false
-	//	0,					//bool 문자 취소선 true/false
-	//	HANGUL_CHARSET,		//문자 세팅
-	//	0,					//출력정확도(?)
-	//	0,					//클리핑 정확도
-	//	0,					//출력의 퀄리티
-	//	0,					//자간
-	//	TEXT("궁서체")		//내부시스템폰트가져옴
-	//);
-	FillRect(getMemDC(), &RectMake(0, 0, WINSIZEX, WINSIZEY), CreateSolidBrush(RGB(255, 0, 0)));
-	font1 = CreateFont(80, 0, 0, 0, 300, true, 1, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
-	SetBkMode(getMemDC(),TRANSPARENT);
-	oldFont = (HFONT)SelectObject(getMemDC(), font1);
-	sprintf(str, "배고프다");
-	
-	TextOut(getMemDC(), 10, 100, str, strlen(str));
-
-	DeleteObject(oldFont);
-	DeleteObject(font1);
-
-	
-	*/
-	font1 = CreateFont(
-		20,					//문자폭
-		0,					//문자 넓이
-		0,					//문자 기울기(각도)
-		0,					//문자 방향
-		600,				//문자 굵기
-		0,					//bool 문자 기울기 true/false
-		0,					//bool 문자 밑줄 true/false
-		0,					//bool 문자 취소선 true/false
-		HANGUL_CHARSET,		//문자 세팅
-		0,					//출력정확도(?)
-		0,					//클리핑 정확도
-		0,					//출력의 퀄리티
-		0,					//자간
-		TEXT("Maplestory Bold")		//내부시스템폰트가져옴
-	);
-	oldFont = (HFONT)SelectObject(getMemDC(), font1);
 
 
 	/////////////////////그려주는부분 - 건들지말것//////////////////

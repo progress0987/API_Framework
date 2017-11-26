@@ -30,6 +30,7 @@ private:
 	bool onSceneChange=false,SceneChanged=false;
 	int fadeAlpha = 0, fadeCount=0;
 	POINT playerNextPoint;
+	bool debug = false;
 
 public:
 
