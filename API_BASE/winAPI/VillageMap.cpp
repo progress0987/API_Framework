@@ -24,6 +24,7 @@ HRESULT VillageMap::init()
 	tagrect marketportal;//시장가는 포탈					4
 	*/
 
+	bgm = "Village";
 
 	//왼쪽 포탈
 	_lefeportal.x = 159;
@@ -139,20 +140,6 @@ void VillageMap::render()
 		
 	}
 
-	//IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), _lefeportal.x - 50, _lefeportal.y - 50, _lefeportal.currentX, 0, 150);
-	//Rectangle(getMemDC(), _lefeportal.rc.left, _lefeportal.rc.top, _lefeportal.rc.right, _lefeportal.rc.bottom);
-
-	//IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), rightportal.x - 50, rightportal.y - 50, _lefeportal.currentX, 0, 150);
-	//Rectangle(getMemDC(), rightportal.rc.left, rightportal.rc.top, rightportal.rc.right, rightportal.rc.bottom);
-
-	//IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), storeportal.x - 50, storeportal.y - 50, _lefeportal.currentX, 0, 150);
-	//Rectangle(getMemDC(), storeportal.rc.left, storeportal.rc.top, storeportal.rc.right, storeportal.rc.bottom);
-
-	//IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), parkportal.x - 50, parkportal.y - 50, _lefeportal.currentX, 0, 150);
-	//Rectangle(getMemDC(), parkportal.rc.left, parkportal.rc.top, parkportal.rc.right, parkportal.rc.bottom);
-
-	//IMAGEMANAGER->findImage("portal")->alphaFrameRender(getMemDC(), marketportal.x - 50, marketportal.y - 50, _lefeportal.currentX, 0, 150);
-	//Rectangle(getMemDC(), marketportal.rc.left, marketportal.rc.top, marketportal.rc.right, marketportal.rc.bottom);
 	//npc
 	for (vector<tagrect>::iterator i = NPC.begin(); i != NPC.end(); i++) {
 		if (i->pattern == -1) {
@@ -177,26 +164,7 @@ void VillageMap::render()
 			i->_img->frameRender(getMemDC(), i->rc.left - cam->camPoint.x, i->rc.top - cam->camPoint.y, i->currentX, Ypos);
 		}
 	}
-	//IMAGEMANAGER->findImage("gujigirl")->frameRender(getMemDC(), gujiGirl.rc.left, gujiGirl.rc.top, gujiGirl.currentX, 0);
-	//IMAGEMANAGER->findImage("lina")->frameRender(getMemDC(), Lina.rc.left, Lina.rc.top, Lina.currentX, 0);
-	//IMAGEMANAGER->findImage("orange")->frameRender(getMemDC(), OrangeHair.rc.left, OrangeHair.rc.top, OrangeHair.currentX, 0);
-	//if (mingming.pattern == 0)
-	//{
-	//	IMAGEMANAGER->findImage("ming")->frameRender(getMemDC(), mingming.rc.left, mingming.rc.top, mingming.currentX, 3);
-	//}
-	//else if (mingming.pattern == 1)
-	//{
-	//	IMAGEMANAGER->findImage("ming")->frameRender(getMemDC(), mingming.rc.left, mingming.rc.top, mingming.currentX, 1);
-	//}
-	//else if (mingming.pattern == 2)
-	//{
-	//	IMAGEMANAGER->findImage("ming")->frameRender(getMemDC(), mingming.rc.left, mingming.rc.top, mingming.currentX, 0);
-	//}
-	//else if (mingming.pattern == 3)
-	//{
-	//	IMAGEMANAGER->findImage("ming")->frameRender(getMemDC(), mingming.rc.left, mingming.rc.top, mingming.currentX, 2);
-	//}
-	//Rectangle(getMemDC(), mingming.rc.left, mingming.rc.top, mingming.rc.right, mingming.rc.bottom);
+	
 
 }
 
@@ -232,7 +200,7 @@ void VillageMap::MingmingMove()//이동거리 정해져있게 할 것
 	{
 		NPC.back().x++;
 		NPC.back().rc = RectMake(NPC.back().x, NPC.back().y, 47, 69);
-		if (count % 100 == 0)
+		if (count % 100 == 0 || NPC.back().x > 1390)
 		{
 			NPC.back().pattern = rand() % 4;
 		}
@@ -241,7 +209,7 @@ void VillageMap::MingmingMove()//이동거리 정해져있게 할 것
 	{
 		NPC.back().x --;
 		NPC.back().rc = RectMake(NPC.back().x, NPC.back().y, 47, 69);
-		if (count % 100 == 0)
+		if (count % 100 == 0 || NPC.back().x < 1190)
 		{
 			NPC.back().pattern = rand() % 4;
 		}

@@ -31,6 +31,9 @@ protected:
 	int count = 0;
 	int myIndex;//맵 스스로의 enum값을 저장할 것(게임맵들에만 해당함.)
 	Camera* cam;
+
+	char* bgm;
+
 public:
 	mapFrame();
 	~mapFrame();
@@ -43,4 +46,7 @@ public:
 	void setCam(Camera* camera) { cam = camera; }
 	vector<tagrect> getPortals() { return PORTAL; }
 	int getIndex() { return myIndex; }
+
+	void soundplay(mapFrame* map);
+	void soundoff(mapFrame* map);
 };
