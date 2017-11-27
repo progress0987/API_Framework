@@ -25,6 +25,7 @@ enum Status {
 
 
 class skill :public gameNode{
+protected:
 	RECT rc;	//플레이어 좌표 갖고 생성시킴
 	RECT dmgRC;//rc와 비례해서 생성,(rc의 왼쪽위를 0,0이라고 생각하고 추가)
 	image* img;
@@ -37,7 +38,7 @@ class skill :public gameNode{
 	vector<RECT> dmgRCList;
 	Camera* cam;
 public:
-	bool onAttack;
+	bool onCast;
 	HRESULT init(char* skillImg,int dPf,int dmg,int range);
 	void release(void);
 	void update(void);

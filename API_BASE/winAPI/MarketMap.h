@@ -22,6 +22,8 @@ public:
 	void Keymanager();
 	//га╥╧юс
 	void Frame();
+
+
 	
 };
 

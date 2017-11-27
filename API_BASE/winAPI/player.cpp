@@ -45,12 +45,16 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	//////////////////////////////////////////스킬 초기화
 	skill* sk1;
 	sk1 = new skill;
-	sk1->init("skill1", 5, 200,500);
+	sk1->init("skill1", 5, 200,300);
 	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
 
-
+	skill* sk2;
+	sk2 = new skill;
+	sk2->init("skill2", 10, 150, 300);
+	sk2->setCam(mycam);
+	skillList.push_back(sk2);
 
 
 
@@ -74,6 +78,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	*/
 
 	ASkill = skillList[0];
+	SSkill = skillList[1];
 	return S_OK;
 }
 
@@ -463,7 +468,7 @@ void player::update(void)
 			if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
 				curCast = ASkill;
 				curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-				break;
+				//break;
 			}
 		}
 
@@ -473,6 +478,27 @@ void player::update(void)
 			attFrame = 0;
 			attX = 0;
 			playAttMotion();
+		}
+		RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+		RECT hit;
+		if (curDir) {//오른쪽
+			skillRange.left += SSkill->getRange() / 2;
+			skillRange.right += SSkill->getRange() / 2;
+		}
+		else {//왼쪽
+			skillRange.left -= SSkill->getRange() / 2;
+			skillRange.right -= SSkill->getRange() / 2;
+
+		}
+		em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+
+		vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+		for (int i = 0; i < monincurmap.size(); i++) {
+			if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+				curCast = SSkill;
+				curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+				//break;
+			}
 		}
 
 	}
@@ -522,7 +548,7 @@ void player::update(void)
 	if (curCast != nullptr) {
 		curCast->update();
 		hitRC = curCast->getCurSkillRC();
-		if (curCast->onAttack == false) {
+		if (curCast->onCast == false) {
 			curCast = nullptr;
 		}
 	}
@@ -596,12 +622,12 @@ void skill::release(void)
 
 void skill::update(void)
 {
-	if (onAttack) {
+	if (onCast) {
 		frame++;
 		if (frame%delayPerFrames == 0) {
 			frameX++;
 			if (frameX > img->getMaxFrameX()) {
-				onAttack = false;
+				onCast = false;
 				frameX = 0;
 			}
 			dmgRC = dmgRCList[frameX];
@@ -611,7 +637,7 @@ void skill::update(void)
 
 void skill::render(void)
 {
-	if (onAttack) {
+	if (onCast) {
 		if(frameX<img->getMaxFrameX())
 		img->frameRender(getMemDC(), rc.left-cam->camPoint.x, rc.top-cam->camPoint.y, frameX, 0);
 		//Rectangle(getMemDC(), rc.left - cam->camPoint.x, rc.top - cam->camPoint.y, rc.right - cam->camPoint.x, rc.bottom - cam->camPoint.y);
@@ -626,5 +652,5 @@ void skill::setSkillRect(RECT skillRC)
 void skill::fire(POINT pos)
 {
 	rc = RectMakeCenter(pos.x, pos.y, img->getFrameWidth(), img->getFrameHeight());
-	onAttack = true;
+	onCast = true;
 }

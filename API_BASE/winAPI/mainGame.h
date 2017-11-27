@@ -30,6 +30,7 @@ private:
 	bool onSceneChange=false,SceneChanged=false;
 	int fadeAlpha = 0, fadeCount=0;
 	POINT playerNextPoint;
+	bool debug = false;
 
 public:
 
@@ -38,6 +39,7 @@ public:
 	virtual void update(void);
 	virtual void render();
 	void imgInit();
+	void soundInit();
 	void SceneChange(mapFrame* next);
 	mapFrame* getNextNode();
 

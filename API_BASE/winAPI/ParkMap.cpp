@@ -14,6 +14,8 @@ ParkMap::~ParkMap()
 
 HRESULT ParkMap::init()
 {
+	bgm = "Park";
+
 	front = IMAGEMANAGER->findImage("park");
 	back = IMAGEMANAGER->findImage("pixelpark");
 

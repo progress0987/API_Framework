@@ -14,6 +14,7 @@ BossMap::~BossMap()
 
 HRESULT BossMap::init()
 {
+	bgm = "Boss";
 
 	////////////////////////////////////////////////////////////////////////////////Æ÷Å»
 	front = IMAGEMANAGER->findImage("boss");
