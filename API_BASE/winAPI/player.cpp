@@ -342,7 +342,7 @@ void player::update(void)
 			if (curStatus == Status::onRope || curStatus == Status::onLadder) {
 				count++;
 				curPos.y += 1;
-				if (count % 1500) {
+				if (count % 150) {
 					curFrameX++;
 					if (curFrameX > _human->getMaxFrameX())curFrameX = 0;
 				}
@@ -449,58 +449,58 @@ void player::update(void)
 			attFrame = 0;
 			attX = 0;
 			playAttMotion();
-		}
-		RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
-		RECT hit;
-		if (curDir) {//오른쪽
-			skillRange.left += ASkill->getRange() / 2;
-			skillRange.right += ASkill->getRange() / 2;
-		}
-		else {//왼쪽
-			skillRange.left -= ASkill->getRange() / 2;
-			skillRange.right -= ASkill->getRange() / 2;
 
-		}
-		em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+			RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
+			RECT hit;
+			if (curDir) {//오른쪽
+				skillRange.left += ASkill->getRange() / 2;
+				skillRange.right += ASkill->getRange() / 2;
+			}
+			else {//왼쪽
+				skillRange.left -= ASkill->getRange() / 2;
+				skillRange.right -= ASkill->getRange() / 2;
 
-		vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-		for (int i = 0; i < monincurmap.size(); i++) {
-			if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-				curCast = ASkill;
-				curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-				//break;
+			}
+			em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+
+			vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+			for (int i = 0; i < monincurmap.size(); i++) {
+				if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+					curCast = ASkill;
+					curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+					//break;
+				}
 			}
 		}
-
 	}
 	if (KEYMANAGER->isOnceKeyDown('S')) {
 		if (!onAttack) {
 			attFrame = 0;
 			attX = 0;
 			playAttMotion();
-		}
-		RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
-		RECT hit;
-		if (curDir) {//오른쪽
-			skillRange.left += SSkill->getRange() / 2;
-			skillRange.right += SSkill->getRange() / 2;
-		}
-		else {//왼쪽
-			skillRange.left -= SSkill->getRange() / 2;
-			skillRange.right -= SSkill->getRange() / 2;
 
-		}
-		em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+			RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+			RECT hit;
+			if (curDir) {//오른쪽
+				skillRange.left += SSkill->getRange() / 2;
+				skillRange.right += SSkill->getRange() / 2;
+			}
+			else {//왼쪽
+				skillRange.left -= SSkill->getRange() / 2;
+				skillRange.right -= SSkill->getRange() / 2;
 
-		vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-		for (int i = 0; i < monincurmap.size(); i++) {
-			if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-				curCast = SSkill;
-				curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-				//break;
+			}
+			em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+
+			vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+			for (int i = 0; i < monincurmap.size(); i++) {
+				if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+					curCast = SSkill;
+					curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+					//break;
+				}
 			}
 		}
-
 	}
 	if (KEYMANAGER->isOnceKeyDown('D')) {
 		if (!onAttack) {
@@ -571,7 +571,7 @@ void player::render(void)
 	}
 
 	char tmp[128];
-	sprintf(tmp, "Cam : %d,%d / curPos : %d,%d", mycam->camPoint.x, mycam->camPoint.y, curPos.x, curPos.y);
+	sprintf(tmp, "프레임 : %d",count);
 	TextOut(getMemDC(), 50, 100, tmp, strlen(tmp));
 	//EllipseMakeCenter(getMemDC(), curPos.x-mycam->camPoint.x, hitRC.bottom + 10 - mycam->camPoint.y, 35, 35);
 	//Rectangle(getMemDC(), hitRC.left- mycam->camPoint.x, hitRC.top - mycam->camPoint.y, hitRC.right - mycam->camPoint.x, hitRC.bottom - mycam->camPoint.y);
