@@ -13,6 +13,8 @@ mainGame::~mainGame()
 }
 HRESULT mainGame::init(void)
 {
+
+
 	gameNode::init(true);
 	srand(time(NULL));
 	imgInit();
