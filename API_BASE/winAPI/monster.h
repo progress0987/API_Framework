@@ -1,9 +1,11 @@
 #pragma once
 #include"gameNode.h"
+#include"progressBar.h"
 //몬스터의 기본 구조 클래스
 class monster :public gameNode
 {
 protected:
+	progressBar* Hpbar;
 	int MaxHp;
 	int NowHp;
 	int Atk;
@@ -45,6 +47,9 @@ public:
 	void SetCam(Camera* c) { cam = c; }//카메라 세팅
 
 	int getIndex(void) { return MyIndex; }//인덱스 가져오기
+
+	void HpbarInit(void);//hp바 만들기
+	void Hpbarupdate(void);//hp바 업데이트
 };
 //Harp의 관리 클래스
 class Harp :public monster

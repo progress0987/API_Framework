@@ -29,6 +29,7 @@ HRESULT monster::init(int Hp, int Atk, int Def, POINT position, int Width, int h
 
 void monster::update()
 {
+
 }
 
 void monster::render()
@@ -126,6 +127,18 @@ void monster::Setbody(int i)
 	body.bottom = i;
 	body.top = body.bottom - Num;
 }
+void monster::HpbarInit(void)
+{
+	Hpbar = new progressBar;
+	Hpbar->init(pt.x, pt.y - bodyH / 2 - 100, bodyW, 10);
+}
+void monster::Hpbarupdate(void)
+{
+	Hpbar->setGauge(NowHp, MaxHp);
+	Hpbar->setX(body.left - cam->camPoint.x);
+	Hpbar->setY(body.top - cam->camPoint.y);
+	Hpbar->update();
+}
 RECT monster::getbody(void)
 {
 	if (NowHp >= 1)
@@ -151,6 +164,7 @@ HRESULT Harp::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 2;
+	HpbarInit();
 	return S_OK;
 }
 void Harp::moving(void)
@@ -352,9 +366,15 @@ void Harp::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void Harp::render(void)
 {
+//		Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+	Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -395,11 +415,11 @@ void Harp::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
 //	char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
 //	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
 //	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	
 }
 void Harp::collRect(RECT player, int demage)
 {
@@ -432,6 +452,7 @@ HRESULT Grupin::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 4;
+	HpbarInit();
 	return S_OK;
 }
 void Grupin::moving(void)
@@ -637,10 +658,15 @@ void Grupin::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void Grupin::render(void)
 {
 //	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -717,6 +743,7 @@ HRESULT Cellion::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 4;
+	HpbarInit();
 	return S_OK;
 }
 void Cellion::moving(void)
@@ -922,10 +949,15 @@ void Cellion::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void Cellion::render(void)
 {
 //	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -1002,6 +1034,7 @@ HRESULT Lioner::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 4;
+	HpbarInit();
 	return S_OK;
 }
 void Lioner::moving(void)
@@ -1207,10 +1240,15 @@ void Lioner::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void Lioner::render(void)
 {
 //	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -1287,6 +1325,7 @@ HRESULT Lucida::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 6;
+	HpbarInit();
 	return S_OK;
 }
 void Lucida::moving(void)
@@ -1492,10 +1531,15 @@ void Lucida::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void Lucida::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -1572,6 +1616,7 @@ HRESULT JrYeti::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 3;
+	HpbarInit();
 	return S_OK;
 }
 void JrYeti::moving(void)
@@ -1784,10 +1829,18 @@ void JrYeti::update(void)
 {
 	moving();
 	dead();
+	Hpbar->setGauge(NowHp, MaxHp);
+	Hpbar->setX(body.left - cam->camPoint.x);
+	Hpbar->setY(body.top - cam->camPoint.y-50);
+	Hpbar->update();
 }
 void JrYeti::render(void)
 {
 //	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -1864,6 +1917,7 @@ HRESULT PePe::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 3;
+	HpbarInit();
 	return S_OK;
 }
 void PePe::moving(void)
@@ -2069,10 +2123,15 @@ void PePe::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void PePe::render(void)
 {
 //	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -2148,6 +2207,7 @@ HRESULT Sheep::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 2;
+	HpbarInit();
 	return S_OK;
 }
 void Sheep::moving(void)
@@ -2353,10 +2413,15 @@ void Sheep::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void Sheep::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -2432,6 +2497,7 @@ HRESULT JCellion::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 5;
+	HpbarInit();
 	return S_OK;
 }
 void JCellion::moving(void)
@@ -2637,10 +2703,15 @@ void JCellion::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void JCellion::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -2717,6 +2788,7 @@ HRESULT JGrupin::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 5;
+	HpbarInit();
 	return S_OK;
 }
 void JGrupin::moving(void)
@@ -2922,10 +2994,15 @@ void JGrupin::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void JGrupin::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -3002,6 +3079,7 @@ HRESULT JLioner::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 5;
+	HpbarInit();
 	return S_OK;
 }
 void JLioner::moving(void)
@@ -3207,10 +3285,15 @@ void JLioner::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void JLioner::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -3287,6 +3370,7 @@ HRESULT JLucida::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 6;
+	HpbarInit();
 	return S_OK;
 }
 void JLucida::moving(void)
@@ -3492,11 +3576,16 @@ void JLucida::update(void)
 {
 	moving();
 	dead();
+	Hpbarupdate();
 }
 void JLucida::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (moveDir)
 	{
 		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
@@ -3573,6 +3662,7 @@ HRESULT Eliza::init(POINT pos)
 	SkillOne = false;
 	SkillTwo = false;
 	MyIndex = 6;
+	HpbarInit();
 	return S_OK;
 }
 void Eliza::moving(void)
@@ -3795,10 +3885,15 @@ void Eliza::update(void)
 			SkillTwoRect[i] = RectMake(DemagePoint[i].x - cam->camPoint.x, DemagePoint[i].y - cam->camPoint.y, IMAGEMANAGER->findImage("ElizaSkill2")->getWidth() / 15, IMAGEMANAGER->findImage("ElizaSkill2")->getHeight());
 		}
 	}
+	Hpbarupdate();
 }
 void Eliza::render(void)
 {
 	//Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
 	if (SkillTwo == true)
 	{
 		for (int i = 0; i < 4; i++)
