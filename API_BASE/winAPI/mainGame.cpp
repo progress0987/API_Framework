@@ -61,7 +61,7 @@ HRESULT mainGame::init(void)
 	_boss->setCam(cam);
 
 	curScene = _village;
-	curScene->soundplay(_village);
+	curScene->soundplay();
 
 	_player->init(pointMake(1660, 400), curScene);
 	
@@ -91,6 +91,7 @@ void mainGame::update(void)
 		if (fadeAlpha >= 255) {
 			fadeAlpha = 255;
 			onSceneChange = false;
+			curScene->soundoff();
 			//씬 체인지
 			_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 			SceneChange(getNextNode());
@@ -103,6 +104,7 @@ void mainGame::update(void)
 			fadeAlpha = 0;
 			SceneChanged = false;
 			_player->sceneChangeFinished = true;
+			curScene->soundplay();
 			
 		}
 	}
@@ -361,19 +363,13 @@ void mainGame::soundInit()
 
 void mainGame::SceneChange(mapFrame * next)
 {
-	curScene->soundoff(_village);
-	curScene->soundoff(_park);
-	curScene->soundoff(_market);
-	curScene->soundoff(_boss);
-	curScene->soundoff(_hill);
-	curScene->soundoff(_forest);
-	curScene->soundoff(_map);
+
 	//잘못된 좌표라면 그냥 나옴
 	if (next == nullptr)return;
+	curScene->soundoff();
 	//다음 갈 포탈 좌표위쪽에 좌표 정해주고 씬을 바꾸며 init을 해줌
 	_player->init(playerNextPoint, next);
 
-	curScene->soundplay(next);
 }
 
 //현재 있는 곳의 좌표를 찾아주고 다음 움직일 맵의 정보를 받아옴

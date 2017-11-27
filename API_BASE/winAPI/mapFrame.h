@@ -47,6 +47,6 @@ public:
 	vector<tagrect> getPortals() { return PORTAL; }
 	int getIndex() { return myIndex; }
 
-	void soundplay(mapFrame* map);
-	void soundoff(mapFrame* map);
+	void soundplay();
+	void soundoff();
 };

@@ -28,12 +28,12 @@ void mapFrame::render()
 {
 }
 
-void mapFrame::soundplay(mapFrame * map)
+void mapFrame::soundplay()
 {
 	SOUNDMANAGER->play(bgm);
 }
 
-void mapFrame::soundoff(mapFrame * map)
+void mapFrame::soundoff()
 {
 	SOUNDMANAGER->stop(bgm);
 }
