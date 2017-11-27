@@ -1325,7 +1325,7 @@ HRESULT Lucida::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 6;
-	HpbarInit();
+	HpbarInit(); 
 	return S_OK;
 }
 void Lucida::moving(void)
