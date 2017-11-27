@@ -9,6 +9,7 @@
 #include"ForestMap.h"
 #include"HillMap.h"
 #include"MarketMap.h"
+#include <atlimage.h>//테스트중
 
 
 class mainGame : public gameNode

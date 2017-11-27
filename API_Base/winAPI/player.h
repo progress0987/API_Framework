@@ -60,13 +60,15 @@ public:
 
 struct status
 {
-	int HP = 2000;    //체력
-	int MP = 1000;    //마나
-	int Str = 0;      //힘
-	int Dex = 0;      //민첩
-	int Int = 0;      //지력
-	int Luk = 0;      //운
-	int Att = 0;      //공격력
+	int Level = 1;
+	int HP = 200;    //체력
+	int MP = 50;    //마나
+	int Str = 5;      //힘
+	int Dex = 5;      //민첩
+	int Int = 5;      //지력
+	int Luk = 5;      //운
+	int Att = Str*4 + Dex*2;      //공격력
+	int Def = Str * 3 + Dex * 3;
 	int Like = 0;     //인기도
 	int Exp = 0;      //경험치
 };
@@ -116,6 +118,7 @@ private:
 	int attX;
 public:
 	bool sceneChange=false;
+	bool sceneChangeFinished = false;
 	HRESULT init(POINT position,mapFrame* Scene);
 	void release(void);
 	void update(void);

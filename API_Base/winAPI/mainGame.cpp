@@ -13,6 +13,8 @@ mainGame::~mainGame()
 }
 HRESULT mainGame::init(void)
 {
+	
+	
 	gameNode::init(true);
 	srand(time(NULL));
 	imgInit();
@@ -89,8 +91,8 @@ void mainGame::update(void)
 		if (fadeAlpha >= 255) {
 			fadeAlpha = 255;
 			onSceneChange = false;
-		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 			//씬 체인지
+			_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 			SceneChange(getNextNode());
 			SceneChanged = true;
 		}
@@ -100,6 +102,7 @@ void mainGame::update(void)
 		if (fadeAlpha <= 0) {
 			fadeAlpha = 0;
 			SceneChanged = false;
+			_player->sceneChangeFinished = true;
 			
 		}
 	}
