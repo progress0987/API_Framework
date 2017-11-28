@@ -223,6 +223,8 @@ void UserInterface::update(void)
 		
 	}
 
+
+	//실시간 캐릭터 스텟 갱신쓰
 }
 
 void UserInterface::render(void)
