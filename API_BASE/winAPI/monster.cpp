@@ -707,10 +707,10 @@ void Grupin::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Grupin::collRect(RECT player, int demage)
 {
@@ -998,10 +998,10 @@ void Cellion::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Cellion::collRect(RECT player, int demage)
 {
@@ -1289,10 +1289,10 @@ void Lioner::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Lioner::collRect(RECT player, int demage)
 {
@@ -1580,10 +1580,10 @@ void Lucida::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Lucida::collRect(RECT player, int demage)
 {
@@ -1881,10 +1881,10 @@ void JrYeti::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JrYeti::collRect(RECT player, int demage)
 {
@@ -2172,10 +2172,10 @@ void PePe::render(void)
 		}
 	}
 //	Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void PePe::collRect(RECT player, int demage)
 {
@@ -2462,10 +2462,10 @@ void Sheep::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Sheep::collRect(RECT player, int demage)
 {
@@ -2752,10 +2752,10 @@ void JCellion::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JCellion::collRect(RECT player, int demage)
 {
@@ -3043,10 +3043,10 @@ void JGrupin::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JGrupin::collRect(RECT player, int demage)
 {
@@ -3334,10 +3334,10 @@ void JLioner::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JLioner::collRect(RECT player, int demage)
 {
@@ -3625,10 +3625,10 @@ void JLucida::render(void)
 			IMAGEMANAGER->findImage("JLucidaS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0);
 		}
 	}
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JLucida::collRect(RECT player, int demage)
 {
@@ -3942,10 +3942,10 @@ void Eliza::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Eliza::collRect(RECT player, int demage)
 {
