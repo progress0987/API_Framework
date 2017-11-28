@@ -166,6 +166,17 @@ HRESULT UserInterface::init(void)
 	expLayer->setX(150);
 	expLayer->setY(761);
 
+	Level = pl->getstatus()->Level;
+	playerHp = pl->getstatus()->curHP;
+	playerMp = pl->getstatus()->curMP;
+	MaxHp = pl->getstatus()->maxHP;
+	MaxMp = pl->getstatus()->maxMP;
+	_str = pl->getstatus()->Str;
+	_dex = pl->getstatus()->Dex;
+	_int = pl->getstatus()->Int;
+	_luk = pl->getstatus()->Luk;
+	//_ap;
+
 
 	
 

@@ -7,7 +7,7 @@ class player;
 class UserInterface :public gameNode
 {
 private:
-	player *curPlayer;
+	player *pl;
 	//--------------손가락커서--------------
 	image *finger;
 
@@ -112,7 +112,7 @@ public:
 	virtual void statement(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
-	void setPlayer(player *pl) { curPlayer = pl; }
+	void setPlayer(player *pl) { this->pl = pl; }
 
 	UserInterface();
 	~UserInterface();
