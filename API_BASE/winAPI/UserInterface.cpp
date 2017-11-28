@@ -58,7 +58,7 @@ HRESULT UserInterface::init(void)
 	//Äü½½·Ô ·¹ÀÌ¾îÀÛ¾÷
 	slotcover1 = IMAGEMANAGER->findImage("Äü½½·Ô¿ŞÂÊÅ×µÎ¸®");
 	slotcover2 = IMAGEMANAGER->findImage("Äü½½·ÔÄ¿¹ö");
-	slotbackground = IMAGEMANAGER->findImage("Äü½½·Ô(0)");
+	slotbackground = IMAGEMANAGER->findImage("Äü½½·Ô0");
 
 	//Äü½½·Ô ´ÜÃàÅ° ÀÛ¾÷
 	q1 = IMAGEMANAGER->findImage("Äü1");
@@ -241,6 +241,8 @@ void UserInterface::render(void)
 
 	//Äü½½·Ô
 
+
+	slotbackground->alphaRender(getMemDC(), 1019, 688, 180);
 	slotcover1->render(getMemDC(), 1009, 686);
 	slotcover2->render(getMemDC(), 1017, 685);
 
