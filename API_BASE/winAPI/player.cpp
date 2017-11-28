@@ -18,8 +18,11 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	sceneChange = false;
 	curDir = false;
 	curPos = pos;
+
 	onAttack = false;
 	onHit = false;
+	onLvlUP = false;
+
 	hitcount = 0;
 	hitalpha = 255;
 
@@ -60,25 +63,9 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	skillList.push_back(sk2);
 
 
+	//수정 - 레벨업 이펙트 추가
+	//EFFECTMANAGER->addEffect();
 
-
-
-
-
-
-
-
-
-	/////////////////////////UI초기화
-	//UI = new UserInterface;
-	//UI->init();
-	//UI하고 stat하고 연결 ex) UI->setStat(stat);
-	//UI안에서는 
-	/*
-	void setStat(status* st){
-		this->playerStat = st;
-	}
-	*/
 
 	ASkill = skillList[0];
 	SSkill = skillList[1];
@@ -87,6 +74,12 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 void player::release(void)
 {
+	ASkill = nullptr;
+	SSkill = nullptr;
+	DSkill = nullptr;
+	curCast = nullptr;
+	SAFE_DELETE(stat);
+	em = nullptr;
 }
 
 void player::update(void)
@@ -645,6 +638,21 @@ void player::BeingHit(int amount)
 		hitmoveX = -25;
 	}
 }
+//경험치 획득
+void player::GainExp(int exp)
+{
+	stat->Exp += exp;
+	if (stat->Exp >= stat->lvlUpExp) {
+		stat->Exp %= stat->lvlUpExp;
+		stat->lvlUpExp *= (4 / 3);
+		stat->Level++;
+		stat->ap += 5;
+
+		//수정 - 레벨업 이펙트
+		//EFFECTMANAGER->play("LVLUP", curPos.x-mycam->camPoint.x, curPos.y-mycam->camPoint.y);
+	}
+}
+
 
 
 //캐릭터를 비춰주는 카메라 함수. 렌더링은 렌더함수 부분에서 처리.

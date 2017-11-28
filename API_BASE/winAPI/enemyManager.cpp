@@ -69,6 +69,9 @@ HRESULT enemyManager::init(Camera* plCam)
 
 void enemyManager::release()
 {
+	for (int i = 0; i < Monsters.size(); i++) {
+		SAFE_DELETE(Monsters[i]);
+	}
 }
 
 void enemyManager::update(int Index)
