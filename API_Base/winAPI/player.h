@@ -92,7 +92,7 @@ private:
 	vector<skill*> skillList;
 
 	status* stat;
-	UserInterface* UI;
+//	UserInterface* UI;
 	enemyManager* em;
 	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
 

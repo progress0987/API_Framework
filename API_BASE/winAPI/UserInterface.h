@@ -1,7 +1,7 @@
 #pragma once
 #include"gameNode.h"
 #include"items.h"
-//#include "player.h"
+#include "player.h"
 
 class UserInterface :public gameNode
 {
@@ -111,7 +111,7 @@ public:
 	virtual void statement(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
-	//void setPlayer(player *pl) { curPlayer = pl; }
+//	void setPlayer(player *pl) { curPlayer = pl; }
 
 	UserInterface();
 	~UserInterface();

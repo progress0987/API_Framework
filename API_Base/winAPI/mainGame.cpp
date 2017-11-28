@@ -347,7 +347,7 @@ void mainGame::imgInit()
 	//Äü½½·Ô
 	IMAGEMANAGER->addImage("Äü½½·Ô0",			"sprites/UI/Äü½½·Ô(0).bmp", 350, 67, true, RGB(255, 255, 255));
 	IMAGEMANAGER->addImage("Äü½½·Ô¿ŞÂÊÅ×µÎ¸®",	"sprites/UI/Äü½½·Ô¿ŞÂÊÅ×µÎ¸®.bmp", 13, 71, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Äü½½·ÔÄ¿¹ö",		"sprites/UI/Äü½½·ÔÄ¿¹ö.bmp", 351, 73, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("Äü½½·ÔÄ¿¹ö",		"sprites/UI/Äü½½·ÔÄ¿¹ö.bmp", 351, 73, true, RGB(255, 0, 255));
 
 	//Äü½½·Ô´ÜÃàÅ°
 	IMAGEMANAGER->addImage("Äü1",				"sprites/UI/Äü1.bmp", 7, 9, true, RGB(255, 255, 255));
