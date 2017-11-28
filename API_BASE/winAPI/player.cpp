@@ -19,6 +19,9 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	curDir = false;
 	curPos = pos;
 	onAttack = false;
+	onHit = false;
+	hitcount = 0;
+	hitalpha = 255;
 
 	mycam->camPoint.x = pos.x-mycam->width/2;
 	mycam->camPoint.y = pos.y-mycam->height/2;
@@ -511,6 +514,7 @@ void player::update(void)
 		}
 	}
 	
+	//공격모션중
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
 		attFrame++;
 		if (attFrame % 12 == 0) {
@@ -529,7 +533,21 @@ void player::update(void)
 		}
 	}
 
-	//모든 연산이 끝난 후 렉트를 생성
+	//맞는중
+	if (onHit) {
+		hitcount++;
+		//curPos.x+=
+		if (hitcount % 50==0) {
+			hitalpha = rand() % 155 + 100;
+			if (hitcount % 100 == 0) {
+				hitalpha = 255;
+			}
+		}
+		if (hitcount >= 1000) {
+			onHit = false;
+		}
+	}
+
 
 	if (curPos.x - (width / 2 - (hitRC.left - rc.left)) < 0) {
 		curPos.x = width / 2 - (hitRC.left - rc.left);
@@ -540,18 +558,6 @@ void player::update(void)
 		moveVel = 0;
 	}
 
-	//UI 업데이트 혹은!!!!!
-	//키를 누를때 UI의 랜더상태를 변경하게(bool)
-	/*ex) if(keymananager->isoncekeydown('I')){
-		UI->toggleInventory();
-		//toggleInventory(){
-		showInv = !showInv;
-		}
-	}
-	*/
-	
-	//UI->update();
-
 	//기술사용
 	if (curCast != nullptr) {
 		curCast->update();
@@ -560,8 +566,10 @@ void player::update(void)
 			curCast = nullptr;
 		}
 	}
+	//모든 연산이 끝난 후 렉트를 생성
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
+	//UI->update();
 }
 
 void player::render(void)
@@ -594,6 +602,24 @@ void player::playAttMotion()
 {
 	if (!onAttack) {
 		onAttack = true;
+	}
+}
+//맞을때 불러올 것
+void player::BeingHit(int amount)
+{
+	hitcount = 0;
+	stat->HP -= amount;
+	onHit = true;
+	bool dir = rand() % 2;//랜덤 방향으로 튀김
+	if (dir) {
+		hitmoveX = 5;
+		hitmoveY = -4;
+		curStatus = Status::onJump;
+	}
+	else {
+		hitmoveX = -5;
+		hitmoveY = -4;
+		curStatus = Status::onJump;
 	}
 }
 
