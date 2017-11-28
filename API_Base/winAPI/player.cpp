@@ -441,6 +441,7 @@ void player::update(void)
 			attFrame = 0;
 			attX = 0;
 			playAttMotion();
+			onAttack = true;
 		}
 	}
 	//////////////////////////////////////////////////////스킬공격
@@ -512,8 +513,14 @@ void player::update(void)
 	
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
 		attFrame++;
-		if (attFrame % 15 == 0) {
+		if (attFrame % 12 == 0) {
 			attX++;
+			if (attX == 2) {
+				dmgRC = RectMakeCenter(curPos.x + (curDir ? 20 : -20), curPos.y + 10, 30, 30);
+			}
+			if (attX == 5) {
+				dmgRC = RectMakeCenter(0, 0, 0, 0);
+			}
 			if (attX > attackMotion->getMaxFrameX()) {
 				attX = 0;
 				attFrame = 0;
@@ -545,6 +552,7 @@ void player::update(void)
 	
 	//UI->update();
 
+	//기술사용
 	if (curCast != nullptr) {
 		curCast->update();
 		hitRC = curCast->getCurSkillRC();
@@ -567,7 +575,7 @@ void player::render(void)
 	}
 	else {
 		attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
-		Rectangle(getMemDC(), dmgRC.left, dmgRC.top, dmgRC.right, dmgRC.bottom);
+		//Rectangle(getMemDC(), dmgRC.left, dmgRC.top, dmgRC.right, dmgRC.bottom);
 	}
 
 	char tmp[128];
