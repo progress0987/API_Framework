@@ -399,21 +399,22 @@ void UserInterface::statement(void)
 	TextOut(getMemDC(), statWnd->getX() + 85, statWnd->getY() + 182, temp8, strlen(temp8));
 
 	char temp9[255];
-	sprintf(temp9, "%d ", playerMp, MaxMp);
-	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp9, strlen(temp9));
+	sprintf(temp9, "%d(%d+%d)", _str, _basicStr, totalEquipstr);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 209, temp9, strlen(temp9));
 
 	char temp10[255];
-	sprintf(temp10, "%d ", playerMp, MaxMp);
-	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp10, strlen(temp10));
+	sprintf(temp10, "%d(%d+%d)", _dex, _basicDex, totalEquipdex);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 227, temp10, strlen(temp10));
 
 	char temp11[255];
-	sprintf(temp11, "%d ", playerMp, MaxMp);
-	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp11, strlen(temp11));
+	sprintf(temp11, "%d(%d+%d)", _int, _basicInt, totalEquipint);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 245, temp11, strlen(temp11));
 
 	char temp12[255];
-	sprintf(temp12, "%d ", playerMp, MaxMp);
-	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp12, strlen(temp12));
+	sprintf(temp12, "%d(%d+%d)", _luk, _basicLuk, totalEquipluk);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 263, temp12, strlen(temp12));
 
+	//다썼으면 지워주자!!!
 	DeleteObject(oldFont);
 	DeleteObject(font1);
 }
