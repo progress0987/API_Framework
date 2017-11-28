@@ -116,7 +116,7 @@ private:
 	bool onAttack;
 	bool onHit;
 	bool hitDir;
-	int hitmoveX, hitmoveY;
+	int hitmoveX;
 	int hitcount,hitalpha;
 
 	int attFrame;
