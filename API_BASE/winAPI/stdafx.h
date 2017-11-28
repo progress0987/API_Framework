@@ -34,6 +34,7 @@
 #include "timeManager.h"
 #include "txtData.h"
 #include "soundManager.h"
+#include "effectManager.h"
 
 using namespace std;
 using namespace Util;

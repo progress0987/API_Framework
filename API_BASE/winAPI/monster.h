@@ -31,6 +31,7 @@ public:
 	HRESULT init(int Hp, int Atk, int Def, POINT position, int Width, int height);
 	virtual void update();
 	virtual void render();
+	void release() { Hpbar = nullptr; }
 	virtual void collRect(RECT player, int demage);
 	virtual RECT getbody(void);//몬스터 체크 렉트 가져오기
 	bool hit(void);				//공격당한것 확인

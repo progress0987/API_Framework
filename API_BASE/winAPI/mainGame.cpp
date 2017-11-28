@@ -77,8 +77,20 @@ HRESULT mainGame::init(void)
 //해제
 void mainGame::release(void)
 {//사용한 이미지도 릴리즈해줘야함
-	gameNode::release();
+	SAFE_DELETE(_village);
+	SAFE_DELETE(_map);
+	SAFE_DELETE(_park);
+	SAFE_DELETE(_hill);
+	SAFE_DELETE(_market);
+	SAFE_DELETE(_forest);
+	SAFE_DELETE(_boss);
+	SAFE_DELETE(cam);
+	SAFE_DELETE(_village);
 	_player->release();
+	em->release();
+	UI->release();
+	gameNode::release();
+
 }
 //연산~
 void mainGame::update(void)

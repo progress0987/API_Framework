@@ -74,6 +74,7 @@ struct status
 	int Like = 0;     //인기도
 	int Exp = 0;      //경험치
 	int lvlUpExp = 300;
+	int ap = 0;	//스텟 포인트
 };
 
 class player :public gameNode
@@ -118,6 +119,12 @@ private:
 
 	bool onAttack;
 	bool onHit;
+
+
+	bool onLvlUP;
+	int levelUPCount;
+
+
 	bool hitDir;
 	int hitmoveX;
 	int hitcount,hitalpha;
@@ -139,6 +146,8 @@ public:
 	RECT getRc() { return rc; }
 	void linkEnemyManager(enemyManager* em) { this->em = em; }
 	void BeingHit(int amount = 50);
+	//경험치 획득
+	void GainExp(int exp);
 
 
 	status* getstatus() { return stat; }
@@ -156,7 +165,6 @@ public:
 	int setExp(int exp) {	stat->Exp = exp; }
 	int setLvupExp(int exp) { stat->lvlUpExp = exp; }
 
-	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.
 
 
 	player();
