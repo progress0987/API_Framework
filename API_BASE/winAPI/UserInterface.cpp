@@ -208,6 +208,21 @@ void UserInterface::update(void)
 
 	}
 
+	//키 작동 확인.
+	//체력포션 처먹처먹
+	if (KEYMANAGER->isOnceKeyDown(VK_DELETE))
+	{
+		
+
+	}
+
+	//마나포션 처먹처먹
+	if (KEYMANAGER->isOnceKeyDown(VK_END))
+	{
+
+		
+	}
+
 }
 
 void UserInterface::render(void)
@@ -245,6 +260,34 @@ void UserInterface::render(void)
 	slotbackground->alphaRender(getMemDC(), 1019, 688, 180);
 	slotcover1->render(getMemDC(), 1009, 686);
 	slotcover2->render(getMemDC(), 1017, 685);
+
+
+
+	///////////////////////////////////여기에 스킬, 아이템이미지, 재고번호 넣도록 하여라.
+
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	q1 -> render(getMemDC(), 1162, 690);
+	q2 -> render(getMemDC(), 1197, 690);
+	q3 -> render(getMemDC(), 1232, 690);
+	q4 -> render(getMemDC(), 1267, 690);
+	q5 -> render(getMemDC(), 1302, 690);
+	q6 -> render(getMemDC(), 1337, 690);
+	qq->render(getMemDC(), 1162, 725);
+	qw->render(getMemDC(), 1197, 725);
+	qe->render(getMemDC(), 1232, 725);
+	qr->render(getMemDC(), 1267, 725);
+	qt->render(getMemDC(), 1302, 725);
+	qa->render(getMemDC(), 1337, 725);
+	_ctrl->render(getMemDC(), 1022, 725);
+	_shift->render(getMemDC(), 1022, 690);
+	_inst->render(getMemDC(), 1057, 690);
+	_del->render(getMemDC(), 1057, 725);
+	_hm -> render(getMemDC(), 1092, 690);
+	_end->render(getMemDC(), 1092, 725);
+	_pgup->render(getMemDC(), 1127, 690);
+	_pgdn->render(getMemDC(), 1127, 725);
+
 
 	//스텟창, 장비창, 인벤토리 렌더링
 	if (onStat)
