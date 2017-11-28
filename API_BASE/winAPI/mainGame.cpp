@@ -65,9 +65,10 @@ HRESULT mainGame::init(void)
 
 	_player->init(pointMake(1660, 400), curScene);
 	
-	//UI = new UserInterface;
+	UI = new UserInterface;
+	UI->setPlayer(_player);
 
-	//UI->init();
+	UI->init();
 
 	return S_OK;
 }
@@ -116,7 +117,7 @@ void mainGame::update(void)
 		debug = !debug;
 	}
 
-	//UI->update();
+	UI->update();
 
 }
 //여기가 그려주는 곳
@@ -146,7 +147,7 @@ void mainGame::render()
 
 	//IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
 
-	//UI->render();
+	UI->render();
 
 	TIMEMANAGER->render(getMemDC());
 	/////////////////////////////
@@ -277,7 +278,7 @@ void mainGame::imgInit()
 
 	//////////////////////////////////////////////UI//////////////////////////////////////////////////////
 	//------------------------------------커서----------------------------------------------
-	IMAGEMANAGER->addFrameImage("커서", "sprites/UI/Cursor.bmp", 120, 120, 4, 4, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addFrameImage("커서", "sprites/UI/Cursor.bmp", 120, 120, 4, 4, true, RGB(255, 0, 255));
 
 
 	IMAGEMANAGER->addImage("아이템정보창",	"sprites/UI/아이템정보창.bmp", 220, 300, false, NULL);
@@ -320,7 +321,9 @@ void mainGame::imgInit()
 	//------------------------------------인터페이스-----------------------------------------
 
 	//체력, 아이디, 레벨 사각형
-	IMAGEMANAGER->addImage("게이지테두리",		"sprites/UI/게이지테두리(비트).bmp", 204, 70, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("게이지테두리",		"sprites/UI/게이지테두리(비트).bmp", 204, 70, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("커버",				"sprites/UI/커버.bmp", 204, 70, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("게이지배경",		"sprites/UI/스테이터스바배경.bmp", 198, 37, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("마나",				"sprites/UI/마나바(비트).bmp", 171, 13, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("체력",				"sprites/UI/체력바(비트).bmp", 171, 13, false, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Lv",				"sprites/UI/Lv.bmp", 15, 10, true, RGB(255, 255, 255));
@@ -365,12 +368,31 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("shift",				"sprites/UI/Shift.bmp", 28, 9, true, RGB(255, 255, 255));
 
 
-	IMAGEMANAGER->addImage("Q",					"sprites?UI/Q.bmp", 10, 10, true, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("W",					"sprites?UI/W.bmp", 12, 9, true, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("E",					"sprites?UI/E.bmp", 10, 9, true, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("R",					"sprites?UI/R.bmp", 10, 9, true, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("T",					"sprites?UI/T.bmp", 10, 9, true, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("A",					"sprites?UI/A.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("Q",					"sprites/UI/Q.bmp", 10, 10, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("W",					"sprites/UI/W.bmp", 12, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("E",					"sprites/UI/E.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("R",					"sprites/UI/R.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("T",					"sprites/UI/T.bmp", 10, 9, true, RGB(255, 255, 255));
+	IMAGEMANAGER->addImage("A",					"sprites/UI/A.bmp", 10, 9, true, RGB(255, 255, 255));
+
+	//-------------------------------------상태표기 숫자들--------------------------------------
+
+	IMAGEMANAGER->addImage("작0", "sprites/UI/작0.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작1", "sprites/UI/작1.bmp", 4, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작2", "sprites/UI/작2.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작3", "sprites/UI/작3.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작4", "sprites/UI/작4.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작5", "sprites/UI/작5.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작6", "sprites/UI/작6.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작7", "sprites/UI/작7.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작8", "sprites/UI/작8.bmp", 7, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("작9", "sprites/UI/작9.bmp", 7, 9, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("역슬래쉬", "sprites/UI/역슬래쉬.bmp", 6, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("점", "sprites/UI/점.bmp", 3, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("[", "sprites/UI/[.bmp", 4, 11, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("]", "sprites/UI/].bmp", 4, 11, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("%", "sprites/UI/작%.bmp", 9, 9, true, RGB(255, 0, 255));
 }
 
 void mainGame::soundInit()

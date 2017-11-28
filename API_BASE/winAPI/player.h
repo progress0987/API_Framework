@@ -114,6 +114,11 @@ private:
 	float velocity = 0.f, gravity = 0.4f, jumpPow = -10.f;
 
 	bool onAttack;
+	bool onHit;
+	bool hitDir;
+	int hitmoveX, hitmoveY;
+	int hitcount,hitalpha;
+
 	int attFrame;
 	int attX;
 public:
@@ -130,6 +135,7 @@ public:
 	RECT getDmgRC() { return dmgRC; }
 	RECT getRc() { return rc; }
 	void linkEnemyManager(enemyManager* em) { this->em = em; }
+	void BeingHit(int amount = 50);
 
 
 	status* getstatus() { return stat; }
