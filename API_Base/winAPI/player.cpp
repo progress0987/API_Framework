@@ -635,7 +635,7 @@ void player::playAttMotion()
 void player::BeingHit(int amount)
 {
 	hitcount = 0;
-	stat->HP -= amount;
+	stat->curHP -= amount;
 	onHit = true;
 	bool dir = rand() % 2;//·£´ı ¹æÇâÀ¸·Î Æ¢±è
 	if (dir) {

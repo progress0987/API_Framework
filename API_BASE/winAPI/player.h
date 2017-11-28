@@ -61,8 +61,10 @@ public:
 struct status
 {
 	int Level = 1;
-	int HP = 200;    //체력
-	int MP = 50;    //마나
+	int maxHP = 200;	//최대 체력
+	int curHP = 200;    //현재 체력
+	int maxMP = 50;		//최대 마나
+	int curMP = 50;    //현재 마나
 	int Str = 5;      //힘
 	int Dex = 5;      //민첩
 	int Int = 5;      //지력
@@ -71,6 +73,7 @@ struct status
 	int Def = Str * 3 + Dex * 3;
 	int Like = 0;     //인기도
 	int Exp = 0;      //경험치
+	int lvlUpExp = 300;
 };
 
 class player :public gameNode
@@ -140,8 +143,10 @@ public:
 
 	status* getstatus() { return stat; }
 	
-	int setHP(int hp) {		stat->HP = hp; }
-	int setMP(int mp) {		stat->MP = mp; }
+	int setMaxHP(int hp) { stat->maxHP = hp; }
+	int setCurHP(int hp) {		stat->curHP = hp; }
+	int setMaxMP(int mp) { stat->maxMP = mp; }
+	int setCurMP(int mp) {		stat->curMP = mp; }
 	int setStr(int str) {	stat->Str = str; }
 	int setDex(int dex) {	stat->Dex = dex; }
 	int setInt(int intt) {	stat->Int = intt; }
@@ -149,6 +154,7 @@ public:
 	int setAtt(int att) {	stat->Att = att; }
 	int setLike(int like) { stat->Like = like; }
 	int setExp(int exp) {	stat->Exp = exp; }
+	int setLvupExp(int exp) { stat->lvlUpExp = exp; }
 
 	//캐릭터의 정보를 받아 카메라를 실시간으로 움직여준다.
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "mainGame.h"
 
+
 //생성자랑 소멸자는 쓰지 않는당..//
 mainGame::mainGame()
 {

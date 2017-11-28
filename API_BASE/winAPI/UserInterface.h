@@ -3,6 +3,7 @@
 #include"items.h"
 #include "player.h"
 
+class player;
 class UserInterface :public gameNode
 {
 private:
