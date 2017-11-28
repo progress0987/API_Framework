@@ -25,7 +25,6 @@ public:
 	void update();
 	void render();
 	//키 
-	void Keymanager();
 	//프레임
 	void Frame();
 	//밍밍부인 움직이는

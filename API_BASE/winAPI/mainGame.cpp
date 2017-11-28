@@ -13,8 +13,8 @@ mainGame::~mainGame()
 }
 HRESULT mainGame::init(void)
 {
-
-
+	
+	
 	gameNode::init(true);
 	srand(time(NULL));
 	imgInit();
@@ -61,10 +61,14 @@ HRESULT mainGame::init(void)
 	_boss->setCam(cam);
 
 	curScene = _village;
-	curScene->soundplay(_village);
+	curScene->soundplay();
 
 	_player->init(pointMake(1660, 400), curScene);
 	
+	//UI = new UserInterface;
+
+	//UI->init();
+
 	return S_OK;
 }
 //해제
@@ -91,8 +95,9 @@ void mainGame::update(void)
 		if (fadeAlpha >= 255) {
 			fadeAlpha = 255;
 			onSceneChange = false;
-		_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
+			curScene->soundoff();
 			//씬 체인지
+			_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
 			SceneChange(getNextNode());
 			SceneChanged = true;
 		}
@@ -102,13 +107,17 @@ void mainGame::update(void)
 		if (fadeAlpha <= 0) {
 			fadeAlpha = 0;
 			SceneChanged = false;
+			_player->sceneChangeFinished = true;
+			curScene->soundplay();
 			
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
 		debug = !debug;
 	}
-	
+
+	//UI->update();
+
 }
 //여기가 그려주는 곳
 void mainGame::render()
@@ -137,9 +146,29 @@ void mainGame::render()
 
 	//IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
 
+	//UI->render();
+
 	TIMEMANAGER->render(getMemDC());
+	/////////////////////////////
+	////이하 테스트중
+	////////////////////////////
 
+	//CString strImgPath = _T("sprites/portal.png");
+	//CString strHP = _T("sprites/hp.bmp");
 
+	//CImage Image,hp;
+	//HRESULT hResult = Image.Load(strImgPath);
+	////HRESULT res1 = hp.Load(strHP);
+
+	//if (FAILED(hResult)) {
+	//	return;
+	//}
+	////if (FAILED(res1))return;
+	////hp.SetTransparentColor(RGB(255,0,255));
+	////hp.Draw(getMemDC(), 225, 228);
+	////Image.Draw(getMemDC(), 200, 200);
+	//Image.AlphaBlend(getMemDC(), 200, 200, 150);
+	//
 
 
 	/////////////////////그려주는부분 - 건들지말것//////////////////
@@ -360,19 +389,13 @@ void mainGame::soundInit()
 
 void mainGame::SceneChange(mapFrame * next)
 {
-	curScene->soundoff(_village);
-	curScene->soundoff(_park);
-	curScene->soundoff(_market);
-	curScene->soundoff(_boss);
-	curScene->soundoff(_hill);
-	curScene->soundoff(_forest);
-	curScene->soundoff(_map);
+
 	//잘못된 좌표라면 그냥 나옴
 	if (next == nullptr)return;
+	curScene->soundoff();
 	//다음 갈 포탈 좌표위쪽에 좌표 정해주고 씬을 바꾸며 init을 해줌
 	_player->init(playerNextPoint, next);
 
-	curScene->soundplay(next);
 }
 
 //현재 있는 곳의 좌표를 찾아주고 다음 움직일 맵의 정보를 받아옴
