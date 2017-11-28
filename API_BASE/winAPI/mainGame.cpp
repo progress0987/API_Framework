@@ -66,7 +66,7 @@ HRESULT mainGame::init(void)
 	_player->init(pointMake(1660, 400), curScene);
 	
 	UI = new UserInterface;
-	UI->setPlayer(_player);
+	//UI->setPlayer(_player);
 
 	UI->init();
 

@@ -48,7 +48,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	//////////////////////////////////////////스킬 초기화
 	skill* sk1;
 	sk1 = new skill;
-	sk1->init("skill1", 5, 200,300);
+	sk1->init("skill1", 3, 200,300);
 	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
@@ -513,6 +513,12 @@ void player::update(void)
 			playAttMotion();
 		}
 	}
+
+
+	/////////////테스트
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+		BeingHit();
+	}
 	
 	//공격모션중
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
@@ -536,18 +542,33 @@ void player::update(void)
 	//맞는중
 	if (onHit) {
 		hitcount++;
-		//curPos.x+=
-		if (hitcount % 50==0) {
-			hitalpha = rand() % 155 + 100;
-			if (hitcount % 100 == 0) {
+		if (hitmoveX != 0) {
+			hitmoveX += (hitmoveX > 0 ? -5 : 5);
+		}
+		if (curStatus != Status::onLadder&&curStatus != Status::onRope) {
+			curPos.x += hitmoveX;
+		}
+		if (hitcount % 10==0) {
+			hitalpha = rand() % 200+55;
+			if (hitcount % 50 == 0) {
 				hitalpha = 255;
 			}
 		}
-		if (hitcount >= 1000) {
+		if (hitcount >= 300) {
 			onHit = false;
 		}
 	}
 
+	//몬스터와 충돌체크
+	if (!onHit) {
+		vector<monster*> tmp = em->getbody(curScene->getIndex());
+		for (int i = 0; i < tmp.size(); i++) {
+			if (IntersectRect(&RECT(), &hitRC, &tmp[i]->getbody())) {
+				BeingHit();
+				break;
+			}
+		}
+	}
 
 	if (curPos.x - (width / 2 - (hitRC.left - rc.left)) < 0) {
 		curPos.x = width / 2 - (hitRC.left - rc.left);
@@ -561,6 +582,7 @@ void player::update(void)
 	//기술사용
 	if (curCast != nullptr) {
 		curCast->update();
+		//현재 사용하는 기술의 대미지 렉트를 그려줌
 		hitRC = curCast->getCurSkillRC();
 		if (curCast->onCast == false) {
 			curCast = nullptr;
@@ -579,7 +601,12 @@ void player::render(void)
 	//curScene->getFront()->render(getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, mycam->width, mycam->height);
 	//curScene->getBack()->render(getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, mycam->width, mycam->height);
 	if (!onAttack) {
-		_human->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY);
+		if (onHit) {
+			_human->alphaFrameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY, hitalpha);
+		}
+		else {
+			_human->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY);
+		}
 	}
 	else {
 		attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
@@ -612,14 +639,10 @@ void player::BeingHit(int amount)
 	onHit = true;
 	bool dir = rand() % 2;//랜덤 방향으로 튀김
 	if (dir) {
-		hitmoveX = 5;
-		hitmoveY = -4;
-		curStatus = Status::onJump;
+		hitmoveX = 25;
 	}
 	else {
-		hitmoveX = -5;
-		hitmoveY = -4;
-		curStatus = Status::onJump;
+		hitmoveX = -25;
 	}
 }
 
