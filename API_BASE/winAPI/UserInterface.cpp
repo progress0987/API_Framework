@@ -189,6 +189,13 @@ void UserInterface::release(void)
 
 void UserInterface::update(void)
 {
+		playerHp = pl->getstatus()->curHP;
+		playerMp = pl->getstatus()->curMP;
+	if (onStat) {
+		Level = pl->getstatus()->Level;
+		MaxHp = pl->getstatus()->maxHP;
+		MaxMp = pl->getstatus()->maxMP;
+	}
 	//인벤토리창 띄우기.
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
