@@ -156,7 +156,7 @@ HRESULT Harp::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("harpM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 81, 103);
+	monster::init(800, 16, 6, GenPoint, 81, 103);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -444,7 +444,7 @@ HRESULT Grupin::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("GrupinM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 60, 63);
+	monster::init(220, 6, 1, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -707,10 +707,10 @@ void Grupin::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Grupin::collRect(RECT player, int demage)
 {
@@ -735,7 +735,7 @@ HRESULT Cellion::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("CellionM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 60, 63);
+	monster::init(200, 10, 4, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -998,10 +998,10 @@ void Cellion::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Cellion::collRect(RECT player, int demage)
 {
@@ -1026,7 +1026,7 @@ HRESULT Lioner::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("LionerM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 60, 63);
+	monster::init(180, 9, 2, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1289,10 +1289,10 @@ void Lioner::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Lioner::collRect(RECT player, int demage)
 {
@@ -1317,7 +1317,7 @@ HRESULT Lucida::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("LucidaM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 62, 84);
+	monster::init(500, 10, 10, GenPoint, 62, 84);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1580,10 +1580,10 @@ void Lucida::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Lucida::collRect(RECT player, int demage)
 {
@@ -1608,7 +1608,7 @@ HRESULT JrYeti::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("Jr YetiM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 39, 40);
+	monster::init(350, 13, 8, GenPoint, 39, 40);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1881,10 +1881,10 @@ void JrYeti::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JrYeti::collRect(RECT player, int demage)
 {
@@ -1909,7 +1909,7 @@ HRESULT PePe::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("PePeM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 73, 63);
+	monster::init(400, 16, 7, GenPoint, 73, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2172,10 +2172,10 @@ void PePe::render(void)
 		}
 	}
 //	Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void PePe::collRect(RECT player, int demage)
 {
@@ -2199,7 +2199,7 @@ HRESULT Sheep::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("SheepM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 92, 61);
+	monster::init(700, 20, 6, GenPoint, 92, 61);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2462,10 +2462,10 @@ void Sheep::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Sheep::collRect(RECT player, int demage)
 {
@@ -2489,7 +2489,7 @@ HRESULT JCellion::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JCellionM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 43, 47);
+	monster::init(55, 9, 0, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2752,10 +2752,10 @@ void JCellion::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JCellion::collRect(RECT player, int demage)
 {
@@ -2780,7 +2780,7 @@ HRESULT JGrupin::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JGrupinM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 43, 47);
+	monster::init(60, 7, 1, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3043,10 +3043,10 @@ void JGrupin::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JGrupin::collRect(RECT player, int demage)
 {
@@ -3071,7 +3071,7 @@ HRESULT JLioner::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JLionerM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 43, 47);
+	monster::init(50, 10, 1, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3334,10 +3334,10 @@ void JLioner::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JLioner::collRect(RECT player, int demage)
 {
@@ -3362,7 +3362,7 @@ HRESULT JLucida::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JLucidaM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 45, 57);
+	monster::init(500, 20, 5, GenPoint, 45, 57);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3625,10 +3625,10 @@ void JLucida::render(void)
 			IMAGEMANAGER->findImage("JLucidaS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0);
 		}
 	}
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void JLucida::collRect(RECT player, int demage)
 {
@@ -3652,7 +3652,7 @@ HRESULT Eliza::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("ElizaM")->getHeight() / 4;
-	monster::init(3000, 30, 10, GenPoint, 200, 161);
+	monster::init(3000, 50, 10, GenPoint, 200, 161);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3942,10 +3942,10 @@ void Eliza::render(void)
 		}
 	}
 	//Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	char tmp[128];
+	//char tmp[128];
 	//sprintf(tmp,"¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
-	TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+	//sprintf(tmp, "¸ó½ºÅÍÁÂÇ¥ : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
 void Eliza::collRect(RECT player, int demage)
 {
