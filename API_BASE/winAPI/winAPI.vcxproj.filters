@@ -335,5 +335,8 @@
     <ClCompile Include="Item.cpp">
       <Filter>MainGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="TextOutProcess.cpp">
+      <Filter>2DGameFramework\UserInterface</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

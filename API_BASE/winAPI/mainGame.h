@@ -9,6 +9,7 @@
 #include"ForestMap.h"
 #include"HillMap.h"
 #include"MarketMap.h"
+#include "UserInterface.h"
 #include <atlimage.h>//테스트중
 
 
@@ -28,10 +29,14 @@ private:
 	HillMap* _hill;//언덕
 	MarketMap* _market;//시장
 
+	UserInterface* UI;
+
 	bool onSceneChange=false,SceneChanged=false;
 	int fadeAlpha = 0, fadeCount=0;
 	POINT playerNextPoint;
 	bool debug = false;
+
+	//테스트중임
 
 public:
 

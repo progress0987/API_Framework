@@ -19,14 +19,13 @@ private:
 	//스텟창사각형
 	RECT wndStat;
 	//스텟창에 들어가는 정보들
-	int playerHp, playerMp, MaxHp, MaxMp, _str, _dex, _int, _luk, _ap;
-
+	int Level = 249, playerHp = 34689, playerMp = 12570, MaxHp = 500000, MaxMp = 500000, _str, _dex, _int, _luk, _ap;
 
 
 	//z Order
 	int Zstat;
 	//true false;
-	bool onStat;
+	bool onStat = false;
 
 	//----------------장비창 데이터----------------
 
@@ -42,14 +41,16 @@ private:
 	//z Order
 	int Zequip;
 	//true false;
-	bool onEquip;
+	bool onEquip = false;
 
 	//-------------인벤토리창 데이터------------
 
 	//플레이어의 인벤토리 데이터
-	image *invenWnd, *equipTab, *potionTab, *etcTab;
+	image *invenWnd, *equipTab, *potionTab, *etcTab, *shadow;
+	//인벤토리 재고량 표기번호
+	image *sZero, *sOne, *sTwo, *sThree, *sFour, *sFive, *sSix, *sSeven, *sEight, *sNine;
 	// 왼쪽상단부터 1234, 밑으로 5678순....24까지.
-	RECT _equip[24], _potion[24], _etc[24];
+	RECT wndInven, _equip[24], _potion[24], _etc[24];
 	//재고, 돈.
 	int stack, money;
 
@@ -58,7 +59,7 @@ private:
 	//z Order
 	int Zinven;
 	//true false;
-	bool onInven; //인벤토리창 온오프
+	bool onInven = false; //인벤토리창 온오프
 	bool invEq, invPo, invEtc; //장비탭, 소비탭, 기타탭 온오프 처리 불변수.
 
 
@@ -72,16 +73,26 @@ private:
 	image *_ctrl, *_shift, *_inst, *_del, *_hm, *_pgup, *_pgdn, *_end;
 	image *qq, *qw, *qe, *qr, *qt, *qa;
 
-
+	
 	//-------------캐릭터 정보창----------------
 	//레이어이미지
-	image *hpbar, *mpbar, *_form;
+	image *hpbar, *mpbar, *_form, *_formBackground, *_shine;
 	//레벨표시에 필요한 이미지
-	image *_lv, *l0, *l1, *l2, *l3, *l4, *l5, *l6, *l7, *l8, *l9;
+	//세자리수까지 있다보니 각 자리수마다 필요한 변수들 모두 선언해줌.
+	image *_lv, *l0, *l1, *l2, *l3, *l4, *l5, *l6, *l7, *l8, *l9,
+		*l00, *l01, *l02, *l03, *l04, *l05, *l06, *l07, *l08, *l09,
+		*l000, *l001, *l002, *l003, *l004, *l005, *l006, *l007, *l008, *l009;
 	//경험치
 	image *expBackground, *expGuage, *expLayer, *expEffect;
-	int _exp, LvExp;
+	int _exp = 794234;
+	double LvExp = 4912340; //퍼센트출력때문에 얘는 더블로 처리했어.
+	int jeongsu, sosu;
 
+
+
+	//------------------------------------캐릭터 상태표시 숫자들----------------------------
+	image *_0, *_1, *_2, *_3, *_4, *_5, *_6, *_7, *_8, *_9, *_rs, *_Lc, *_Rc, *_percent, *_dot;
+	//숫자, 역슬래쉬, 왼쪽커버, 오른쪽커버, 퍼센트, 점.
 
 public:
 	virtual HRESULT init(void);
@@ -90,6 +101,14 @@ public:
 	virtual void update(void);
 
 	virtual void render(void);
+
+
+	//덩어리로 작업해야 하기 때문에 함수로 묶어줬다.
+	virtual void equip(void);
+	virtual void inventory(void);
+	virtual void statement(void);
+	virtual void showLevel(void);
+	virtual void showStatement(void);
 
 	UserInterface();
 	~UserInterface();

@@ -65,6 +65,10 @@ HRESULT mainGame::init(void)
 
 	_player->init(pointMake(1660, 400), curScene);
 	
+	//UI = new UserInterface;
+
+	//UI->init();
+
 	return S_OK;
 }
 //해제
@@ -111,7 +115,9 @@ void mainGame::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
 		debug = !debug;
 	}
-	
+
+	//UI->update();
+
 }
 //여기가 그려주는 곳
 void mainGame::render()
@@ -138,11 +144,31 @@ void mainGame::render()
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
 
-	IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
+	//IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
+
+	//UI->render();
 
 	TIMEMANAGER->render(getMemDC());
+	/////////////////////////////
+	////이하 테스트중
+	////////////////////////////
 
+	//CString strImgPath = _T("sprites/portal.png");
+	//CString strHP = _T("sprites/hp.bmp");
 
+	//CImage Image,hp;
+	//HRESULT hResult = Image.Load(strImgPath);
+	////HRESULT res1 = hp.Load(strHP);
+
+	//if (FAILED(hResult)) {
+	//	return;
+	//}
+	////if (FAILED(res1))return;
+	////hp.SetTransparentColor(RGB(255,0,255));
+	////hp.Draw(getMemDC(), 225, 228);
+	////Image.Draw(getMemDC(), 200, 200);
+	//Image.AlphaBlend(getMemDC(), 200, 200, 150);
+	//
 
 
 	/////////////////////그려주는부분 - 건들지말것//////////////////
