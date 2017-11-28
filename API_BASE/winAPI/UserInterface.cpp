@@ -322,6 +322,89 @@ void UserInterface::statement(void)
 {
 	wndStat = RectMake(statWnd->getX(), statWnd->getY(), statWnd->getWidth(), statWnd->getHeight());
 	statWnd->render(getMemDC());
+
+	SetBkMode(getMemDC(), TRANSPARENT); //이거 해줘야 흰색배경 없앤다.
+	SetTextColor(getMemDC(), RGB(80, 80, 80));
+
+	char temp[255];
+	HFONT oldFont, font1;
+	//CreateFont(
+	//	40,					//문자폭
+	//	0,					//문자 넓이
+	//	40,					//문자 기울기(각도)
+	//	0,					//문자 방향
+	//	600,				//문자 굵기
+	//	0,					//bool 문자 기울기 true/false
+	//	0,					//bool 문자 밑줄 true/false
+	//	0,					//bool 문자 취소선 true/false
+	//	HANGUL_CHARSET,		//문자 세팅
+	//	0,					//출력정확도(?)
+	//	0,					//클리핑 정확도
+	//	0,					//출력의 퀄리티
+	//	0,					//자간
+	//	TEXT("궁서체")		//내부시스템폰트가져옴
+	//);
+	
+	font1 = CreateFont(15, 0, 0, 0, 100, false, 0, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
+	SetBkMode(getMemDC(), TRANSPARENT);
+	oldFont = (HFONT)SelectObject(getMemDC(), font1);
+	sprintf(temp, "아무고토모타조");
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 30, temp, strlen(temp));
+
+	char temp2[255];
+	sprintf(temp2, "등골브레이커");
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 49, temp2, strlen(temp2));
+
+	char temp3[255];
+	sprintf(temp3, "창희네");
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 67, temp3, strlen(temp3));
+
+	char temp4[255];
+	sprintf(temp4, "ㅡ");
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 85, temp4, strlen(temp4));
+
+	char temp5[255];
+	sprintf(temp5, "샤방샤방");
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 102, temp5, strlen(temp5));
+
+
+	//중간에 글자크기 변경!!!!
+
+	DeleteObject(oldFont); //변경할때 딜리트 안해주면 터져버린다!!!!
+	DeleteObject(font1); //계속 생성생성만 해주면 터져버리지......getpixel맛탱이 간다.
+	font1 = CreateFont(13, 0, 0, 0, 100, false, 0, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
+	oldFont = (HFONT)SelectObject(getMemDC(), font1);
+
+	char temp6[255];
+	sprintf(temp6, "%d / %d", playerHp, MaxHp);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 121, temp6, strlen(temp6));
+
+	char temp7[255];
+	sprintf(temp7, "%d / %d", playerMp, MaxMp);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp7, strlen(temp7));
+
+	char temp8[255];
+	sprintf(temp8, "%d", _ap);
+	TextOut(getMemDC(), statWnd->getX() + 85, statWnd->getY() + 182, temp8, strlen(temp8));
+
+	char temp9[255];
+	sprintf(temp9, "%d ", playerMp, MaxMp);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp9, strlen(temp9));
+
+	char temp10[255];
+	sprintf(temp10, "%d ", playerMp, MaxMp);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp10, strlen(temp10));
+
+	char temp11[255];
+	sprintf(temp11, "%d ", playerMp, MaxMp);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp11, strlen(temp11));
+
+	char temp12[255];
+	sprintf(temp12, "%d ", playerMp, MaxMp);
+	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 139, temp12, strlen(temp12));
+
+	DeleteObject(oldFont);
+	DeleteObject(font1);
 }
 
 UserInterface::UserInterface()

@@ -22,7 +22,9 @@ private:
 	//스텟창사각형
 	RECT wndStat;
 	//스텟창에 들어가는 정보들
-	int Level = 249, playerHp = 34689, playerMp = 12570, MaxHp = 500000, MaxMp = 500000, _str, _dex, _int, _luk, _ap;
+	int Level = 249, playerHp = 34689, playerMp = 12570, MaxHp = 500000, MaxMp = 500000, _str, _dex, _int, _luk, _ap = 0;
+	int totalEquipstr, totalEquipdex, totalEquipint, totalEquipluk;
+	int _basicStr, _basicDex, _basicInt, _basicLuk;
 
 
 	//z Order
