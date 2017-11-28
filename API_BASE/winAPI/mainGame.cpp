@@ -135,7 +135,7 @@ void mainGame::render()
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
 
-	IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
+	//IMAGEMANAGER->render("인터페이스", getMemDC(), 0, 0);
 
 	TIMEMANAGER->render(getMemDC());
 

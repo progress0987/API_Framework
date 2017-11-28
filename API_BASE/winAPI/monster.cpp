@@ -156,7 +156,7 @@ HRESULT Harp::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("harpM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 81, 103);
+	monster::init(800, 16, 6, GenPoint, 81, 103);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -444,7 +444,7 @@ HRESULT Grupin::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("GrupinM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 60, 63);
+	monster::init(220, 6, 1, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -735,7 +735,7 @@ HRESULT Cellion::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("CellionM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 60, 63);
+	monster::init(200, 10, 4, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1026,7 +1026,7 @@ HRESULT Lioner::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("LionerM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 60, 63);
+	monster::init(180, 9, 2, GenPoint, 60, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1317,7 +1317,7 @@ HRESULT Lucida::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("LucidaM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 62, 84);
+	monster::init(500, 10, 10, GenPoint, 62, 84);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1608,7 +1608,7 @@ HRESULT JrYeti::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("Jr YetiM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 39, 40);
+	monster::init(350, 13, 8, GenPoint, 39, 40);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -1909,7 +1909,7 @@ HRESULT PePe::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("PePeM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 73, 63);
+	monster::init(400, 16, 7, GenPoint, 73, 63);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2199,7 +2199,7 @@ HRESULT Sheep::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("SheepM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 92, 61);
+	monster::init(700, 20, 6, GenPoint, 92, 61);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2489,7 +2489,7 @@ HRESULT JCellion::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JCellionM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 43, 47);
+	monster::init(55, 9, 0, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -2780,7 +2780,7 @@ HRESULT JGrupin::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JGrupinM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 43, 47);
+	monster::init(60, 7, 1, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3071,7 +3071,7 @@ HRESULT JLioner::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JLionerM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 43, 47);
+	monster::init(50, 10, 1, GenPoint, 43, 47);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3362,7 +3362,7 @@ HRESULT JLucida::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("JLucidaM")->getHeight() / 4;
-	monster::init(500, 30, 10, GenPoint, 45, 57);
+	monster::init(500, 20, 5, GenPoint, 45, 57);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
@@ -3652,7 +3652,7 @@ HRESULT Eliza::init(POINT pos)
 {
 	GenPoint.x = pos.x;
 	GenPoint.y = pos.y - IMAGEMANAGER->findImage("ElizaM")->getHeight() / 4;
-	monster::init(3000, 30, 10, GenPoint, 200, 161);
+	monster::init(3000, 50, 10, GenPoint, 200, 161);
 	int way = rand() % 2;
 	left(way);
 	Stay = true;
