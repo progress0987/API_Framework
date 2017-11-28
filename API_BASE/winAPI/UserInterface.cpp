@@ -243,6 +243,11 @@ void UserInterface::update(void)
 
 
 	//실시간 캐릭터 스텟 갱신쓰
+
+	_str = _basicStr + totalEquipstr;
+	_dex = _basicDex + totalEquipdex;
+	_int = _basicInt + totalEquipint;
+	_luk = _basicLuk + totalEquipluk;
 }
 
 void UserInterface::render(void)
