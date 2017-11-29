@@ -95,7 +95,8 @@ private:
 	skill* curCast=nullptr;
 	vector<skill*> skillList;
 
-	status* stat;
+	status* stat = new status;
+
 //	UserInterface* UI;
 	enemyManager* em;
 	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
@@ -134,7 +135,7 @@ private:
 	int attFrame;
 	int attX;
 
-	int meso;
+	int meso = 1000;
 public:
 	bool sceneChange=false;
 	bool sceneChangeFinished = false;
@@ -169,6 +170,10 @@ public:
 	void setExp(int exp) {	stat->Exp = exp; }
 	void setLvupExp(int exp) { stat->lvlUpExp = exp; }
 	int getmeso() { return meso; }
+	bool spendmeso(int amount) {
+		if (meso - amount >= 0) { meso -= amount; return true; }
+		else { return false; }
+	}
 
 public:
 	void showShop(bool val) { onShop = val; }
