@@ -460,10 +460,12 @@ void mainGame::imgInit()
 void mainGame::soundInit()
 {
 	//¸Ê »ç¿îµå
+	SOUNDMANAGER->addSound("Bdie", "sound/BossDead.mp3", true, false);
 	SOUNDMANAGER->addSound("Boss", "sound/BossBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Hill", "sound/HillBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Forest", "sound/ForestBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Store", "sound/StoreBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Mdie", "sound/MonsterDie.mp3", true, false);
 	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);

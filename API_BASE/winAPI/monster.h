@@ -23,6 +23,8 @@ protected:
 	int MyIndex;
 	int Gentime=50;
 
+	char* deadsound = "Mdie";
+	char* BossDead = "Bdie";
 	Camera* cam;
 public:
 
