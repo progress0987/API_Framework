@@ -223,7 +223,11 @@ void UserInterface::update(void)
 
 		//인벤토리창이 켜져있는경우
 
-
+		//상점이 켜져있는경우
+		if (pl->openShop() == true) {
+			//
+			//onShop=!onShop;
+		}
 	}
 
 	//키 작동 확인.
