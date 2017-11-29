@@ -45,6 +45,7 @@ public:
 	image* getBack() { return back; }
 	void setCam(Camera* camera) { cam = camera; }
 	vector<tagrect> getPortals() { return PORTAL; }
+	vector<tagrect> getNPCs() { return NPC; }
 	int getIndex() { return myIndex; }
 
 	void soundplay();

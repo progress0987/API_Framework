@@ -66,11 +66,6 @@ void StoreMap::update()
 			if (i->currentX > i->_img->getMaxFrameX())i->currentX = 0;
 		}
 	}
-	//npc누르면 상점 뜨게
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&storenpc.rc, ptMouse))
-	{
-		storewindow.rc = RectMake(500, 100, 500, 500);
-	}
 }
 void StoreMap::render()
 {

@@ -142,6 +142,7 @@ HRESULT UserInterface::init(void)
 	_form->setY(690);
 	_formBackground->setX(_form->getX() + 3);
 	_formBackground->setY(_form->getY() + 25);
+	
 	hpbar->setX(_formBackground->getX() + 22);
 	hpbar->setY(_formBackground->getY() + 3);
 
@@ -175,9 +176,10 @@ HRESULT UserInterface::init(void)
 	_luk = pl->getstatus()->Luk;
 	//_ap;
 
+	//shopItem[0] = RectMake()
+	
 
-	Hpwidth = (pl->getstatus()->curHP / pl->getstatus()->maxHP)*hpbar->getWidth();
-	Mpwidth = (pl->getstatus()->curMP / pl->getstatus()->maxMP)*mpbar->getWidth();
+	
 
 	return S_OK;
 }
@@ -222,6 +224,11 @@ void UserInterface::update(void)
 
 		//인벤토리창이 켜져있는경우
 
+		//상점이 켜져있는경우
+		if (pl->openShop() == true) {
+			//
+			this->onShop = true;
+		}
 	}
 
 	//키 작동 확인.
@@ -229,12 +236,14 @@ void UserInterface::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_DELETE))
 	{
 		
+
 	}
 
 	//마나포션 처먹처먹
 	if (KEYMANAGER->isOnceKeyDown(VK_END))
 	{
 
+		
 	}
 
 
@@ -244,9 +253,6 @@ void UserInterface::update(void)
 	_dex = _basicDex + totalEquipdex;
 	_int = _basicInt + totalEquipint;
 	_luk = _basicLuk + totalEquipluk;
-	Hpwidth = (pl->getstatus()->curHP / pl->getstatus()->maxHP) * hpbar->getWidth();
-	Mpwidth = (pl->getstatus()->curMP / pl->getstatus()->maxMP)*mpbar->getWidth();
-	Exwidth = (pl->getstatus()->Exp / pl->getstatus()->lvlUpExp)*expGuage->getWidth();
 }
 
 void UserInterface::render(void)
@@ -258,13 +264,13 @@ void UserInterface::render(void)
 	//기본인터페이스 렌더링
 	//경험치
 	expBackground->render(getMemDC());
-	expGuage->render(getMemDC(), 16,761,0,0,Exwidth,expLayer->getHeight());
+	expGuage->render(getMemDC());
 	expLayer->render(getMemDC());
 
 	//캐릭터정보 및 체력, 마나게이지
 	_formBackground->render(getMemDC());
-	hpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 3,0,0, Hpwidth,mpbar->getHeight());
-	mpbar->render(getMemDC(),_formBackground->getX() + 22, _formBackground->getY() + 17, 0, 0, Mpwidth, hpbar->getHeight());
+	hpbar->render(getMemDC());
+	mpbar->render(getMemDC());
 	_form->render(getMemDC());
 	_shine->alphaRender(getMemDC(), _form->getX(), _form->getY(), 120);
 
