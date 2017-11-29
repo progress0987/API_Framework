@@ -35,11 +35,12 @@ protected:
 	int frameX=0;
 	int frame=0;
 	int delayPerFrames;
+	int reqMP;
 	vector<RECT> dmgRCList;
 	Camera* cam;
 public:
 	bool onCast;
-	HRESULT init(char* skillImg,int dPf,int dmg,int range);
+	HRESULT init(char* skillImg,int dPf,int dmg,int range,int reqMP);
 	void release(void);
 	void update(void);
 	void render(void);
@@ -54,6 +55,7 @@ public:
 		tmpRC.bottom += rc.top;
 		return tmpRC;
 	}
+	int getReqMP() { return reqMP; }
 	void setCam(Camera* glcam) { cam = glcam; }
 	int getDmg() {return dmg;}
 };
