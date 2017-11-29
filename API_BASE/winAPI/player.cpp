@@ -53,14 +53,14 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	//////////////////////////////////////////스킬 초기화
 	skill* sk1;
 	sk1 = new skill;
-	sk1->init("skill1", 3, 200,300);
+	sk1->init("skill1", 3, 200,300,15);
 	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
 
 	skill* sk2;
 	sk2 = new skill;
-	sk2->init("skill2", 10, 150, 300);
+	sk2->init("skill2", 10, 150, 300,10);
 	sk2->setCam(mycam);
 	skillList.push_back(sk2);
 
@@ -108,9 +108,6 @@ void player::release(void)
 
 void player::update(void)
 {
-	//중력값//카메라 처리
-	//WINSIZEY/2 = 384
-	//int temp = mycam->camPoint.y + WINSIZEY / 2;		//테스트용
 	if (curPos.y - mycam->camPoint.y - height / 2>WINSIZEY / 2) {//카메라가 중간보다 아래에있다면(밑으로 내려가야함)
 		mycam->camPoint.y += 3.f;
 		if (mycam->camPoint.y + WINSIZEY > backStage->getHeight()) {
@@ -467,60 +464,66 @@ void player::update(void)
 		//////////////////////////////////////////////////////스킬공격
 		if (KEYMANAGER->isOnceKeyDown('A')) {
 			if (!onAttack) {
-				SOUNDMANAGER->play("askill");
-				attFrame = 0;
-				attX = 0;
-				playAttMotion();
+				if (stat->curMP >= ASkill->getReqMP()) {
+					SOUNDMANAGER->play("askill");
+					stat->curMP -= ASkill->getReqMP();
+					attFrame = 0;
+					attX = 0;
+					playAttMotion();
 
-				RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
-				RECT hit;
-				if (curDir) {//오른쪽
-					skillRange.left += ASkill->getRange() / 2;
-					skillRange.right += ASkill->getRange() / 2;
-				}
-				else {//왼쪽
-					skillRange.left -= ASkill->getRange() / 2;
-					skillRange.right -= ASkill->getRange() / 2;
+					RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
+					RECT hit;
+					if (curDir) {//오른쪽
+						skillRange.left += ASkill->getRange() / 2;
+						skillRange.right += ASkill->getRange() / 2;
+					}
+					else {//왼쪽
+						skillRange.left -= ASkill->getRange() / 2;
+						skillRange.right -= ASkill->getRange() / 2;
 
-				}
-				em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+					}
+					em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
 
-				vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-				for (int i = 0; i < monincurmap.size(); i++) {
-					if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-						curCast = ASkill;
-						curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-						//break;
+					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+					for (int i = 0; i < monincurmap.size(); i++) {
+						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+							curCast = ASkill;
+							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+							//break;
+						}
 					}
 				}
 			}
 		}
 		if (KEYMANAGER->isOnceKeyDown('S')) {
 			if (!onAttack) {
-				SOUNDMANAGER->play("sskill");
-				attFrame = 0;
-				attX = 0;
-				playAttMotion();
+				if (stat->curMP >= SSkill->getReqMP()) {
+					SOUNDMANAGER->play("sskill");
+					attFrame = 0;
+					stat->curMP -= SSkill->getReqMP();
+					attX = 0;
+					playAttMotion();
 
-				RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
-				RECT hit;
-				if (curDir) {//오른쪽
-					skillRange.left += SSkill->getRange() / 2;
-					skillRange.right += SSkill->getRange() / 2;
-				}
-				else {//왼쪽
-					skillRange.left -= SSkill->getRange() / 2;
-					skillRange.right -= SSkill->getRange() / 2;
+					RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+					RECT hit;
+					if (curDir) {//오른쪽
+						skillRange.left += SSkill->getRange() / 2;
+						skillRange.right += SSkill->getRange() / 2;
+					}
+					else {//왼쪽
+						skillRange.left -= SSkill->getRange() / 2;
+						skillRange.right -= SSkill->getRange() / 2;
 
-				}
-				em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+					}
+					em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
 
-				vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-				for (int i = 0; i < monincurmap.size(); i++) {
-					if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-						curCast = SSkill;
-						curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-						//break;
+					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+					for (int i = 0; i < monincurmap.size(); i++) {
+						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+							curCast = SSkill;
+							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+							//break;
+						}
 					}
 				}
 			}
@@ -718,11 +721,12 @@ player::~player()
 {
 }
 
-HRESULT skill::init(char * skillImg, int dPf, int dmg,int range)
+HRESULT skill::init(char * skillImg, int dPf, int dmg,int range,int reqMP)
 {
 	img = IMAGEMANAGER->findImage(skillImg);
 	rc = { 0,0,img->getFrameWidth(),img->getFrameHeight() };
 	delayPerFrames = dPf;
+	this->reqMP = reqMP;
 	this->range = range;
 	this->dmg = dmg;
 	for (int i = 0; i <= img->getMaxFrameX(); i++) {
