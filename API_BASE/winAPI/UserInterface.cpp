@@ -239,11 +239,35 @@ void UserInterface::update(void)
 	_int = _basicInt + totalEquipint;
 	_luk = _basicLuk + totalEquipluk;
 
-	//상점이 켜졌을때 기본적으로 작동하는 프로세스
-	if (onShop)
+
+	//==============================================마우스 올렸을때의 핑거액션!!!!=========================================
+	/*if문이 분할되어 같은 액션을 취하려고 하면 충돌해버려서 if else 세트로 한꺼번에 묶었음.*/
+	// 1. ---------------------------커서를 상점아줌마에게 갖다댔을때 나타나는 핑거액션
+	if (pl->openShop() == true && !onShop) 
+	{
+		finger->setFrameY(2);
+		if (count % 30 == 0)
+		{
+			fingerCount++;
+			if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+		}
+	}
+
+	// 2. ------------------------------------상점이 켜졌을때
+	else if (onShop)
 	{
 		//상점내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
-		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&buttonQuit, ptMouse) || PtInRect(&buttonBuy, ptMouse) || PtInRect(&buttonSell, ptMouse))
+		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&shopItem[1], ptMouse) || 
+			PtInRect(&shopItem[2], ptMouse) || PtInRect(&shopItem[3], ptMouse) || 
+			PtInRect(&shopItem[4], ptMouse) || PtInRect(&shopItem[5], ptMouse) || 
+			PtInRect(&shopItem[6], ptMouse) || PtInRect(&shopItem[7], ptMouse) || 
+			PtInRect(&shopItem[8], ptMouse) || PtInRect(&buttonQuit, ptMouse) ||
+			PtInRect(&buttonBuy, ptMouse) || PtInRect(&buttonSell, ptMouse) ||
+			PtInRect(&myItem[0], ptMouse) || PtInRect(&myItem[1], ptMouse) ||
+			PtInRect(&myItem[2], ptMouse) || PtInRect(&myItem[3], ptMouse) ||
+			PtInRect(&myItem[4], ptMouse) || PtInRect(&myItem[5], ptMouse) ||
+			PtInRect(&myItem[6], ptMouse) || PtInRect(&myItem[7], ptMouse) ||
+			PtInRect(&myItem[8], ptMouse))
 		{
 			finger->setFrameY(2);
 			if (count % 30 == 0)
@@ -252,12 +276,25 @@ void UserInterface::update(void)
 				if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
 			}
 		}
+		//상점내부에서 버튼위에 있는게 아닐때
 		else
 		{
 			fingerCount = 0;
 			finger->setFrameY(0);
 		}
+	}
+	// 3.-----------------------------상점이 꺼진상태고, 마우스위에 누구한테도 올린게 아닐때---------------
+	else
+	{
+		fingerCount = 0;
+		finger->setFrameY(0);
+	}
+	//====================================================핑거액션 끝==============================
 
+
+	//상점창 내부 캐릭터, npc움직임을 위한 프레임 처리.
+	if (onShop)
+	{
 		//참고로 이런 프레임렌더를 위한 카운트 변수들 증감은 업데이트 부분에서 해줘야 잘된다.
 		//렌더링부분에서 해주니깐 버벅거린다.
 
@@ -273,7 +310,6 @@ void UserInterface::update(void)
 			if (_AzoommaCount > _Azoomma->getMaxFrameX()) _AzoommaCount = 0;
 		}
 	}
-
 
 
 	//---------------------------------------------입력처리-----------------------------------------------

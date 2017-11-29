@@ -138,6 +138,8 @@ public:
 	virtual void shop(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
+
+	//플레이어 클래스와 상호참조
 	void setPlayer(player *pl) { this->pl = pl; }
 
 	UserInterface();
