@@ -177,7 +177,10 @@ HRESULT UserInterface::init(void)
 	//_ap;
 
 	//----------------------------------상점이미지로드-----------------------
+
+	//처음셋팅
 	onShop = false;
+	onShopEquipTab = true, onShopPortionTab = false, onShopEtcTab = false;
 
 	_me = IMAGEMANAGER->findImage("캐릭터");
 	_Azoomma = IMAGEMANAGER->findImage("storenpc");
@@ -207,6 +210,9 @@ HRESULT UserInterface::init(void)
 	count = fingerCount = 0;
 
 	onClickQuit = onClickBuy = onClickSell = onClickAzoomma = false;
+
+	onClickShopEquip = onClickShopPortion = onClickShopEtc = false;
+
 
 	return S_OK;
 }
@@ -293,7 +299,8 @@ void UserInterface::update(void)
 			PtInRect(&myItem[2], ptMouse) || PtInRect(&myItem[3], ptMouse) ||
 			PtInRect(&myItem[4], ptMouse) || PtInRect(&myItem[5], ptMouse) ||
 			PtInRect(&myItem[6], ptMouse) || PtInRect(&myItem[7], ptMouse) ||
-			PtInRect(&myItem[8], ptMouse))
+			PtInRect(&myItem[8], ptMouse) || PtInRect(&shopEquipTab, ptMouse) ||
+			PtInRect(&shopPortionTab, ptMouse) || PtInRect(&shopEtcTab, ptMouse))
 		{
 			finger->setFrameY(2);
 			if (count % 30 == 0)
@@ -390,6 +397,21 @@ void UserInterface::update(void)
 			{
 				onClickSell = true;
 			}
+			//눌렀을때 장비탭 위에 있었던 경우
+			if (PtInRect(&shopEquipTab, ptMouse))
+			{
+				onClickShopEquip = true;
+			}
+			//눌렀을때 소비탭 위에 있었던 경우
+			if (PtInRect(&shopPortionTab, ptMouse))
+			{
+				onClickShopPortion = true;
+			}
+			//눌렀을때 기타탭 위에 있었던 경우
+			if (PtInRect(&shopEtcTab, ptMouse))
+			{
+				onClickShopEtc = true;
+			}
 		}
 	}
 
@@ -430,6 +452,27 @@ void UserInterface::update(void)
 			}
 			else
 				onClickSell = false;
+
+			if (PtInRect(&shopEquipTab, ptMouse) && onClickShopEquip)
+			{
+				onClickShopEquip = true;
+			}
+			else
+				onClickShopEquip = false;
+			
+			if (PtInRect(&shopPortionTab, ptMouse) && onClickShopPortion)
+			{
+				onClickShopPortion = true;
+			}
+			else
+				onClickShopPortion = false;
+			
+			if (PtInRect(&shopEtcTab, ptMouse) && onClickShopEtc)
+			{
+				onClickShopEtc = true;
+			}
+			else
+				onClickShopEtc = false;
 		}
 
 	}
@@ -457,7 +500,7 @@ void UserInterface::update(void)
 				onClickQuit = false;
 
 			//아이템 사기버튼에 있었던 경우
-			if (PtInRect(&buttonBuy, ptMouse))
+			if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
 			{
 				onClickBuy = false;
 			}
@@ -465,12 +508,45 @@ void UserInterface::update(void)
 				onClickBuy = false;
 
 			//아이템팔기버튼이었던 경우
-			if (PtInRect(&buttonSell, ptMouse))
+			if (PtInRect(&buttonSell, ptMouse) && onClickSell)
 			{
 				onClickSell = false;
 			}
 			else
 				onClickSell = false;
+
+			//장비탭이었던 경우
+			if (PtInRect(&shopEquipTab, ptMouse) && onClickShopEquip)
+			{
+				onShopEquipTab = true;
+				onShopPortionTab = false;
+				onShopEtcTab = false;
+				onClickShopEquip = false;
+			}
+			else
+				onClickShopEquip = false;
+
+			//소비탭이었던 경우
+			if (PtInRect(&shopPortionTab, ptMouse) && onClickShopPortion)
+			{
+				onShopEquipTab = false;
+				onShopPortionTab = true;
+				onShopEtcTab = false;
+				onClickShopPortion = false;
+			}
+			else
+				onClickShopPortion = false;
+
+			//기타탭이었던 경우
+			if (PtInRect(&shopEtcTab, ptMouse) && onClickShopEtc)
+			{
+				onShopEquipTab = false;
+				onShopPortionTab = false;
+				onShopEtcTab = true;
+				onClickShopEtc = false;
+			}
+			else
+				onClickShopEtc = false;
 		}
 	}
 
@@ -708,19 +784,42 @@ void UserInterface::shop(void)
 	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
 	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
 
+	shopEquipTab = RectMake(shopWnd->getX() + 284, shopWnd->getY() + 100, 42, 19);
+	shopPortionTab = RectMake(shopWnd->getX() + 327, shopWnd->getY() + 100, 42, 19);
+	shopEtcTab = RectMake(shopWnd->getX() + 370, shopWnd->getY() + 100, 42, 19);
+	//Rectangle(getMemDC(), shopEtcTab.left, shopEtcTab.top, shopEtcTab.right, shopEtcTab.bottom);
+
 	_me->frameRender(getMemDC(), shopWnd->getX() + 280, shopWnd->getY() - 10, _meCount, _me->getFrameY());
 	_Azoomma->frameRender(getMemDC(), shopWnd->getX() + 30, shopWnd->getY() + 10, _AzoommaCount, _Azoomma->getFrameY());
 	
 	buttonQuit = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 54, 64, 16);
 	buttonBuy = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 74, 64, 16);
 	buttonSell = RectMake(shopWnd->getX() + 433, shopWnd->getY() + 74, 64, 16);
-	//Rectangle(getMemDC(), buttonSell.left, buttonSell.top, buttonSell.right, buttonSell.bottom);
+
+	//장비탭이 켜진경우
+	if (onShopEquipTab)
+	{
+		shopEquip->render(getMemDC(), shopEquipTab.left, shopEquipTab.top);
+	}
+
+	//소비탭이 켜진경우
+	if (onShopPortionTab)
+	{
+		shopPortion->render(getMemDC(), shopPortionTab.left, shopPortionTab.top);
+	}
+
+	//기타탭이 켜진경우
+	if (onShopEtcTab)
+	{
+		shopEtc->render(getMemDC(), shopEtcTab.left, shopEtcTab.top);
+	}
 
 	//상점나가기 버튼에 마우스를 올렸을경우
 	if (PtInRect(&buttonQuit, ptMouse))
 	{
 		shopQuit->render(getMemDC(), buttonQuit.left, buttonQuit.top);
 	}
+	//눌렀을경우
 	if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
 	{
 		shopQuitPushed->render(getMemDC(), buttonQuit.left, buttonQuit.top);
@@ -731,6 +830,7 @@ void UserInterface::shop(void)
 	{
 		shopBuy->render(getMemDC(), buttonBuy.left, buttonBuy.top);
 	}
+	//눌렀을경우
 	if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
 	{
 		shopBuyPushed->render(getMemDC(), buttonBuy.left, buttonBuy.top);
@@ -741,6 +841,7 @@ void UserInterface::shop(void)
 	{
 		shopSell->render(getMemDC(), buttonSell.left, buttonSell.top);
 	}
+	//눌렀을경우
 	if (PtInRect(&buttonSell, ptMouse) && onClickSell)
 	{
 		shopSellPushed->render(getMemDC(), buttonSell.left, buttonSell.top);

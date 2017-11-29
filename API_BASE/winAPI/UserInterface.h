@@ -81,9 +81,12 @@ private:
 	image *_me, *_Azoomma;
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
-	RECT buttonQuit, buttonBuy, buttonSell;
+	RECT buttonQuit, buttonBuy, buttonSell, shopEquipTab, shopPortionTab, shopEtcTab;
 	//각버튼위, 상점아줌마위에서 누르고있을때 on, 뗐을떼 off
 	bool onClickQuit, onClickBuy, onClickSell, onClickAzoomma;
+	//장비탭이냐, 소비탭이냐, 기타탭이냐
+	bool onShopEquipTab, onShopPortionTab, onShopEtcTab;
+	bool onClickShopEquip, onClickShopPortion, onClickShopEtc;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
