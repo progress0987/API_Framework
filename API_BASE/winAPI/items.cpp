@@ -391,6 +391,177 @@ HRESULT items::init(void)
 		_item.push_back(t);
 	}
 
+	//»óÀÇ
+	{
+		t.itemimg = IMAGEMANAGER->findImage("»óÀÇ1");
+		strcpy(t.itemname, "Æ¼¼ÅÃ÷");
+		t.itemtype = itemType::clothes;
+		t._price = 150;
+		t.hp = 50, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 5, t.magatk = 0, t.magarm = 0,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 1;
+		t.reqStr = 1;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "ÆíÇÑ È¸»ö Æ¼¼ÅÃ÷.");
+
+		_item.push_back(t);
+
+		t.itemimg = IMAGEMANAGER->findImage("»óÀÇ2");
+		strcpy(t.itemname, "·ÕÄÚÆ®");
+		t.itemtype = itemType::clothes;
+		t._price = 300;
+		t.hp = 100, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 15, t.magatk = 0, t.magarm = 0,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 3;
+		t.reqStr = 2;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "¿äÁò À¯ÇàÇÏ´Â ·ÕÄÚÆ®½ºÅ¸ÀÏ");
+
+		_item.push_back(t);
+
+		t.itemimg = IMAGEMANAGER->findImage("»óÀÇ3");
+		strcpy(t.itemname, "°ËÀº °©¿Ê");
+		t.itemtype = itemType::clothes;
+		t._price = 500;
+		t.hp = 150, t.mp = 50, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 25, t.magatk = 0, t.magarm = 25,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 5;
+		t.reqStr = 5;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "Æ°Æ°ÇØº¸ÀÌ´Â °ËÀº»öÀÇ °©¿ÊÀÌ´Ù.");
+
+		_item.push_back(t);
+	}
+
+	//½Å¹ß
+	{
+		t.itemimg = IMAGEMANAGER->findImage("½Å¹ß1");
+		strcpy(t.itemname, "»ª±¸µÎ");
+		t.itemtype = itemType::boots;
+		t._price = 150;
+		t.hp = 50, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 5, t.magatk = 0, t.magarm = 0,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 1;
+		t.reqStr = 1;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "¹İÂ¦¹İÂ¦ »ª±¸µÎ.");
+
+		_item.push_back(t);
+
+		t.itemimg = IMAGEMANAGER->findImage("½Å¹ß2");
+		strcpy(t.itemname, "°¡Á×½Å¹ß");
+		t.itemtype = itemType::boots;
+		t._price = 300;
+		t.hp = 100, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 15, t.magatk = 0, t.magarm = 0,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 3;
+		t.reqStr = 2;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "Æ°Æ°ÇÑ °¡Á×½Å¹ßÀÌ´Ù.");
+
+		_item.push_back(t);
+
+		t.itemimg = IMAGEMANAGER->findImage("½Å¹ß3");
+		strcpy(t.itemname, "ÅĞºÎÃ÷");
+		t.itemtype = itemType::boots;
+		t._price = 500;
+		t.hp = 150, t.mp = 50, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 25, t.magatk = 0, t.magarm = 25,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 5;
+		t.reqStr = 5;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "µû¶æÇÑ ÅĞÀÌ ´Ş¸° ºÎÃ÷.");
+
+		_item.push_back(t);
+	}
+
+	//½Å¹ß
+	{
+		t.itemimg = IMAGEMANAGER->findImage("Àå°©1");
+		strcpy(t.itemname, "ÇÏ¾á Àå°©");
+		t.itemtype = itemType::gloves;
+		t._price = 150;
+		t.hp = 50, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 5, t.magatk = 0, t.magarm = 0,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 1;
+		t.reqStr = 1;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "¿¹½Ä¿ë ÇÏ¾á Àå°©.");
+
+		_item.push_back(t);
+
+		t.itemimg = IMAGEMANAGER->findImage("Àå°©2");
+		strcpy(t.itemname, "µÎÅùÇÑ Àå°©");
+		t.itemtype = itemType::gloves;
+		t._price = 300;
+		t.hp = 100, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 15, t.magatk = 0, t.magarm = 0,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 3;
+		t.reqStr = 2;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "±Û·¯ºê ´ë¿ëÀ¸·Î ¾µ¸¸ÇÑ µÎÅùÇÑ Àå°©.");
+
+		_item.push_back(t);
+
+		t.itemimg = IMAGEMANAGER->findImage("Àå°©3");
+		strcpy(t.itemname, "°¡Á×Àå°©");
+		t.itemtype = itemType::gloves;
+		t._price = 500;
+		t.hp = 150, t.mp = 50, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
+		t.phyatk = 0, t.phyarm = 25, t.magatk = 0, t.magarm = 25,
+			t.hitrate = 0, t.avoidrate = 0, t.upgrade = 7;
+
+		t.reqLev = 5;
+		t.reqStr = 5;
+		t.reqDex = 0;
+		t.reqInt = 0;
+		t.reqLuk = 0;
+
+		strcpy(t.script, "½Ç¿ëÀûÀÎ µğÀÚÀÎÀÇ °¡Á×ÀçÁú Àå°©.");
+
+		_item.push_back(t);
+	}
+
 
 	return S_OK;
 }
