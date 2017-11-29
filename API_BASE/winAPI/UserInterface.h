@@ -74,6 +74,8 @@ private:
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
 	RECT buttonQuit, buttonBuy, buttonSell;
+	//각버튼위, 상점아줌마위에서 누르고있을때 on, 뗐을떼 off
+	bool onClickQuit, onClickBuy, onClickSell, onClickAzoomma;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
@@ -111,8 +113,7 @@ private:
 
 	//손가락 움직임을 위한 변수
 	int count, fingerCount;
-
-	//상점 UI프로세싱을 위한 변수들
+	
 
 
 
@@ -126,6 +127,7 @@ public:
 
 
 	//덩어리로 작업해야 하기 때문에 함수로 묶어줬다.
+	//렌더링 함수들!!!!!
 	virtual void equip(void);
 	virtual void inventory(void);
 	virtual void statement(void);

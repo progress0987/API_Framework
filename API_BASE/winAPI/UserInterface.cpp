@@ -196,7 +196,7 @@ HRESULT UserInterface::init(void)
 
 	count = fingerCount = 0;
 
-	
+	onClickQuit = onClickBuy = onClickSell = onClickAzoomma = false;
 
 	return S_OK;
 }
@@ -207,6 +207,9 @@ void UserInterface::release(void)
 
 void UserInterface::update(void)
 {
+	//------------------------------실시간 UI프로세스 갱신쓰!-----------------------------
+
+
 	//프레임 처리를 위한 변수
 	count++;
 
@@ -219,6 +222,14 @@ void UserInterface::update(void)
 	}
 
 
+	//실시간 캐릭터 스텟 갱신쓰
+
+	_str = _basicStr + totalEquipstr;
+	_dex = _basicDex + totalEquipdex;
+	_int = _basicInt + totalEquipint;
+	_luk = _basicLuk + totalEquipluk;
+
+	//상점이 켜졌을때 기본적으로 작동하는 프로세스
 	if (onShop)
 	{
 		//상점내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
@@ -239,6 +250,8 @@ void UserInterface::update(void)
 	}
 
 
+
+	//---------------------------------------------입력처리-----------------------------------------------
 	//인벤토리창 띄우기.
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
@@ -258,15 +271,6 @@ void UserInterface::update(void)
 		onEquip = !onEquip;
 	}
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
-		finger->setFrameY(1);
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		finger->setFrameY(0);
-	}
-
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		
@@ -275,11 +279,111 @@ void UserInterface::update(void)
 		//스텟창이 켜져있는경우
 
 		//인벤토리창이 켜져있는경우
-
-		//상점이 켜져있는경우
+		
+		//상점 아줌마 클릭하기쓰
 		if (pl->openShop() == true) {
-			//
+			onClickAzoomma = true;
+		}
+
+		//만일 샵이 켜져있는 경우
+		else if (onShop)
+		{
+			//눌렀을때 나가기 버튼위에 있었던 경우
+			if (PtInRect(&buttonQuit, ptMouse))
+			{
+				onClickQuit = true;
+			}
+			//눌렀을때 아이템사기 버튼위에 있었던 경우
+			if (PtInRect(&buttonBuy, ptMouse))
+			{
+				onClickBuy = true;
+			}
+			//눌렀을때 아이템팔기 버튼위에 있었던 경우
+			if (PtInRect(&buttonSell, ptMouse))
+			{
+				onClickSell = true;
+			}
+		}
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	{
+		finger->setFrameY(1);
+		//==============만일 아줌마클릭에서 버튼액션을 발동시킨 상태라면=============
+		if (pl->openShop() == true && onClickAzoomma) {
+			//버튼액션 유지
+			onClickAzoomma = true;
+		}
+		//아니라면 버튼액션 종료
+		else
+			onClickAzoomma = false;
+
+		//==================만일 샵에서 버튼액션을 발동시킨상태라면==================
+		if (onShop)
+		{
+			//버튼위에서 누르고있으면 클릭을 유지시켜준다.
+			if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
+			{
+				onClickQuit = true;
+			}
+			//누른상태에서 버튼을 벗어나면 액션을 취소시킨다.
+			else
+				onClickQuit = false;
+
+			if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
+			{
+				onClickBuy = true;
+			}
+			else
+				onClickBuy = false;
+
+			if (PtInRect(&buttonSell, ptMouse) && onClickSell)
+			{
+				onClickSell = true;
+			}
+			else
+				onClickSell = false;
+		}
+
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		finger->setFrameY(0);
+		//==================상점아줌마를 누르고 있던 경우===============
+		if (pl->openShop() == true && onClickAzoomma) {
+			//마우스를 뗌과 동시에 상점을 켜준다.
 			this->onShop = true;
+		}
+
+		//==================샵에서 버튼을 누르고있는 경우===============
+		if (onShop)
+		{
+			//뗐을때 버튼위에 있었 경우
+			if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
+			{
+				//버튼클릭을 꺼주고, 샵을 닫아준다.
+				onClickQuit = false;
+				onShop = false;
+			}
+			else
+				//아닌경우 버튼액션만 무효화시킨다.
+				onClickQuit = false;
+
+			//아이템 사기버튼에 있었던 경우
+			if (PtInRect(&buttonBuy, ptMouse))
+			{
+				onClickBuy = false;
+			}
+			else
+				onClickBuy = false;
+
+			//아이템팔기버튼이었던 경우
+			if (PtInRect(&buttonSell, ptMouse))
+			{
+				onClickSell = false;
+			}
+			else
+				onClickSell = false;
 		}
 	}
 
@@ -297,16 +401,6 @@ void UserInterface::update(void)
 
 		
 	}
-
-
-	//------------------------------실시간 UI프로세스 갱신쓰!------------------------------
-
-	//실시간 캐릭터 스텟 갱신쓰
-
-	_str = _basicStr + totalEquipstr;
-	_dex = _basicDex + totalEquipdex;
-	_int = _basicInt + totalEquipint;
-	_luk = _basicLuk + totalEquipluk;
 }
 
 void UserInterface::render(void)
@@ -531,17 +625,29 @@ void UserInterface::shop(void)
 	{
 		shopQuit->render(getMemDC(), buttonQuit.left, buttonQuit.top);
 	}
+	if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
+	{
+		shopQuitPushed->render(getMemDC(), buttonQuit.left, buttonQuit.top);
+	}
 
 	//아이템사기 버튼에 마우스를 올렸을 경우
 	if (PtInRect(&buttonBuy, ptMouse))
 	{
 		shopBuy->render(getMemDC(), buttonBuy.left, buttonBuy.top);
 	}
+	if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
+	{
+		shopBuyPushed->render(getMemDC(), buttonBuy.left, buttonBuy.top);
+	}
 
 	//아이템팔기 버튼에 마우스를 올렸을 경우
 	if (PtInRect(&buttonSell, ptMouse))
 	{
 		shopSell->render(getMemDC(), buttonSell.left, buttonSell.top);
+	}
+	if (PtInRect(&buttonSell, ptMouse) && onClickSell)
+	{
+		shopSellPushed->render(getMemDC(), buttonSell.left, buttonSell.top);
 	}
 
 	//상점 판매목록에 기본적으로 표시되어있는 메소아이콘
