@@ -95,7 +95,8 @@ private:
 	skill* curCast=nullptr;
 	vector<skill*> skillList;
 
-	status* stat;
+	status* stat = new status;
+
 //	UserInterface* UI;
 	enemyManager* em;
 	bool curDir;//현재 방향 - true:오른쪽, false:왼쪽
@@ -134,7 +135,7 @@ private:
 	int attFrame;
 	int attX;
 
-	int meso;
+	int meso = 1000;
 public:
 	bool sceneChange=false;
 	bool sceneChangeFinished = false;
