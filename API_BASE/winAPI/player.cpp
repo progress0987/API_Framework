@@ -39,13 +39,13 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	height = _human->getFrameHeight();
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 
-	//hitRC - rcleft + 34 / rcbottom - 7 / rcright - 36 / rctop + 13
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
 
 	_human->setFrameX(curFrameX);
 	_human->setFrameY(curFrameY);
 
 	stat = new status;
+	meso = 1000;
 
 
 	//////////////////////////////////////////스킬 초기화
@@ -130,10 +130,6 @@ void player::update(void)
 	}
 
 	//떨어지는것
-	//COLORREF t = GetPixel(backStage->getMemDC(), mycam->camPoint.x + curPos.x, mycam->camPoint.y + hitRC.bottom + 1);
-	//int r = GetRValue(t);
-	//int g = GetGValue(t);
-	//int b = GetBValue(t);
 	if (curStatus != Status::onJump&&(curStatus!=Status::onLadder&&curStatus!=Status::onRope) /* && GetPixel(backStage->getMemDC(), mycam->camPoint.x + curPos.x, mycam->camPoint.y + hitRC.bottom) != RGB(255, 0, 0)*/) {
 		velocity += gravity;
 		if (velocity > 10) velocity = 10;
@@ -506,12 +502,7 @@ void player::update(void)
 			playAttMotion();
 		}
 	}
-
-
-	/////////////테스트
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		BeingHit();
-	}
+	
 	
 	//공격모션중
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
@@ -584,15 +575,10 @@ void player::update(void)
 	//모든 연산이 끝난 후 렉트를 생성
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
-	//UI->update();
 }
 
 void player::render(void)
 {
-	//IMAGEMANAGER->render("지형", getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, WINSIZEX, WINSIZEY);
-	//Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
-	//curScene->getFront()->render(getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, mycam->width, mycam->height);
-	//curScene->getBack()->render(getMemDC(), 0, 0, mycam->camPoint.x, mycam->camPoint.y, mycam->width, mycam->height);
 	if (!onAttack) {
 		if (onHit) {
 			_human->alphaFrameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY, hitalpha);
@@ -603,19 +589,11 @@ void player::render(void)
 	}
 	else {
 		attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
-		//Rectangle(getMemDC(), dmgRC.left, dmgRC.top, dmgRC.right, dmgRC.bottom);
 	}
-
-	char tmp[128];
-	sprintf(tmp, "프레임 : %d",count);
-	TextOut(getMemDC(), 50, 100, tmp, strlen(tmp));
-	//EllipseMakeCenter(getMemDC(), curPos.x-mycam->camPoint.x, hitRC.bottom + 10 - mycam->camPoint.y, 35, 35);
-	//Rectangle(getMemDC(), hitRC.left- mycam->camPoint.x, hitRC.top - mycam->camPoint.y, hitRC.right - mycam->camPoint.x, hitRC.bottom - mycam->camPoint.y);
+	
 	if (curCast != nullptr) {
 		curCast->render();
 	}
-	//여기에 UI 출력--> 
-	//UI->render();
 }
 
 void player::playAttMotion()
@@ -657,6 +635,16 @@ void player::GainExp(int exp)
 
 //캐릭터를 비춰주는 카메라 함수. 렌더링은 렌더함수 부분에서 처리.
 //진행방향과 캐릭터좌표정보를 받아서 mapx, mapy를 조정해준다.
+
+bool player::openShop()
+{
+	for (int i = 0; i < curScene->getNPCs().size(); i++) {
+		if (PtInRect(&curScene->getNPCs()[i].rc, ptMouse) && curScene->getIndex() == MapIndex::MStore) {
+			return true;
+		}
+	}
+	return false;
+}
 
 //////////////////////////////////////////////////////////스킬
 player::player()
