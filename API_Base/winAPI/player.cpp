@@ -22,6 +22,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	onAttack = false;
 	onHit = false;
 	onLvlUP = false;
+	levelUPCount = lvlUPFrame= 0;
 
 	hitcount = 0;
 	hitalpha = 255;
@@ -64,7 +65,6 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 
 	//수정 - 레벨업 이펙트 추가
-	EFFECTMANAGER->addEffect("레벨업","sprites/UI/레벨업.bmp",18080,904,904,904,5,1,60);
 
 
 	ASkill = skillList[0];
@@ -169,7 +169,7 @@ void player::update(void)
 			}
 		}
 	}
-	//////////////////////////////////////////////////////////////왼쪽
+	//////////////////////////////////////////////////////////////왼쪽,오른쪽
 	if (!sceneChange&&!onAttack) {
 		//왼쪽키 처음눌렸을때
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
@@ -239,6 +239,7 @@ void player::update(void)
 		}
 
 		//////////////////////////////////////////////////////////////오른쪽
+
 		//오른쪽키 처음눌렸을때
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT)) {
 			curDir = true;
@@ -427,87 +428,103 @@ void player::update(void)
 			//점프 후 스킬쓸때
 		}
 	}
-	///////////////////////////////////////////////////////기본공격
-	if (KEYMANAGER->isOnceKeyDown('X')) {
-		if (!onAttack) {
-			attFrame = 0;
-			attX = 0;
-			playAttMotion();
-			onAttack = true;
+	///////////////////////////////////////////////////////공격
+	if (curStatus != Status::onLadder&&curStatus != Status::onRope) {
+		//////////////////기본공격
+		if (KEYMANAGER->isOnceKeyDown('X')) {
+			if (!onAttack) {
+				attFrame = 0;
+				attX = 0;
+				playAttMotion();
+				onAttack = true;
+			}
 		}
-	}
-	//////////////////////////////////////////////////////스킬공격
-	if (KEYMANAGER->isOnceKeyDown('A')) {
-		if (!onAttack) {
-			attFrame = 0;
-			attX = 0;
-			playAttMotion();
+		//////////////////////////////////////////////////////스킬공격
+		if (KEYMANAGER->isOnceKeyDown('A')) {
+			if (!onAttack) {
+				attFrame = 0;
+				attX = 0;
+				playAttMotion();
 
-			RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
-			RECT hit;
-			if (curDir) {//오른쪽
-				skillRange.left += ASkill->getRange() / 2;
-				skillRange.right += ASkill->getRange() / 2;
-			}
-			else {//왼쪽
-				skillRange.left -= ASkill->getRange() / 2;
-				skillRange.right -= ASkill->getRange() / 2;
+				RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
+				RECT hit;
+				if (curDir) {//오른쪽
+					skillRange.left += ASkill->getRange() / 2;
+					skillRange.right += ASkill->getRange() / 2;
+				}
+				else {//왼쪽
+					skillRange.left -= ASkill->getRange() / 2;
+					skillRange.right -= ASkill->getRange() / 2;
 
-			}
-			em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+				}
+				em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
 
-			vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-			for (int i = 0; i < monincurmap.size(); i++) {
-				if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-					curCast = ASkill;
-					curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-					//break;
+				vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+				for (int i = 0; i < monincurmap.size(); i++) {
+					if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+						curCast = ASkill;
+						curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+						//break;
+					}
 				}
 			}
 		}
-	}
-	if (KEYMANAGER->isOnceKeyDown('S')) {
-		if (!onAttack) {
-			attFrame = 0;
-			attX = 0;
-			playAttMotion();
+		if (KEYMANAGER->isOnceKeyDown('S')) {
+			if (!onAttack) {
+				attFrame = 0;
+				attX = 0;
+				playAttMotion();
 
-			RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
-			RECT hit;
-			if (curDir) {//오른쪽
-				skillRange.left += SSkill->getRange() / 2;
-				skillRange.right += SSkill->getRange() / 2;
-			}
-			else {//왼쪽
-				skillRange.left -= SSkill->getRange() / 2;
-				skillRange.right -= SSkill->getRange() / 2;
+				RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+				RECT hit;
+				if (curDir) {//오른쪽
+					skillRange.left += SSkill->getRange() / 2;
+					skillRange.right += SSkill->getRange() / 2;
+				}
+				else {//왼쪽
+					skillRange.left -= SSkill->getRange() / 2;
+					skillRange.right -= SSkill->getRange() / 2;
 
-			}
-			em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+				}
+				em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
 
-			vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-			for (int i = 0; i < monincurmap.size(); i++) {
-				if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-					curCast = SSkill;
-					curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-					//break;
+				vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+				for (int i = 0; i < monincurmap.size(); i++) {
+					if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+						curCast = SSkill;
+						curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+						//break;
+					}
 				}
 			}
 		}
-	}
-	if (KEYMANAGER->isOnceKeyDown('D')) {
-		if (!onAttack) {
-			attFrame = 0;
-			attX = 0;
-			playAttMotion();
+		if (KEYMANAGER->isOnceKeyDown('D')) {
+			if (!onAttack) {
+				attFrame = 0;
+				attX = 0;
+				playAttMotion();
+			}
 		}
 	}
-
-	//테스트
+	///////////////////////////////////////////////////테스트
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		EFFECTMANAGER->play("레벨업", curPos.x - mycam->camPoint.x - IMAGEMANAGER->findImage("레벨업")->getWidth() / 2, curPos.y - mycam->camPoint.y - IMAGEMANAGER->findImage("레벨업")->getWidth() / 2);
+		onLvlUP = true;
+		levelUPCount = lvlUPFrame = 0;
+		lvlupIMGpt = pointMake(curPos.x - 904 / 2, curPos.y - 904+200);
 	}
 	
+
+	//레벨업중
+	if (onLvlUP) {
+		levelUPCount++;
+		if (levelUPCount % 5 == 0) {
+			lvlUPFrame++;
+			if (lvlUPFrame > IMAGEMANAGER->findImage("레벨업")->getMaxFrameX()) {
+				levelUPCount = lvlUPFrame = 0;
+				onLvlUP = false;
+			}
+		}
+	}
 	
 	//공격모션중
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
@@ -580,11 +597,13 @@ void player::update(void)
 	//모든 연산이 끝난 후 렉트를 생성
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
-	EFFECTMANAGER->update();
 }
 
 void player::render(void)
 {
+	if (onLvlUP) {
+		IMAGEMANAGER->findImage("레벨업")->alphaFrameRender(getMemDC(), lvlupIMGpt.x-mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0, 200);
+	}
 	if (!onAttack) {
 		if (onHit) {
 			_human->alphaFrameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, curFrameX, curFrameY, hitalpha);
@@ -600,7 +619,6 @@ void player::render(void)
 	if (curCast != nullptr) {
 		curCast->render();
 	}
-	EFFECTMANAGER->render();
 }
 
 void player::playAttMotion()

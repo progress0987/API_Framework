@@ -123,7 +123,8 @@ private:
 
 
 	bool onLvlUP;
-	int levelUPCount;
+	int levelUPCount,lvlUPFrame;
+	POINT lvlupIMGpt;
 
 
 	bool hitDir;
