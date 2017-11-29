@@ -630,7 +630,8 @@ void player::update(void)
 void player::render(void)
 {
 	if (onLvlUP) {
-		IMAGEMANAGER->findImage("레벨업")->alphaFrameRender(getMemDC(), lvlupIMGpt.x-mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0, 200);
+		IMAGEMANAGER->findImage("레벨업")->frameRender(getMemDC(), lvlupIMGpt.x - mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0);
+		//IMAGEMANAGER->findImage("레벨업")->alphaFrameRender(getMemDC(), lvlupIMGpt.x-mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0, 200);
 	}
 	if (!onAttack) {
 		if (onHit) {
