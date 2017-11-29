@@ -59,6 +59,9 @@ struct item {
 	//회복시켜주는 hp, mp
 	int healHp = 0, healMp = 0;
 
+	//스택
+	int stack = 1;
+
 	//설명
 	char script[500];
 };
