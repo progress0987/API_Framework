@@ -504,27 +504,27 @@ void player::update(void)
 					attX = 0;
 					playAttMotion();
 
-					RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
-					RECT hit;
-					if (curDir) {//오른쪽
-						skillRange.left += SSkill->getRange() / 2;
-						skillRange.right += SSkill->getRange() / 2;
-					}
-					else {//왼쪽
-						skillRange.left -= SSkill->getRange() / 2;
-						skillRange.right -= SSkill->getRange() / 2;
+RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+RECT hit;
+if (curDir) {//오른쪽
+	skillRange.left += SSkill->getRange() / 2;
+	skillRange.right += SSkill->getRange() / 2;
+}
+else {//왼쪽
+	skillRange.left -= SSkill->getRange() / 2;
+	skillRange.right -= SSkill->getRange() / 2;
 
-					}
-					em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+}
+em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
 
-					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-					for (int i = 0; i < monincurmap.size(); i++) {
-						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-							curCast = SSkill;
-							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-							//break;
-						}
-					}
+vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+for (int i = 0; i < monincurmap.size(); i++) {
+	if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+		curCast = SSkill;
+		curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+		//break;
+	}
+}
 				}
 			}
 		}
@@ -540,7 +540,7 @@ void player::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 		GainExp(100);
 	}
-	
+
 
 	//레벨업중
 	if (onLvlUP) {
@@ -553,7 +553,7 @@ void player::update(void)
 			}
 		}
 	}
-	
+
 	//공격모션중
 	if (onAttack) {//공격 일때는 프레임을 다르게 잡아줘야함
 		attFrame++;
@@ -582,8 +582,8 @@ void player::update(void)
 		if (curStatus != Status::onLadder&&curStatus != Status::onRope) {
 			curPos.x += hitmoveX;
 		}
-		if (hitcount % 10==0) {
-			hitalpha = rand() % 200+55;
+		if (hitcount % 10 == 0) {
+			hitalpha = rand() % 200 + 55;
 			if (hitcount % 50 == 0) {
 				hitalpha = 255;
 			}
@@ -598,6 +598,10 @@ void player::update(void)
 		vector<monster*> tmp = em->getbody(curScene->getIndex());
 		for (int i = 0; i < tmp.size(); i++) {
 			if (IntersectRect(&RECT(), &hitRC, &tmp[i]->getbody())) {
+				BeingHit();
+				break;
+			}
+			if (IntersectRect(&RECT(), &hitRC, &tmp[i]->getSkill())) {
 				BeingHit();
 				break;
 			}
