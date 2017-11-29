@@ -60,7 +60,14 @@ private:
 	int stack, money;
 	//프로그레스바를 위한 width
 	float Hpwidth, Mpwidth,Exwidth;
-
+	//회복 카운트
+	int HpHillCount = 0;
+	int MpHillCount = 0;
+	//회복 양
+	float HpHillMax = 0;
+	float HpHill = 0;
+	float MpHillMax = 0;
+	float MpHill = 0;
 
 	//z Order
 	int Zinven;

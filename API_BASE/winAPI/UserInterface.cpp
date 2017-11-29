@@ -255,9 +255,9 @@ void UserInterface::update(void)
 	_dex = _basicDex + totalEquipdex;
 	_int = _basicInt + totalEquipint;
 	_luk = _basicLuk + totalEquipluk;
-	Hpwidth = (pl->getstatus()->curHP / pl->getstatus()->maxHP) * hpbar->getWidth();
-	Mpwidth = (pl->getstatus()->curMP / pl->getstatus()->maxMP)*mpbar->getWidth();
-	Exwidth = (pl->getstatus()->Exp / pl->getstatus()->lvlUpExp)*expGuage->getWidth();
+	Hpwidth = ((float)pl->getstatus()->curHP / (float)pl->getstatus()->maxHP) * (float)hpbar->getWidth();
+	Mpwidth = ((float)pl->getstatus()->curMP / (float)pl->getstatus()->maxMP)*(float)mpbar->getWidth();
+	Exwidth = ((float)pl->getstatus()->Exp / (float)pl->getstatus()->lvlUpExp)*(float)expGuage->getWidth();
 }
 
 void UserInterface::render(void)
