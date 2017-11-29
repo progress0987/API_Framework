@@ -25,13 +25,14 @@ void progressBar::update()
 
 void progressBar::render()
 {
-	IMAGEMANAGER->render("BOTBAR", getMemDC(), rcProg.left + progBarBot->getWidth() / 2, rcProg.top, 0, 0, progBarBot->getWidth(), progBarBot->getHeight());
+	IMAGEMANAGER->render("BOTBAR", getMemDC(), rcProg.left + progBarBot->getWidth() / 2, rcProg.top,0, 0, progBarBot->getWidth(), progBarBot->getHeight());
 	IMAGEMANAGER->render("TOPBAR", getMemDC(), rcProg.left + progBarTop->getWidth() / 2, rcProg.top, 0, 0, width, progBarTop->getHeight());
 }
 
 void progressBar::setGauge(float curGauge, float maxGauge)
 {
 	this->width = (curGauge / maxGauge)* progBarTop->getWidth();
+
 }
 
 progressBar::progressBar()
