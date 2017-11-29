@@ -58,7 +58,8 @@ private:
 	RECT wndInven, _equip[24], _potion[24], _etc[24];
 	//재고, 돈.
 	int stack, money;
-
+	//프로그레스바를 위한 width
+	float Hpwidth, Mpwidth,Exwidth;
 
 
 	//z Order
