@@ -139,6 +139,404 @@ void monster::Hpbarupdate(void)
 	Hpbar->setY(body.top - cam->camPoint.y);
 	Hpbar->update();
 }
+void monster::DemageFont(int Num)
+{
+	if (Num >= 9999)
+	{
+		IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 9, 0);
+		IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left+50, colBody.top - 50, 9, 0);
+		IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left+100, colBody.top - 50, 9, 0);
+		IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left+150, colBody.top - 50, 9, 0);
+	}
+	else if(Num>=1000)
+	{
+		if (Num >= 9000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 9, 0);
+		}
+		else if (Num >= 8000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 8, 0);
+		}
+		else if (Num >= 7000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 7, 0);
+		}
+		else if (Num >= 6000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 6, 0);
+		}
+		else if (Num >= 5000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 5, 0);
+		}
+		else if (Num >= 4000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 4, 0);
+		}
+		else if (Num >= 3000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 3, 0);
+		}
+		else if (Num >= 2000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 2, 0);
+		}
+		else if (Num >= 1000)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 1, 0);
+		}
+		if (Num % 1000 >= 900)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 9, 0);
+		}
+		else if (Num % 1000 >= 800)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 8, 0);
+		}
+		else if (Num % 1000 >= 700)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 7, 0);
+		}
+		else if (Num % 1000 >= 600)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 6, 0);
+		}
+		else if (Num % 1000 >= 500)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 5, 0);
+		}
+		else if (Num % 1000 >= 400)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 4, 0);
+		}
+		else if (Num % 1000 >= 300)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 3, 0);
+		}
+		else if (Num % 1000 >= 200)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 2, 0);
+		}
+		else if (Num % 1000 >= 100)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 1, 0);
+		}
+		if (Num % 100 >= 90)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 9, 0);
+		}
+		else if (Num % 100 >= 80)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 8, 0);
+		}
+		else if (Num % 100 >= 70)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 7, 0);
+		}
+		else if (Num % 100 >= 60)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 6, 0);
+		}
+		else if (Num % 100 >= 50)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 5, 0);
+		}
+		else if (Num % 100 >= 40)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 4, 0);
+		}
+		else if (Num % 100 >= 30)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 3, 0);
+		}
+		else if (Num % 100 >= 20)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 2, 0);
+		}
+		else if (Num % 100 >= 10)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 1, 0);
+		}
+		if (Num % 10 == 0)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 0, 0);
+		}
+		else if (Num % 10 == 1)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 1, 0);
+		}
+		else if (Num % 10 == 2)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 2, 0);
+		}
+		else if (Num % 10 == 3)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 3, 0);
+		}
+		else if (Num % 10 == 4)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 4, 0);
+		}
+		else if (Num % 10 == 5)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 5, 0);
+		}
+		else if (Num % 10 == 6)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 6, 0);
+		}
+		else if (Num % 10 == 7)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 7, 0);
+		}
+		else if (Num % 10 == 8)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 8, 0);
+		}
+		else if (Num % 10 == 9)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 150, colBody.top - 50, 9, 0);
+		}
+	}
+	else if (Num >= 100)
+	{
+		if (Num >= 900)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 9, 0);
+		}
+		else if (Num >= 800)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 8, 0);
+		}
+		else if (Num >= 700)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 7, 0);
+		}
+		else if (Num >= 600)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 6, 0);
+		}
+		else if (Num >= 500)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 5, 0);
+		}
+		else if (Num >= 400)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 4, 0);
+		}
+		else if (Num >= 300)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 3, 0);
+		}
+		else if (Num >= 200)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 2, 0);
+		}
+		else if (Num >= 100)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 1, 0);
+		}
+		if (Num % 100 >= 90)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 9, 0);
+		}
+		else if (Num % 100 >= 80)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 8, 0);
+		}
+		else if (Num % 100 >= 70)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 7, 0);
+		}
+		else if (Num % 100 >= 60)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 6, 0);
+		}
+		else if (Num % 100 >= 50)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 5, 0);
+		}
+		else if (Num % 100 >= 40)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 4, 0);
+		}
+		else if (Num % 100 >= 30)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 3, 0);
+		}
+		else if (Num % 100 >= 20)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 2, 0);
+		}
+		else if (Num % 100 >= 10)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 1, 0);
+		}
+		if (Num % 10 == 9)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 9, 0);
+		}
+		else if (Num % 10 == 8)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 8, 0);
+		}
+		else if (Num % 10 == 7)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 7, 0);
+		}
+		else if (Num % 10 == 6)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 6, 0);
+		}
+		else if (Num % 10 == 5)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 5, 0);
+		}
+		else if (Num % 10 == 4)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 4, 0);
+		}
+		else if (Num % 10 == 3)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 3, 0);
+		}
+		else if (Num % 10 == 2)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 2, 0);
+		}
+		else if (Num % 10 == 1)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 1, 0);
+		}
+		else if (Num % 10 == 0)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 0, 0);
+		}
+	}
+	else if (Num >= 10)
+	{
+		if (Num >= 90)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 9, 0);
+		}
+		else if (Num >= 80)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 8, 0);
+		}
+		else if (Num >= 70)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 7, 0);
+		}
+		else if (Num >= 60)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 6, 0);
+		}
+		else if (Num >= 50)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 5, 0);
+		}
+		else if (Num >= 40)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 4, 0);
+		}
+		else if (Num >= 30)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 3, 0);
+		}
+		else if (Num >= 20)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 2, 0);
+		}
+		else if (Num >= 10)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left, colBody.top - 50, 1, 0);
+		}
+		if (Num % 10 == 9)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left - 50, colBody.top - 50, 9, 0);
+		}
+		else if (Num % 10 == 8)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left - 50, colBody.top - 50, 8, 0);
+		}
+		else if (Num % 10 == 7)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 7, 0);
+		}
+		else if (Num % 10 == 6)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 6, 0);
+		}
+		else if (Num % 10 == 5)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 5, 0);
+		}
+		else if (Num % 10 == 4)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 4, 0);
+		}
+		else if (Num % 10 == 3)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 3, 0);
+		}
+		else if (Num % 10 == 2)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 2, 0);
+		}
+		else if (Num % 10 == 1)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 1, 0);
+		}
+		else if (Num % 10 == 0)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 0, 0);
+		}
+	}
+	else
+	{
+		if (Num == 0)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50,0,0);
+		}
+		else if (Num == 1)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 1, 0);
+		}
+		else if (Num == 2)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 2, 0);
+		}
+		else if (Num == 3)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 3, 0);
+		}
+		else if (Num == 4)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 4, 0);
+		}
+		else if (Num == 5)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 5, 0);
+		}
+		else if (Num == 6)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 6, 0);
+		}
+		else if (Num == 7)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 7, 0);
+		}
+		else if (Num == 8)
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 8, 0);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), body.left - cam->camPoint.x - 50, body.top - cam->camPoint.y - 50, 9, 0);
+		}
+	}
+}
 RECT monster::getbody(void)
 {
 	if (NowHp >= 1)
@@ -331,7 +729,9 @@ void Harp::moving(void)
 }
 void Harp::SubHp(int Atk)
 {
-	NowHp -= Atk;
+	NowHp -= Atk - Def;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -373,7 +773,7 @@ void Harp::render(void)
 //		Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
 	if (NowHp != MaxHp&&NowHp >= 1)
 	{
-	Hpbar->render();
+		Hpbar->render();
 	}
 	if (moveDir)
 	{
@@ -381,10 +781,17 @@ void Harp::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("harpD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -400,10 +807,17 @@ void Harp::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("harpD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("harpD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -429,6 +843,7 @@ void Harp::collRect(RECT player, int demage)
 		if (IntersectRect(&rc, &player, &body))
 		{
 			SubHp(demage);
+			
 		}
 	}
 }
@@ -624,6 +1039,8 @@ void Grupin::moving(void)
 void Grupin::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -673,10 +1090,17 @@ void Grupin::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("GrupinD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("GrupinD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -692,10 +1116,17 @@ void Grupin::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("GrupinD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("GrupinD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -915,6 +1346,8 @@ void Cellion::moving(void)
 void Cellion::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -964,10 +1397,17 @@ void Cellion::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("CellionD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("CellionD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -983,10 +1423,17 @@ void Cellion::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("CellionD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("CellionD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -1206,6 +1653,8 @@ void Lioner::moving(void)
 void Lioner::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -1255,10 +1704,17 @@ void Lioner::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("LionerD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("LionerD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -1274,10 +1730,17 @@ void Lioner::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("LionerD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("LionerD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -1497,6 +1960,8 @@ void Lucida::moving(void)
 void Lucida::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -1546,10 +2011,17 @@ void Lucida::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("LucidaD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("LucidaD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -1565,10 +2037,17 @@ void Lucida::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("LucidaD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("LucidaD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -1795,6 +2274,8 @@ void JrYeti::moving(void)
 void JrYeti::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -1847,10 +2328,17 @@ void JrYeti::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("Jr YetiD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x-25, body.top - cam->camPoint.y-23, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("Jr YetiD")->frameRender(getMemDC(), body.left - cam->camPoint.x-25, body.top - cam->camPoint.y-23, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -1866,10 +2354,17 @@ void JrYeti::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("Jr YetiD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x+25, body.top - cam->camPoint.y-23, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("Jr YetiD")->frameRender(getMemDC(), body.left - cam->camPoint.x+25, body.top - cam->camPoint.y-23, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2089,6 +2584,8 @@ void PePe::moving(void)
 void PePe::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -2138,10 +2635,16 @@ void PePe::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , frame, 1, alpha);
-		}
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2157,10 +2660,16 @@ void PePe::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , frame, 0, alpha);
-		}
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2379,6 +2888,8 @@ void Sheep::moving(void)
 void Sheep::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -2428,10 +2939,17 @@ void Sheep::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("SheepD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("SheepD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2447,10 +2965,17 @@ void Sheep::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("SheepD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("SheepD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2669,6 +3194,8 @@ void JCellion::moving(void)
 void JCellion::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -2718,10 +3245,17 @@ void JCellion::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JCellionD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("JCellionD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2737,10 +3271,17 @@ void JCellion::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JCellionD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("JCellionD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -2960,6 +3501,8 @@ void JGrupin::moving(void)
 void JGrupin::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -3009,10 +3552,17 @@ void JGrupin::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JGrupinD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("JGrupinD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3028,10 +3578,17 @@ void JGrupin::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JGrupinD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("JGrupinD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3251,6 +3808,8 @@ void JLioner::moving(void)
 void JLioner::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -3300,10 +3859,17 @@ void JLioner::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JLionerD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("JLionerD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3319,10 +3885,17 @@ void JLioner::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JLionerD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("JLionerD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3542,6 +4115,8 @@ void JLucida::moving(void)
 void JLucida::SubHp(int Atk)
 {
 	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	hit = true;
 	HitTimer = 6;
 	frame = 0;
@@ -3592,10 +4167,17 @@ void JLucida::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JLucidaD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("JLucidaD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3611,10 +4193,17 @@ void JLucida::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("JLucidaD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("JLucidaD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3833,7 +4422,9 @@ void Eliza::moving(void)
 }
 void Eliza::SubHp(int Atk)
 {
-	hit = true;
+	NowHp -= Atk;
+	//데미지 폰트 출력을 위한 데미지 값 저장
+	SaveNowDemge = Atk - Def;
 	HitTimer = 6;
 	frame = 0;
 	SkillTwoCount++;
@@ -3908,10 +4499,17 @@ void Eliza::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("ElizaD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 1, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (NowHp>0 && hit == true)
 		{
 			IMAGEMANAGER->findImage("ElizaD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{
@@ -3927,10 +4525,17 @@ void Eliza::render(void)
 		if (NowHp <= 0)
 		{
 			IMAGEMANAGER->findImage("ElizaD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
 		}
 		else if (hit == true)
 		{
 			IMAGEMANAGER->findImage("ElizaD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
 		}
 		else if (Stay == false)
 		{

@@ -16,6 +16,7 @@ protected:
 	RECT SkillTwoRect[4];
 	POINT pt;
 	POINT GenPoint;
+	int SaveNowDemge;
 	bool dead;
 	bool moveDir;//true - 오른쪽
 	int bodyW, bodyH;
@@ -51,6 +52,8 @@ public:
 
 	void HpbarInit(void);//hp바 만들기
 	void Hpbarupdate(void);//hp바 업데이트
+
+	void DemageFont(int Num);
 };
 //Harp의 관리 클래스
 class Harp :public monster
