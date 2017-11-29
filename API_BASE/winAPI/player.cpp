@@ -644,7 +644,7 @@ void player::GainExp(int exp)
 	stat->Exp += exp;
 	if (stat->Exp >= stat->lvlUpExp) {
 		stat->Exp %= stat->lvlUpExp;
-		stat->lvlUpExp *= (3/2);
+		stat->lvlUpExp = stat->lvlUpExp* 3/2;
 		stat->Level++;
 		stat->ap += 5;
 		onLvlUP = true;

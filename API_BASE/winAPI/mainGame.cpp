@@ -282,12 +282,40 @@ void mainGame::imgInit()
 
 	////////////////////////////////////////////////æ∆¿Ã≈€//////////////////////////////////////////////////////
 
-	IMAGEMANAGER->addImage("¬ﬁ¬ﬁπŸ", "sprites/UI/¬ﬁ¬ﬁπŸ.bmp", 31, 31, true, NULL);
-	IMAGEMANAGER->addImage("ª°∞£∆˜º«", "sprites/UI/ª°∞£∆˜º«.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("¡÷»≤∆˜º«", "sprites/UI/¡÷»≤∆˜º«.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("∆ƒ∂ı∆˜º«", "sprites/UI/∆ƒ∂ı∆˜º«.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("∆œ∫˘ºˆ", "sprites/UI/∆œ∫˘ºˆ.bmp", 26, 30, true, NULL);
-	IMAGEMANAGER->addImage("«œæ·∆˜º«", "sprites/UI/«œæ·∆˜º«.bmp", 27, 27, true, NULL);
+	IMAGEMANAGER->addImage("¬ﬁ¬ﬁπŸ",	"sprites/item/¬ﬁ¬ﬁπŸ.bmp",		32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("ª°∞£∆˜º«",	"sprites/item/ª°∞£∆˜º«.bmp",	32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("¡÷»≤∆˜º«",	"sprites/item/¡÷»≤∆˜º«.bmp",	32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("∆ƒ∂ı∆˜º«",	"sprites/item/∆ƒ∂ı∆˜º«.bmp",	32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("∆œ∫˘ºˆ",	"sprites/item/∆œ∫˘ºˆ.bmp",		32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("«œæ·∆˜º«",	"sprites/item/«œæ·∆˜º«.bmp",	32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("∏¡≈‰1", "sprites/item/∏¡≈‰1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("∏¡≈‰2", "sprites/item/∏¡≈‰2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("∏¡≈‰3",	"sprites/item/∏¡≈‰3.bmp",	32, 32, true, RGB(255,0,255));
+
+	IMAGEMANAGER->addImage("∏¿⁄1", "sprites/item/∏¿⁄1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("∏¿⁄2", "sprites/item/∏¿⁄2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("∏¿⁄3", "sprites/item/∏¿⁄3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("π´±‚1", "sprites/item/π´±‚1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("π´±‚2", "sprites/item/π´±‚2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("π´±‚3", "sprites/item/π´±‚3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("πŸ¡ˆ1", "sprites/item/πŸ¡ˆ1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("πŸ¡ˆ2", "sprites/item/πŸ¡ˆ2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("πŸ¡ˆ3", "sprites/item/πŸ¡ˆ3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("ªÛ¿«1", "sprites/item/ªÛ¿«1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ªÛ¿«2", "sprites/item/ªÛ¿«2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ªÛ¿«3", "sprites/item/ªÛ¿«3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Ω≈πﬂ1", "sprites/item/Ω≈πﬂ1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Ω≈πﬂ2", "sprites/item/Ω≈πﬂ2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Ω≈πﬂ3", "sprites/item/Ω≈πﬂ3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("¿Â∞©1", "sprites/item/¿Â∞©1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¿Â∞©2", "sprites/item/¿Â∞©2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¿Â∞©3", "sprites/item/¿Â∞©3.bmp", 32, 32, true, RGB(255, 0, 255));
+
 
 
 	//////////////////////////////////////////////UI//////////////////////////////////////////////////////
