@@ -176,7 +176,22 @@ HRESULT UserInterface::init(void)
 	_luk = pl->getstatus()->Luk;
 	//_ap;
 
-	//shopItem[0] = RectMake()
+	//----------------------------------상점이미지로드-----------------------
+	onShop = false;
+
+	shopWnd = IMAGEMANAGER->findImage("상점");
+	shopQuit = IMAGEMANAGER->findImage("상점나가기마우스");
+	shopBuy = IMAGEMANAGER->findImage("아이템사기마우스");
+	shopSell = IMAGEMANAGER->findImage("아이템팔기마우스");
+	shopQuitPushed = IMAGEMANAGER->findImage("상점나가기눌림");
+	shopBuyPushed = IMAGEMANAGER->findImage("아이템사기눌림");
+	shopSellPushed = IMAGEMANAGER->findImage("아이템팔기눌림");
+	shopEquip = IMAGEMANAGER->findImage("상점장비활성");
+	shopPortion = IMAGEMANAGER->findImage("상점소비활성");
+	shopEtc = IMAGEMANAGER->findImage("상점기타활성");
+	mesoIcon = IMAGEMANAGER->findImage("메소아이콘");
+	selectEffect = IMAGEMANAGER->findImage("셀렉트효과");
+
 	
 
 	
@@ -319,13 +334,15 @@ void UserInterface::render(void)
 	_pgdn->render(getMemDC(), 1127, 725);
 
 
-	//스텟창, 장비창, 인벤토리 렌더링
+	//스텟창, 장비창, 인벤토리, 상점 렌더링
 	if (onStat)
 		statement();
 	if (onEquip)
 		equip();
 	if (onInven)
 		inventory();
+	if (onShop)
+		shop();
 
 	//마우스 커서 숨기기
 	SetCursor(NULL);
@@ -434,6 +451,11 @@ void UserInterface::statement(void)
 	//다썼으면 지워주자!!!
 	DeleteObject(oldFont);
 	DeleteObject(font1);
+}
+
+void UserInterface::shop(void)
+{
+	shopWnd->render(getMemDC(), 450, 100);
 }
 
 UserInterface::UserInterface()

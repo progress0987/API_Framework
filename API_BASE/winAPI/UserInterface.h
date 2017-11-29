@@ -68,10 +68,10 @@ private:
 	bool onInven = false; //인벤토리창 온오프
 	bool invEq, invPo, invEtc; //장비탭, 소비탭, 기타탭 온오프 처리 불변수.
 
-	//------------------------------------상점데이터---------------------------------------------
+    //------------------------------------상점데이터---------------------------------------------
 
 	bool onShop; //샵 온오프
-	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopEquip, *shopPortion, *shopEtc, *mesoIcon;
+	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
 
    
@@ -106,6 +106,7 @@ private:
 	image *_0, *_1, *_2, *_3, *_4, *_5, *_6, *_7, *_8, *_9, *_rs, *_Lc, *_Rc, *_percent, *_dot;
 	//숫자, 역슬래쉬, 왼쪽커버, 오른쪽커버, 퍼센트, 점.
 
+	
 public:
 	virtual HRESULT init(void);
 	virtual void release(void);
@@ -119,6 +120,7 @@ public:
 	virtual void equip(void);
 	virtual void inventory(void);
 	virtual void statement(void);
+	virtual void shop(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
 	void setPlayer(player *pl) { this->pl = pl; }
