@@ -18,6 +18,8 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	sceneChange = false;
 	curDir = false;
 	curPos = pos;
+	ItemList = new items;
+	ItemList->init();
 
 	onAttack = false;
 	onHit = false;
@@ -51,19 +53,42 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	//////////////////////////////////////////스킬 초기화
 	skill* sk1;
 	sk1 = new skill;
-	sk1->init("skill1", 3, 200,300);
+	sk1->init("skill1", 3, 200,300,15);
 	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
 
 	skill* sk2;
 	sk2 = new skill;
-	sk2->init("skill2", 10, 150, 300);
+	sk2->init("skill2", 10, 150, 300,10);
 	sk2->setCam(mycam);
 	skillList.push_back(sk2);
 
 
-	//수정 - 레벨업 이펙트 추가
+	//각 탭에 아이템 추가
+
+	
+	item tmp = getItem("붉은 망토");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("낡은 고깔모자");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("기본형 ESP 증폭기");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("천바지");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("티셔츠");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("빽구두");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("하얀 장갑");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+
+	tmp = getItem("빨간포션");
+	tmp.stack = 10;
+	if (tmp.itemtype != -1)consume.push_back(tmp);
+	tmp = getItem("파란포션");
+	tmp.stack = 10;
+	if (tmp.itemtype != -1)consume.push_back(tmp);
 
 
 	ASkill = skillList[0];
@@ -83,9 +108,6 @@ void player::release(void)
 
 void player::update(void)
 {
-	//중력값//카메라 처리
-	//WINSIZEY/2 = 384
-	//int temp = mycam->camPoint.y + WINSIZEY / 2;		//테스트용
 	if (curPos.y - mycam->camPoint.y - height / 2>WINSIZEY / 2) {//카메라가 중간보다 아래에있다면(밑으로 내려가야함)
 		mycam->camPoint.y += 3.f;
 		if (mycam->camPoint.y + WINSIZEY > backStage->getHeight()) {
@@ -442,60 +464,66 @@ void player::update(void)
 		//////////////////////////////////////////////////////스킬공격
 		if (KEYMANAGER->isOnceKeyDown('A')) {
 			if (!onAttack) {
-				SOUNDMANAGER->play("askill");
-				attFrame = 0;
-				attX = 0;
-				playAttMotion();
+				if (stat->curMP >= ASkill->getReqMP()) {
+					SOUNDMANAGER->play("askill");
+					stat->curMP -= ASkill->getReqMP();
+					attFrame = 0;
+					attX = 0;
+					playAttMotion();
 
-				RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
-				RECT hit;
-				if (curDir) {//오른쪽
-					skillRange.left += ASkill->getRange() / 2;
-					skillRange.right += ASkill->getRange() / 2;
-				}
-				else {//왼쪽
-					skillRange.left -= ASkill->getRange() / 2;
-					skillRange.right -= ASkill->getRange() / 2;
+					RECT skillRange = RectMakeCenter(curPos.x, curPos.y, ASkill->getRange(), 10);
+					RECT hit;
+					if (curDir) {//오른쪽
+						skillRange.left += ASkill->getRange() / 2;
+						skillRange.right += ASkill->getRange() / 2;
+					}
+					else {//왼쪽
+						skillRange.left -= ASkill->getRange() / 2;
+						skillRange.right -= ASkill->getRange() / 2;
 
-				}
-				em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
+					}
+					em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
 
-				vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-				for (int i = 0; i < monincurmap.size(); i++) {
-					if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-						curCast = ASkill;
-						curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-						//break;
+					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+					for (int i = 0; i < monincurmap.size(); i++) {
+						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+							curCast = ASkill;
+							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+							//break;
+						}
 					}
 				}
 			}
 		}
 		if (KEYMANAGER->isOnceKeyDown('S')) {
 			if (!onAttack) {
-				SOUNDMANAGER->play("sskill");
-				attFrame = 0;
-				attX = 0;
-				playAttMotion();
+				if (stat->curMP >= SSkill->getReqMP()) {
+					SOUNDMANAGER->play("sskill");
+					attFrame = 0;
+					stat->curMP -= SSkill->getReqMP();
+					attX = 0;
+					playAttMotion();
 
-				RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
-				RECT hit;
-				if (curDir) {//오른쪽
-					skillRange.left += SSkill->getRange() / 2;
-					skillRange.right += SSkill->getRange() / 2;
-				}
-				else {//왼쪽
-					skillRange.left -= SSkill->getRange() / 2;
-					skillRange.right -= SSkill->getRange() / 2;
+					RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+					RECT hit;
+					if (curDir) {//오른쪽
+						skillRange.left += SSkill->getRange() / 2;
+						skillRange.right += SSkill->getRange() / 2;
+					}
+					else {//왼쪽
+						skillRange.left -= SSkill->getRange() / 2;
+						skillRange.right -= SSkill->getRange() / 2;
 
-				}
-				em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+					}
+					em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
 
-				vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-				for (int i = 0; i < monincurmap.size(); i++) {
-					if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-						curCast = SSkill;
-						curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-						//break;
+					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+					for (int i = 0; i < monincurmap.size(); i++) {
+						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+							curCast = SSkill;
+							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+							//break;
+						}
 					}
 				}
 			}
@@ -661,6 +689,18 @@ void player::GainExp(int exp)
 //캐릭터를 비춰주는 카메라 함수. 렌더링은 렌더함수 부분에서 처리.
 //진행방향과 캐릭터좌표정보를 받아서 mapx, mapy를 조정해준다.
 
+item player::getItem(char itemName[])
+{
+	item ret;
+	ret.itemtype = -1;//에러타입
+	for (vector<item>::iterator i = ItemList->_item.begin(); i != ItemList->_item.end(); i++) {
+		if (strcmp(itemName, i->itemname) == 0) {
+			return (*i);
+		}
+	}
+	return ret;
+}
+
 bool player::openShop()
 {
 	for (int i = 0; i < curScene->getNPCs().size(); i++) {
@@ -681,11 +721,12 @@ player::~player()
 {
 }
 
-HRESULT skill::init(char * skillImg, int dPf, int dmg,int range)
+HRESULT skill::init(char * skillImg, int dPf, int dmg,int range,int reqMP)
 {
 	img = IMAGEMANAGER->findImage(skillImg);
 	rc = { 0,0,img->getFrameWidth(),img->getFrameHeight() };
 	delayPerFrames = dPf;
+	this->reqMP = reqMP;
 	this->range = range;
 	this->dmg = dmg;
 	for (int i = 0; i <= img->getMaxFrameX(); i++) {

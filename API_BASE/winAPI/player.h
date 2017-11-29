@@ -35,11 +35,12 @@ protected:
 	int frameX=0;
 	int frame=0;
 	int delayPerFrames;
+	int reqMP;
 	vector<RECT> dmgRCList;
 	Camera* cam;
 public:
 	bool onCast;
-	HRESULT init(char* skillImg,int dPf,int dmg,int range);
+	HRESULT init(char* skillImg,int dPf,int dmg,int range,int reqMP);
 	void release(void);
 	void update(void);
 	void render(void);
@@ -54,6 +55,7 @@ public:
 		tmpRC.bottom += rc.top;
 		return tmpRC;
 	}
+	int getReqMP() { return reqMP; }
 	void setCam(Camera* glcam) { cam = glcam; }
 	int getDmg() {return dmg;}
 };
@@ -83,6 +85,7 @@ private:
 	mapFrame* curScene;
 	image *_human;
 	image* attackMotion;
+	items* ItemList;
 
 	image *backStage;
 	Camera* mycam;
@@ -136,6 +139,11 @@ private:
 	int attX;
 
 	int meso = 1000;
+
+	vector<item> equip;
+	vector<item> consume;
+	vector<item> etc;
+
 public:
 	bool sceneChange=false;
 	bool sceneChangeFinished = false;
@@ -154,7 +162,9 @@ public:
 	//°æÇèÄ¡ È¹µæ
 	void GainExp(int exp);
 
-
+	vector<item> getEquip() { return equip; }
+	vector<item> getConsume() { return consume; }
+	vector<item> getEtc() { return etc; }
 	status* getstatus() { return stat; }
 	
 	void setMaxHP(int hp) { stat->maxHP = hp; }
@@ -175,7 +185,8 @@ public:
 		else { return false; }
 	}
 
-public:
+	item getItem(char itemName[]);
+
 	void showShop(bool val) { onShop = val; }
 	bool openShop();
 

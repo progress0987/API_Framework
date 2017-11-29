@@ -417,6 +417,9 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("R",					"sprites/UI/R.bmp", 10, 9, true, RGB(255, 255, 255));
 	IMAGEMANAGER->addImage("T",					"sprites/UI/T.bmp", 10, 9, true, RGB(255, 255, 255));
 	IMAGEMANAGER->addImage("A",					"sprites/UI/A.bmp", 10, 9, true, RGB(255, 255, 255));
+	//-------------------------------------몬스터 히트 데미지------------------------------------
+
+	IMAGEMANAGER->addFrameImage("HitDamge", "sprites/UI/HitNumber.bmp", 310, 44, 10, 1, true, RGB(255, 0, 255));
 
 	//-------------------------------------상태표기 숫자들--------------------------------------
 

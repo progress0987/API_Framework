@@ -417,6 +417,9 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("R",					"sprites/UI/R.bmp", 10, 9, true, RGB(255, 255, 255));
 	IMAGEMANAGER->addImage("T",					"sprites/UI/T.bmp", 10, 9, true, RGB(255, 255, 255));
 	IMAGEMANAGER->addImage("A",					"sprites/UI/A.bmp", 10, 9, true, RGB(255, 255, 255));
+	//-------------------------------------몬스터 히트 데미지------------------------------------
+
+	IMAGEMANAGER->addFrameImage("HitDamge", "sprites/UI/HitNumber.bmp", 310, 44, 10, 1, true, RGB(255, 0, 255));
 
 	//-------------------------------------상태표기 숫자들--------------------------------------
 
@@ -457,10 +460,12 @@ void mainGame::imgInit()
 void mainGame::soundInit()
 {
 	//맵 사운드
+	SOUNDMANAGER->addSound("Bdie", "sound/BossDead.mp3", true, false);
 	SOUNDMANAGER->addSound("Boss", "sound/BossBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Hill", "sound/HillBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Forest", "sound/ForestBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Store", "sound/StoreBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Mdie", "sound/MonsterDie.mp3", true, false);
 	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);

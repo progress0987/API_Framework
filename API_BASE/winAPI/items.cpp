@@ -337,7 +337,7 @@ HRESULT items::init(void)
 	//바지
 	{
 		t.itemimg = IMAGEMANAGER->findImage("바지1");
-		strcpy(t.itemname, "천 바지");
+		strcpy(t.itemname, "천바지");
 		t.itemtype = itemType::pants;
 		t._price = 150;
 		t.hp = 50, t.mp = 0, t.str = 0, t.dex = 0, t.inteligence = 0, t.luk = 0;
@@ -505,7 +505,7 @@ HRESULT items::init(void)
 		_item.push_back(t);
 	}
 
-	//신발
+	//장갑
 	{
 		t.itemimg = IMAGEMANAGER->findImage("장갑1");
 		strcpy(t.itemname, "하얀 장갑");
