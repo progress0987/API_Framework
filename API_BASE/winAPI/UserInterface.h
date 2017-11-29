@@ -67,6 +67,12 @@ private:
 	bool onInven = false; //인벤토리창 온오프
 	bool invEq, invPo, invEtc; //장비탭, 소비탭, 기타탭 온오프 처리 불변수.
 
+	//------------------------------------상점데이터---------------------------------------------
+
+	bool onShop; //샵 온오프
+	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopEquip, *shopPortion, *shopEtc;
+	RECT shopItem[9], myItem[9];
+
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
    

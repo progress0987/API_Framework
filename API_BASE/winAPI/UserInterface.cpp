@@ -142,8 +142,7 @@ HRESULT UserInterface::init(void)
 	_form->setY(690);
 	_formBackground->setX(_form->getX() + 3);
 	_formBackground->setY(_form->getY() + 25);
-	hpbar->setX(_formBackground->getX());
-	hpbar->setY(_formBackground->getY());
+	
 	hpbar->setX(_formBackground->getX() + 22);
 	hpbar->setY(_formBackground->getY() + 3);
 
@@ -177,6 +176,8 @@ HRESULT UserInterface::init(void)
 	_luk = pl->getstatus()->Luk;
 	//_ap;
 
+	shopItem[0] = RectMake()
+	
 
 	
 
