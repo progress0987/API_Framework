@@ -432,6 +432,7 @@ void player::update(void)
 		//////////////////기본공격
 		if (KEYMANAGER->isOnceKeyDown('X')) {
 			if (!onAttack) {
+				SOUNDMANAGER->play("basicatt");
 				attFrame = 0;
 				attX = 0;
 				playAttMotion();
@@ -441,6 +442,7 @@ void player::update(void)
 		//////////////////////////////////////////////////////스킬공격
 		if (KEYMANAGER->isOnceKeyDown('A')) {
 			if (!onAttack) {
+				SOUNDMANAGER->play("askill");
 				attFrame = 0;
 				attX = 0;
 				playAttMotion();
@@ -470,6 +472,7 @@ void player::update(void)
 		}
 		if (KEYMANAGER->isOnceKeyDown('S')) {
 			if (!onAttack) {
+				SOUNDMANAGER->play("sskill");
 				attFrame = 0;
 				attX = 0;
 				playAttMotion();
