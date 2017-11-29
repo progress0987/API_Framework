@@ -21,7 +21,7 @@ private:
 	image *statWnd, *UpN, *UpO, *UpC, *autoDistN, *autoDistC;
 	//스텟창사각형
 	RECT wndStat;
-	//스텟창에 들어가는 정보들
+	//스텟창에 들어가는 정보들(임시값 들어가있는데 어차피 init에서 바꿔치기 해주니깐 걱정 ㄴㄴ)
 	int Level = 249, playerHp = 34689, playerMp = 12570, MaxHp = 500000, MaxMp = 500000, _str, _dex, _int, _luk, _ap = 0;
 	int totalEquipstr = 10, totalEquipdex = 20, totalEquipint = 400, totalEquipluk = 3;
 	int _basicStr = 4, _basicDex = 4, _basicInt = 13, _basicLuk = 4;

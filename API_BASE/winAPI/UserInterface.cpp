@@ -175,6 +175,8 @@ HRESULT UserInterface::init(void)
 	_int = pl->getstatus()->Int;
 	_luk = pl->getstatus()->Luk;
 	_ap = pl->getstatus()->ap;
+	_exp = pl->getstatus()->Exp;
+	LvExp = pl->getstatus()->lvlUpExp;
 
 	//----------------------------------상점이미지로드-----------------------
 
@@ -241,6 +243,8 @@ void UserInterface::update(void)
 	_int = pl->getstatus()->Int;
 	_luk = pl->getstatus()->Luk;
 	_ap = pl->getstatus()->ap;
+	_exp = pl->getstatus()->Exp;
+	LvExp = pl->getstatus()->lvlUpExp;
 
 	//체력이 회복되고 있는가
 	if (HpHillCount != 0)
