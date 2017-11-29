@@ -300,6 +300,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("닫기",			"sprites/UI/닫기.bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기마우스온",	"sprites/UI/닫기(MouseOn).bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기클릭",		"sprites/UI/닫기(clicked).bmp", 13, 13, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("레벨업", "sprites/UI/레벨업.bmp", 18080, 904, 20, 1, true, RGB(255, 0, 255));
 
 	//-------------------------------------인벤토리------------------------------------------
 	IMAGEMANAGER->addImage("인벤토리창",		"sprites/UI/아이템인벤토리.bmp", 172, 335, true, RGB(255, 0, 255));
@@ -414,8 +415,14 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("상점장비활성", "sprites/UI/장비탭활성화.bmp", 42, 19, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("상점소비활성", "sprites/UI/소비탭활성화.bmp", 42, 19, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("상점기타활성", "sprites/UI/기타탭활성화.bmp", 42, 19, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("상점나가기마우스", "sprites/UI/기타탭활성화.bmp", 42, 19, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("상점나가기눌림", "sprites/UI/기타탭활성화.bmp", 42, 19, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("상점나가기마우스", "sprites/UI/상점나가기마우스.bmp", 64, 16, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("상점나가기눌림", "sprites/UI/상점나가기눌림.bmp", 64, 16, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아이템사기마우스", "sprites/UI/아이템사기마우스.bmp", 64, 16, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아이템사기눌림", "sprites/UI/아이템사기눌림.bmp", 64, 16, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아이템팔기마우스", "sprites/UI/아이템팔기마우스.bmp", 64, 16, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아이템팔기눌림", "sprites/UI/아이템팔기눌림.bmp", 64, 16, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("메소아이콘", "sprites/UI/메소아이콘.bmp", 12, 12, true, RGB(255, 0, 255));
+	
 }
 
 void mainGame::soundInit()
