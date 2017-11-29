@@ -2624,68 +2624,71 @@ void PePe::update(void)
 }
 void PePe::render(void)
 {
-//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
-	if (NowHp != MaxHp&&NowHp >= 1)
-	{
-		Hpbar->render();
-	}
-	if (moveDir)
-	{
-		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
-		if (NowHp <= 0)
+		//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+		if (NowHp != MaxHp&&NowHp >= 1)
 		{
-			IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , frame, 1, alpha);
-			if (alpha > 0)
+			Hpbar->render();
+		}
+		if (moveDir)
+		{
+			//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
+			if (NowHp <= 0)
 			{
-				//데미지 폰트 출력
-				DemageFont(SaveNowDemge);
+				IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1, alpha);
+				if (alpha > 0)
+				{
+					//데미지 폰트 출력
+					DemageFont(SaveNowDemge);
+				}
+				else if (NowHp > 0 && hit == true)
+				{
+					IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, 0, 1);
+					//데미지 폰트 출력
+					DemageFont(SaveNowDemge);
+				}
+				else if (Stay == false)
+				{
+					IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1);
+				}
+				else if (Stay == true)
+				{
+					IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1);
+				}
 			}
-		else if (NowHp>0 && hit == true)
-		{
-			IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , 0, 1);
-			//데미지 폰트 출력
-			DemageFont(SaveNowDemge);
-		}
-		else if (Stay == false)
-		{
-			IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , frame, 1);
-		}
-		else if (Stay == true)
-		{
-			IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y-20, frame, 1);
-		}
-	}
-	else
-	{
-		if (NowHp <= 0)
-		{
-			IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , frame, 0, alpha);
-			if (alpha > 0)
+			else
 			{
-				//데미지 폰트 출력
-				DemageFont(SaveNowDemge);
+				if (NowHp <= 0)
+				{
+					IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0, alpha);
+					if (alpha > 0)
+					{
+						//데미지 폰트 출력
+						DemageFont(SaveNowDemge);
+					}
+					else if (hit == true)
+					{
+						IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, 0, 0);
+						//데미지 폰트 출력
+						DemageFont(SaveNowDemge);
+					}
+					else if (Stay == false)
+					{
+						IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0);
+					}
+					else if (Stay == true)
+					{
+						IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0);
+					}
+				}
+				//	Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
+				//char tmp[128];
+				//sprintf(tmp,"몬스터좌표 : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
+				//sprintf(tmp, "몬스터좌표 : x-%d y-%d", body.left, body.top);
+				//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 			}
-		else if (hit == true)
-		{
-			IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20 , 0, 0);
-			//데미지 폰트 출력
-			DemageFont(SaveNowDemge);
 		}
-		else if (Stay == false)
-		{
-			IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x , body.top - cam->camPoint.y-20, frame, 0);
-		}
-		else if (Stay == true)
-		{
-			IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y-20, frame, 0);
-		}
-	}
-//	Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-	//char tmp[128];
-	//sprintf(tmp,"몬스터좌표 : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-	//sprintf(tmp, "몬스터좌표 : x-%d y-%d", body.left, body.top);
-	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
+
 void PePe::collRect(RECT player, int demage)
 {
 	RECT rc;
