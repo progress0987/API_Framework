@@ -25,6 +25,8 @@ protected:
 	int Gentime=50;
 	float alpha;
 
+	char* deadsound = "Mdie";
+	char* BossDead = "Bdie";
 	Camera* cam;
 public:
 

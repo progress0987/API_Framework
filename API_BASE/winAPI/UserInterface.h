@@ -21,7 +21,7 @@ private:
 	image *statWnd, *UpN, *UpO, *UpC, *autoDistN, *autoDistC;
 	//스텟창사각형
 	RECT wndStat;
-	//스텟창에 들어가는 정보들
+	//스텟창에 들어가는 정보들(임시값 들어가있는데 어차피 init에서 바꿔치기 해주니깐 걱정 ㄴㄴ)
 	int Level = 249, playerHp = 34689, playerMp = 12570, MaxHp = 500000, MaxMp = 500000, _str, _dex, _int, _luk, _ap = 0;
 	int totalEquipstr = 10, totalEquipdex = 20, totalEquipint = 400, totalEquipluk = 3;
 	int _basicStr = 4, _basicDex = 4, _basicInt = 13, _basicLuk = 4;
@@ -78,6 +78,11 @@ private:
     //------------------------------------상점데이터---------------------------------------------
 
 	bool onShop; //샵 온오프
+
+	items *Sellings;
+
+	items *Mines;
+
 	image *_me, *_Azoomma;
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
@@ -150,6 +155,8 @@ public:
 	virtual void shop(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
+	
+	void showItemInfo(int index);
 
 	//플레이어 클래스와 상호참조
 	void setPlayer(player *pl) { this->pl = pl; }

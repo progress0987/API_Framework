@@ -174,7 +174,9 @@ HRESULT UserInterface::init(void)
 	_dex = pl->getstatus()->Dex;
 	_int = pl->getstatus()->Int;
 	_luk = pl->getstatus()->Luk;
-	//_ap;
+	_ap = pl->getstatus()->ap;
+	_exp = pl->getstatus()->Exp;
+	LvExp = pl->getstatus()->lvlUpExp;
 
 	//----------------------------------상점이미지로드-----------------------
 
@@ -205,6 +207,11 @@ HRESULT UserInterface::init(void)
 	_meCount = 0;
 	_AzoommaCount = 0;
 
+	Sellings = new items;
+	Sellings->init();
+	Mines = new items;
+	Mines->init();
+
 	//-------------------------------임시변수들 초기 설정---------------------------
 
 	count = fingerCount = 0;
@@ -226,13 +233,19 @@ void UserInterface::update(void)
 	//프레임 처리를 위한 변수
 	count++;
 
-		playerHp = pl->getstatus()->curHP;
-		playerMp = pl->getstatus()->curMP;
-	if (onStat) {
-		Level = pl->getstatus()->Level;
-		MaxHp = pl->getstatus()->maxHP;
-		MaxMp = pl->getstatus()->maxMP;
-	}
+	Level = pl->getstatus()->Level;
+	playerHp = pl->getstatus()->curHP;
+	playerMp = pl->getstatus()->curMP;
+	MaxHp = pl->getstatus()->maxHP;
+	MaxMp = pl->getstatus()->maxMP;
+	_str = pl->getstatus()->Str;
+	_dex = pl->getstatus()->Dex;
+	_int = pl->getstatus()->Int;
+	_luk = pl->getstatus()->Luk;
+	_ap = pl->getstatus()->ap;
+	_exp = pl->getstatus()->Exp;
+	LvExp = pl->getstatus()->lvlUpExp;
+
 	//체력이 회복되고 있는가
 	if (HpHillCount != 0)
 	{
@@ -350,52 +363,55 @@ void UserInterface::update(void)
 		}
 
 		//상점목록2 이었던 경우
-		if (PtInRect(&shopItem[1], ptMouse))
+		else if (PtInRect(&shopItem[1], ptMouse))
 		{
 			shopList = 1;
 		}
 
 		//상점목록3 이었던 경우
-		if (PtInRect(&shopItem[2], ptMouse))
+		else if (PtInRect(&shopItem[2], ptMouse))
 		{
 			shopList = 2;
 		}
 
 		//상점목록4 이었던 경우
-		if (PtInRect(&shopItem[3], ptMouse))
+		else if (PtInRect(&shopItem[3], ptMouse))
 		{
 			shopList = 3;
 		}
 
 		//상점목록5 이었던 경우
-		if (PtInRect(&shopItem[4], ptMouse))
+		else if (PtInRect(&shopItem[4], ptMouse))
 		{
 			shopList = 4;
 		}
 
 		//상점목록6 이었던 경우
-		if (PtInRect(&shopItem[5], ptMouse))
+		else if (PtInRect(&shopItem[5], ptMouse))
 		{
 			shopList = 5;
 		}
 
 		//상점목록7 이었던 경우
-		if (PtInRect(&shopItem[6], ptMouse))
+		else if (PtInRect(&shopItem[6], ptMouse))
 		{
 			shopList = 6;
 		}
 
 		//상점목록8 이었던 경우
-		if (PtInRect(&shopItem[7], ptMouse))
+		else if (PtInRect(&shopItem[7], ptMouse))
 		{
 			shopList = 7;
 		}
 
 		//상점목록9 이었던 경우
-		if (PtInRect(&shopItem[8], ptMouse))
+		else if (PtInRect(&shopItem[8], ptMouse))
 		{
 			shopList = 8;
 		}
+		//그밖의 영역에서는 창을 띄우지 않는다.
+		else
+			shopList = -1;
 
 	}
 
@@ -958,25 +974,35 @@ void UserInterface::shop(void)
 
 	}
 
+	//샵이 판매리스트 순서가 바뀔리 없으니까 여기에 다이렉트로 아이템정보를 뽑도록 한다.
 	switch (shopList)
 	{
 	case 0:
+		showItemInfo(0);
 		break;
 	case 1:
+		showItemInfo(1);
 		break;
 	case 2:
+		showItemInfo(2);
 		break;
 	case 3:
+		showItemInfo(3);
 		break;
 	case 4:
+		showItemInfo(4);
 		break;
 	case 5:
+		showItemInfo(5);
 		break;
 	case 6:
+		showItemInfo(6);
 		break;
 	case 7:
+		showItemInfo(7);
 		break;
 	case 8:
+		showItemInfo(8);
 		break;
 	default:
 		break;
@@ -989,6 +1015,191 @@ void UserInterface::shop(void)
 	}
 }
 
+void UserInterface::showItemInfo(int index)
+{
+	Sellings->iteminfo->alphaRender(getMemDC(), ptMouse.x, ptMouse.y, 150);
+	
+	Sellings->_item.at(index).itemimg->render(getMemDC(), ptMouse.x + 38, ptMouse.y + 98);
+	int i = 0;
+	char temp[255];
+	sprintf(temp, "%s", Sellings->_item.at(index).itemname);
+	SetBkMode(getMemDC(), TRANSPARENT); //이거 해줘야 흰색배경 없앤다.
+	SetTextColor(getMemDC(), RGB(255, 255, 255));
+	TextOut(getMemDC(), ptMouse.x + 80, ptMouse.y + 40, temp, strlen(temp));
+	char temp2[255];
+	sprintf(temp2, "REQ LEV : %d", Sellings->_item.at(index).reqLev);
+	TextOut(getMemDC(), ptMouse.x + 110, ptMouse.y + 75, temp2, strlen(temp2));
+	char temp3[255];
+	sprintf(temp3, "REQ STR : %d", Sellings->_item.at(index).reqStr);
+	TextOut(getMemDC(), ptMouse.x + 110, ptMouse.y + 90, temp3, strlen(temp3));
+	char temp4[255];
+	sprintf(temp4, "REQ DEX : %d", Sellings->_item.at(index).reqDex);
+	TextOut(getMemDC(), ptMouse.x + 110, ptMouse.y + 105, temp4, strlen(temp4));
+	char temp5[255];
+	sprintf(temp5, "REQ INT : %d", Sellings->_item.at(index).reqInt);
+	TextOut(getMemDC(), ptMouse.x + 110, ptMouse.y + 120, temp5, strlen(temp5));
+	char temp6[255];
+	sprintf(temp6, "REQ LUK : %d", Sellings->_item.at(index).reqLuk);
+	TextOut(getMemDC(), ptMouse.x + 110, ptMouse.y + 135, temp6, strlen(temp6));
+
+	char temp7[255];
+	if (Sellings->_item.at(index).itemtype == 1)
+		sprintf(temp7, "기타아이템");
+	else if (Sellings->_item.at(index).itemtype == 2)
+		sprintf(temp7, "소비아이템");
+	else if (Sellings->_item.at(index).itemtype == 3)
+		sprintf(temp7, "장비분류 : 무기");
+	else if (Sellings->_item.at(index).itemtype == 4)
+		sprintf(temp7, "장비분류 : 모자");
+	else if (Sellings->_item.at(index).itemtype == 5)
+		sprintf(temp7, "장비분류 : 귀고리");
+	else if (Sellings->_item.at(index).itemtype == 6)
+		sprintf(temp7, "장비분류 : 상의");
+	else if (Sellings->_item.at(index).itemtype == 7)
+		sprintf(temp7, "장비분류 : 하의");
+	else if (Sellings->_item.at(index).itemtype == 8)
+		sprintf(temp7, "장비분류 : 장갑");
+	else if (Sellings->_item.at(index).itemtype == 9)
+		sprintf(temp7, "장비분류 : 신발");
+	else if (Sellings->_item.at(index).itemtype == 10)
+		sprintf(temp7, "장비분류 : 망토");
+
+	TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 160, temp7, strlen(temp7));
+	if (Sellings->_item.at(index).hp > 0)
+	{
+		char temp8[255];
+		sprintf(temp8, "HP : + %d", Sellings->_item.at(index).hp);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp8, strlen(temp8));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).mp > 0)
+	{
+		char temp9[255];
+		sprintf(temp9, "MP : + %d", Sellings->_item.at(index).mp);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp9, strlen(temp9));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).str > 0)
+	{
+		char temp10[255];
+		sprintf(temp10, "STR : + %d", Sellings->_item.at(index).str);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp10, strlen(temp10));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).dex > 0)
+	{
+		char temp11[255];
+		sprintf(temp11, "DEX : + %d", Sellings->_item.at(index).dex);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp11, strlen(temp11));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).inteligence > 0)
+	{
+		char temp12[255];
+		sprintf(temp12, "INT : + %d", Sellings->_item.at(index).inteligence);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp12, strlen(temp12));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).luk > 0)
+	{
+		char temp13[255];
+		sprintf(temp13, "LUK : + %d", Sellings->_item.at(index).luk);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp13, strlen(temp13));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).phyatk > 0)
+	{
+		char temp14[255];
+		sprintf(temp14, "물리공격력 : + %d", Sellings->_item.at(index).phyatk);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp14, strlen(temp14));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).phyarm > 0)
+	{
+		char temp15[255];
+		sprintf(temp15, "물리방어력 : + %d", Sellings->_item.at(index).phyarm);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp15, strlen(temp15));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).magatk > 0)
+	{
+		char temp16[255];
+		sprintf(temp16, "마법공격력 : + %d", Sellings->_item.at(index).magatk);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp16, strlen(temp16));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).magarm > 0)
+	{
+		char temp17[255];
+		sprintf(temp17, "마법방어력 : + %d", Sellings->_item.at(index).magarm);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp17, strlen(temp17));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).hitrate > 0)
+	{
+		char temp18[255];
+		sprintf(temp18, "명중률 : + %d", Sellings->_item.at(index).hitrate);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp18, strlen(temp18));
+		i++;
+	}
+
+	if (Sellings->_item.at(index).avoidrate > 0)
+	{
+		char temp19[255];
+		sprintf(temp19, "회피율 : + %d", Sellings->_item.at(index).avoidrate);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp19, strlen(temp19));
+		i++;
+	}
+
+	/*
+
+	<영역 출력!!!>
+
+	- RECT rcTextArea = {200, 200, 300, 300};
+	   -> RECT로 영역 범위 설정
+	 
+	 - DrawText(hdc, szTemp, strlen(szTemp), &rcTextArea, DT_SINGLELINE | DT_VCENTER);
+		-> (핸들, 문자열, 문자열의 길이, 영역크기, 드로우텍스트_출력스타일);
+		-> 해당 영역안에 글자를 스타일에 따라 출력해준다. or(|)연산으로 중복된 스타일을 쓸 수 있다.
+
+	// 자주 쓰는 스타일//
+	DT_LEFT		좌측정렬
+	DT_CENTER	중앙 정렬
+	DT_WORDBREAK	영역 넘어갈시 단어 단위로 줄바꿈
+	DT_SINGLELINE	한줄 사용. 영역 넘어갈시 짤린다.
+	DT_NOCLIP	영역무시 출력
+	DT_VCENTER	수직 정중앙에 맞춰라. (DT_SINGLELINE랑 같이 써야된다.)
+
+
+	*/
+
+	char temp20[255];
+	sprintf(temp20, "%s", Sellings->_item.at(index).script);
+	RECT rcTextArea = { ptMouse.x + 10, ptMouse.y + 175 + i * 15,ptMouse.x + 230,  ptMouse.y + 175 + i * 15 + 45};
+	DrawText(getMemDC(), temp20, -1, &rcTextArea, DT_LEFT | DT_WORDBREAK);
+	//문자열 길이부분에 -1 => 자동으로 계산.
+	i+=3; //글자상자때문에 세줄을 할당하는 바람에 여기서는 +3!!
+	
+
+	//업그레이드 가능횟수는 장비아이템인 경우에만 출력한다.
+	if (!(Sellings->_item.at(index).itemtype == 0) && !(Sellings->_item.at(index).itemtype == 1) && !(Sellings->_item.at(index).itemtype == 2))
+	{
+		char temp21[255];
+		sprintf(temp21, "업그레이드 가능횟수 : %d회", Sellings->_item.at(index).upgrade);
+		TextOut(getMemDC(), ptMouse.x + 10, ptMouse.y + 175 + i * 15, temp21, strlen(temp21));
+	}
+}
+
 UserInterface::UserInterface()
 {
 }
@@ -997,3 +1208,4 @@ UserInterface::UserInterface()
 UserInterface::~UserInterface()
 {
 }
+

@@ -538,7 +538,7 @@ for (int i = 0; i < monincurmap.size(); i++) {
 	}
 	///////////////////////////////////////////////////테스트
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		GainExp(100);
+		GainExp(10000);
 	}
 
 
@@ -634,7 +634,8 @@ for (int i = 0; i < monincurmap.size(); i++) {
 void player::render(void)
 {
 	if (onLvlUP) {
-		IMAGEMANAGER->findImage("레벨업")->alphaFrameRender(getMemDC(), lvlupIMGpt.x-mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0, 200);
+		IMAGEMANAGER->findImage("레벨업")->frameRender(getMemDC(), lvlupIMGpt.x - mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0);
+		//IMAGEMANAGER->findImage("레벨업")->alphaFrameRender(getMemDC(), lvlupIMGpt.x-mycam->camPoint.x, lvlupIMGpt.y - mycam->camPoint.y, lvlUPFrame, 0, 200);
 	}
 	if (!onAttack) {
 		if (onHit) {
@@ -679,7 +680,11 @@ void player::GainExp(int exp)
 	stat->Exp += exp;
 	if (stat->Exp >= stat->lvlUpExp) {
 		stat->Exp %= stat->lvlUpExp;
-		stat->lvlUpExp = stat->lvlUpExp* 3/2;
+		stat->maxHP = stat->maxHP * 1.1;
+		stat->maxMP = stat->maxMP * 1.1;
+		stat->curHP = stat->maxHP;
+		stat->curMP = stat->maxMP;
+		stat->lvlUpExp = stat->lvlUpExp* 1.1;
 		stat->Level++;
 		stat->ap += 5;
 		onLvlUP = true;

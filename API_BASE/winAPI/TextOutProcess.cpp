@@ -170,10 +170,9 @@ void UserInterface::showLevel(void)
 
 	}
 
-	else //레벨이 두자리인경우
-		if (Level >= 10)
+	//레벨이 두자리인경우
+	else if (Level >= 10)
 		{
-
 			//10자리
 			switch (Level / 10)
 			{
@@ -235,47 +234,47 @@ void UserInterface::showLevel(void)
 			case 1:
 				l01->setX(_form->getX() + 53);
 				l01->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l01->render(getMemDC());
 				break;
 			case 2:
 				l02->setX(_form->getX() + 53);
 				l02->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l02->render(getMemDC());
 				break;
 			case 3:
 				l03->setX(_form->getX() + 53);
 				l03->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l03->render(getMemDC());
 				break;
 			case 4:
 				l04->setX(_form->getX() + 53);
 				l04->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l04->render(getMemDC());
 				break;
 			case 5:
 				l05->setX(_form->getX() + 53);
 				l05->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l05->render(getMemDC());
 				break;
 			case 6:
 				l06->setX(_form->getX() + 53);
 				l06->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l06->render(getMemDC());
 				break;
 			case 7:
 				l07->setX(_form->getX() + 53);
 				l07->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l07->render(getMemDC());
 				break;
 			case 8:
 				l08->setX(_form->getX() + 53);
 				l08->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l08->render(getMemDC());
 				break;
 			case 9:
 				l09->setX(_form->getX() + 53);
 				l09->setY(_form->getY() + 7);
-				l00->render(getMemDC());
+				l09->render(getMemDC());
 				break;
 
 			}

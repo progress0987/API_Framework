@@ -790,6 +790,10 @@ void Harp::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void Harp::update(void)
 {
@@ -1101,6 +1105,10 @@ void Grupin::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void Grupin::update(void)
 {
@@ -1409,6 +1417,10 @@ void Cellion::dead(void)
 				hit = false;
 			}
 		}
+	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
 	}
 }
 void Cellion::update(void)
@@ -1719,6 +1731,10 @@ void Lioner::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void Lioner::update(void)
 {
@@ -2027,6 +2043,10 @@ void Lucida::dead(void)
 				hit = false;
 			}
 		}
+	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
 	}
 }
 void Lucida::update(void)
@@ -2344,6 +2364,10 @@ void JrYeti::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void JrYeti::update(void)
 {
@@ -2656,6 +2680,10 @@ void PePe::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void PePe::update(void)
 {
@@ -2964,6 +2992,10 @@ void Sheep::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void Sheep::update(void)
 {
@@ -3271,6 +3303,10 @@ void JCellion::dead(void)
 				hit = false;
 			}
 		}
+	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
 	}
 }
 void JCellion::update(void)
@@ -3581,6 +3617,10 @@ void JGrupin::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void JGrupin::update(void)
 {
@@ -3889,6 +3929,10 @@ void JLioner::dead(void)
 				hit = false;
 			}
 		}
+	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
 	}
 }
 void JLioner::update(void)
@@ -4199,6 +4243,10 @@ void JLucida::dead(void)
 			}
 		}
 	}
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(deadsound);
+	}
 }
 void JLucida::update(void)
 {
@@ -4503,7 +4551,10 @@ void Eliza::SubHp(int Atk)
 }
 void Eliza::dead(void)
 {
-
+	if (alpha == 200)
+	{
+		SOUNDMANAGER->play(BossDead);
+	}
 }
 void Eliza::update(void)
 {
@@ -4532,6 +4583,7 @@ void Eliza::update(void)
 		}
 	}
 	Hpbarupdate();
+	dead();
 }
 void Eliza::render(void)
 {

@@ -324,7 +324,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addFrameImage("커서", "sprites/UI/Cursor.bmp", 120, 120, 4, 4, true, RGB(255, 0, 255));
 
 
-	IMAGEMANAGER->addImage("아이템정보창",	"sprites/UI/아이템정보창.bmp", 220, 300, false, NULL);
+	IMAGEMANAGER->addImage("아이템정보창",	"sprites/UI/아이템정보창.bmp", 261, 301, false, NULL);
 	//------------------------------------공용-----------------------------------------------
 	IMAGEMANAGER->addImage("닫기",			"sprites/UI/닫기.bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기마우스온",	"sprites/UI/닫기(MouseOn).bmp", 13, 13, true, RGB(0, 0, 0));
@@ -461,10 +461,12 @@ void mainGame::imgInit()
 void mainGame::soundInit()
 {
 	//맵 사운드
+	SOUNDMANAGER->addSound("Bdie", "sound/BossDead.mp3", true, false);
 	SOUNDMANAGER->addSound("Boss", "sound/BossBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Hill", "sound/HillBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Forest", "sound/ForestBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Store", "sound/StoreBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Mdie", "sound/MonsterDie.mp3", true, false);
 	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);
