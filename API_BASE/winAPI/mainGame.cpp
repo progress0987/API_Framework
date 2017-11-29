@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include "mainGame.h"
 
 
@@ -464,6 +464,9 @@ void mainGame::soundInit()
 	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("askill", "sound/Askill.mp3", true, false);
+	SOUNDMANAGER->addSound("basicatt", "sound/BasicAtt.mp3", true, false);
+	SOUNDMANAGER->addSound("sskill", "sound/Sskill.mp3", true, false);
 }
 
 
