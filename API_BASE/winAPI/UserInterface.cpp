@@ -217,6 +217,28 @@ void UserInterface::update(void)
 		MaxHp = pl->getstatus()->maxHP;
 		MaxMp = pl->getstatus()->maxMP;
 	}
+
+
+	if (onShop)
+	{
+		//상점내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
+		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&buttonQuit, ptMouse) || PtInRect(&buttonBuy, ptMouse) || PtInRect(&buttonSell, ptMouse))
+		{
+			finger->setFrameY(2);
+			if (count % 30 == 0)
+			{
+				fingerCount++;
+				if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+			}
+		}
+		else
+		{
+			fingerCount = 0;
+			finger->setFrameY(0);
+		}
+	}
+
+
 	//인벤토리창 띄우기.
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
@@ -277,21 +299,7 @@ void UserInterface::update(void)
 	}
 
 
-	//실시간 UI프로세스 갱신쓰!
-	if (PtInRect(&shopItem[0], ptMouse))
-	{
-		finger->setFrameY(2);
-		if (count % 25 == 0)
-		{
-			fingerCount++;
-			if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
-		}
-	}
-	else
-	{
-		fingerCount = 0;
-		finger->setFrameY(0);
-	}
+	//------------------------------실시간 UI프로세스 갱신쓰!------------------------------
 
 	//실시간 캐릭터 스텟 갱신쓰
 
@@ -491,6 +499,8 @@ void UserInterface::shop(void)
 	shopWnd->render(getMemDC());
 	
 	//아이템사진은 35x35. 아이템 설명및 가격표기 태그는 165x35.
+
+	//상점 버튼액션 및 이미지 렌더링을 위한 구역렉트설정
 	shopItem[0] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 124, 200, 35);
 	shopItem[1] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 166, 200, 35);
 	shopItem[2] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 208, 200, 35);
@@ -511,6 +521,34 @@ void UserInterface::shop(void)
 	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
 	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
 	
+	buttonQuit = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 54, 64, 16);
+	buttonBuy = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 74, 64, 16);
+	buttonSell = RectMake(shopWnd->getX() + 433, shopWnd->getY() + 74, 64, 16);
+	//Rectangle(getMemDC(), buttonSell.left, buttonSell.top, buttonSell.right, buttonSell.bottom);
+
+	//상점나가기 버튼에 마우스를 올렸을경우
+	if (PtInRect(&buttonQuit, ptMouse))
+	{
+		shopQuit->render(getMemDC(), buttonQuit.left, buttonQuit.top);
+	}
+
+	//아이템사기 버튼에 마우스를 올렸을 경우
+	if (PtInRect(&buttonBuy, ptMouse))
+	{
+		shopBuy->render(getMemDC(), buttonBuy.left, buttonBuy.top);
+	}
+
+	//아이템팔기 버튼에 마우스를 올렸을 경우
+	if (PtInRect(&buttonSell, ptMouse))
+	{
+		shopSell->render(getMemDC(), buttonSell.left, buttonSell.top);
+	}
+
+	//상점 판매목록에 기본적으로 표시되어있는 메소아이콘
+	for (int i = 0; i < 9; i++)
+	{
+		mesoIcon->render(getMemDC(), shopItem[i].left + 40, shopItem[i].top + 21);
+	}
 }
 
 UserInterface::UserInterface()

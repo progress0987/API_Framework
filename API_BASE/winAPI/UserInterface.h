@@ -73,6 +73,7 @@ private:
 	bool onShop; //샵 온오프
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
+	RECT buttonQuit, buttonBuy, buttonSell;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
@@ -105,9 +106,15 @@ private:
 	//------------------------------------캐릭터 상태표시 숫자들----------------------------
 	image *_0, *_1, *_2, *_3, *_4, *_5, *_6, *_7, *_8, *_9, *_rs, *_Lc, *_Rc, *_percent, *_dot;
 	//숫자, 역슬래쉬, 왼쪽커버, 오른쪽커버, 퍼센트, 점.
-
+	
 	//-----------------------------------UI프로세싱을 위한 변수들---------------------------
+
+	//손가락 움직임을 위한 변수
 	int count, fingerCount;
+
+	//상점 UI프로세싱을 위한 변수들
+
+
 
 public:
 	virtual HRESULT init(void);
