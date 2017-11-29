@@ -71,6 +71,7 @@ private:
     //------------------------------------상점데이터---------------------------------------------
 
 	bool onShop; //샵 온오프
+	image *_me, *_Azoomma;
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
 	RECT buttonQuit, buttonBuy, buttonSell;
@@ -113,6 +114,9 @@ private:
 
 	//손가락 움직임을 위한 변수
 	int count, fingerCount;
+
+	//상점내 내 캐릭과 상점아줌마 움직임을 위한 변수
+	int _meCount, _AzoommaCount;
 	
 
 

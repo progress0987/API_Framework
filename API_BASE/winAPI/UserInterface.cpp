@@ -179,6 +179,8 @@ HRESULT UserInterface::init(void)
 	//----------------------------------상점이미지로드-----------------------
 	onShop = false;
 
+	_me = IMAGEMANAGER->findImage("캐릭터");
+	_Azoomma = IMAGEMANAGER->findImage("storenpc");
 	shopWnd = IMAGEMANAGER->findImage("상점");
 	shopQuit = IMAGEMANAGER->findImage("상점나가기마우스");
 	shopBuy = IMAGEMANAGER->findImage("아이템사기마우스");
@@ -191,6 +193,14 @@ HRESULT UserInterface::init(void)
 	shopEtc = IMAGEMANAGER->findImage("상점기타활성");
 	mesoIcon = IMAGEMANAGER->findImage("메소아이콘");
 	selectEffect = IMAGEMANAGER->findImage("셀렉트효과");
+
+	_me->setFrameX(0);
+	_me->setFrameY(0);
+	_Azoomma->setFrameX(0);
+	_Azoomma->setFrameY(0);
+
+	_meCount = 0;
+	_AzoommaCount = 0;
 
 	//-------------------------------임시변수들 초기 설정---------------------------
 
@@ -246,6 +256,21 @@ void UserInterface::update(void)
 		{
 			fingerCount = 0;
 			finger->setFrameY(0);
+		}
+
+		//참고로 이런 프레임렌더를 위한 카운트 변수들 증감은 업데이트 부분에서 해줘야 잘된다.
+		//렌더링부분에서 해주니깐 버벅거린다.
+
+		if (count % 40 == 0)
+		{
+			_meCount++;
+			if (_meCount > _me->getMaxFrameX()) _meCount = 0;
+		}
+
+		if (count % 50 == 0)
+		{
+			_AzoommaCount++;
+			if (_AzoommaCount > _Azoomma->getMaxFrameX()) _AzoommaCount = 0;
 		}
 	}
 
@@ -614,6 +639,9 @@ void UserInterface::shop(void)
 	myItem[6] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 376, 200, 35);
 	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
 	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
+
+	_me->frameRender(getMemDC(), shopWnd->getX() + 280, shopWnd->getY() - 10, _meCount, _me->getFrameY());
+	_Azoomma->frameRender(getMemDC(), shopWnd->getX() + 30, shopWnd->getY() + 10, _AzoommaCount, _Azoomma->getFrameY());
 	
 	buttonQuit = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 54, 64, 16);
 	buttonBuy = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 74, 64, 16);
