@@ -70,7 +70,7 @@ private:
 	//------------------------------------상점데이터---------------------------------------------
 
 	bool onShop; //샵 온오프
-	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopEquip, *shopPortion, *shopEtc;
+	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopEquip, *shopPortion, *shopEtc, *mesoIcon;
 	RECT shopItem[9], myItem[9];
 
    
