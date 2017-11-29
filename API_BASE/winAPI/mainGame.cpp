@@ -96,6 +96,7 @@ void mainGame::release(void)
 void mainGame::update(void)
 {
 	gameNode::update();
+	_player->GainExp(em->getexp(curScene->getIndex()));
 	em->SharePlayer(_player->getRc(), curScene->getIndex());
 	em->colling(_player->getDmgRC(), 100, curScene->getIndex());
 	em->update(curScene->getIndex());

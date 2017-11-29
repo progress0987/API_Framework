@@ -243,6 +243,19 @@ void enemyManager::SharePlayer(RECT PlayerBase, int Index)
 	}
 }
 
+int enemyManager::getexp(int Index)
+{
+	for (vector<monster*>::iterator i = Monsters.begin(); i != Monsters.end(); i++) {
+		if ((*i)->getIndex() == Index)
+		{
+			if ((*i)->getalpha() == 100)
+			{
+				return (*i)->getexp();
+			}
+		}
+	}
+}
+
 vector<monster*> enemyManager::getbody(int Index)
 {
 	vector<monster*> monInCurMap;
@@ -254,7 +267,6 @@ vector<monster*> enemyManager::getbody(int Index)
 	}
 	return monInCurMap;
 }
-
 
 enemyManager::enemyManager()
 {

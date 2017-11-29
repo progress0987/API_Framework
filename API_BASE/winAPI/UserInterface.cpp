@@ -637,7 +637,7 @@ void UserInterface::update(void)
 	}
 
 	//¸¶³ªÆ÷¼Ç Ã³¸ÔÃ³¸Ô
-	if (KEYMANAGER->isOnceKeyDown(VK_END))
+	if (KEYMANAGER->isOnceKeyDown(VK_INSERT))
 	{
 		MpHillMax += 50;
 		MpHill = MpHillMax / 10;

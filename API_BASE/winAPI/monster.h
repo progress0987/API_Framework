@@ -10,6 +10,7 @@ protected:
 	int NowHp;
 	int Atk;
 	int Def;
+	int exp;
 	RECT body;
 	RECT colBody;
 	RECT playerBody;
@@ -22,6 +23,7 @@ protected:
 	int bodyW, bodyH;
 	int MyIndex;
 	int Gentime=50;
+	float alpha;
 
 	Camera* cam;
 public:
@@ -35,6 +37,8 @@ public:
 	void release() { Hpbar = nullptr; }
 	virtual void collRect(RECT player, int demage);
 	virtual RECT getbody(void);//몬스터 체크 렉트 가져오기
+	virtual RECT getSkill(void);//몬스터 스킬 가져오기
+	virtual int getexp(void);
 	bool hit(void);				//공격당한것 확인
 	void MonsterMoving(int move);	//몬스터 좌우 움직임
 	bool ZeroHp(void);				//체력이 0 이하인지 확인
@@ -54,6 +58,9 @@ public:
 	void Hpbarupdate(void);//hp바 업데이트
 
 	void DemageFont(int Num);
+
+	int getalpha(void) {return alpha; }
+
 };
 //Harp의 관리 클래스
 class Harp :public monster
@@ -64,7 +71,6 @@ class Harp :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	Harp();
 	~Harp();
@@ -90,7 +96,6 @@ class Grupin :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	Grupin();
 	~Grupin();
@@ -116,7 +121,6 @@ class Cellion :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	Cellion();
 	~Cellion();
@@ -142,7 +146,6 @@ class Lioner :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	Lioner();
 	~Lioner();
@@ -168,7 +171,6 @@ class Lucida :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	Lucida();
 	~Lucida();
@@ -194,7 +196,6 @@ class JrYeti :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	JrYeti();
 	~JrYeti();
@@ -220,7 +221,6 @@ class PePe :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	PePe();
 	~PePe();
@@ -246,7 +246,6 @@ class Sheep :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	Sheep();
 	~Sheep();
@@ -272,7 +271,6 @@ class JCellion :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	JCellion();
 	~JCellion();
@@ -298,7 +296,6 @@ class JGrupin :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	JGrupin();
 	~JGrupin();
@@ -324,7 +321,6 @@ class JLioner :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	JLioner();
 	~JLioner();
@@ -350,7 +346,6 @@ class JLucida :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 public:
 	JLucida();
 	~JLucida();
@@ -382,7 +377,6 @@ class Eliza :public monster
 	bool hit;
 	int HitTimer;
 	int MoveTime = 0;
-	int alpha = 250;
 	int SkillTime = 0;
 	RECT PlayerBase;
 	int PlayerDamge;

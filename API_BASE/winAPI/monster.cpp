@@ -222,6 +222,10 @@ void monster::DemageFont(int Num)
 		{
 			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 1, 0);
 		}
+		else 
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 0, 0);
+		}
 		if (Num % 100 >= 90)
 		{
 			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 9, 0);
@@ -257,6 +261,10 @@ void monster::DemageFont(int Num)
 		else if (Num % 100 >= 10)
 		{
 			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 1, 0);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 100, colBody.top - 50, 0, 0);
 		}
 		if (Num % 10 == 0)
 		{
@@ -372,6 +380,10 @@ void monster::DemageFont(int Num)
 		else if (Num % 100 >= 10)
 		{
 			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 1, 0);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), colBody.left + 50, colBody.top - 50, 0, 0);
 		}
 		if (Num % 10 == 9)
 		{
@@ -544,6 +556,21 @@ RECT monster::getbody(void)
 		return body;
 	}
 }
+RECT monster::getSkill(void)
+{
+	for (int i = 0; i < 4; i++)
+	{
+	return SkillTwoRect[i];
+	}
+}
+int monster::getexp(void)
+{
+		return exp;
+}
+
+
+
+
 Harp::Harp()
 {
 }
@@ -562,6 +589,8 @@ HRESULT Harp::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 2;
+	exp = 10;
+	alpha = 250;
 	HpbarInit();
 	return S_OK;
 }
@@ -867,7 +896,9 @@ HRESULT Grupin::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 4;
+	alpha = 250;
 	HpbarInit();
+	exp = 4;
 	return S_OK;
 }
 void Grupin::moving(void)
@@ -1174,7 +1205,9 @@ HRESULT Cellion::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 4;
+	alpha = 250;
 	HpbarInit();
+	exp = 4;
 	return S_OK;
 }
 void Cellion::moving(void)
@@ -1481,7 +1514,9 @@ HRESULT Lioner::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 4;
+	alpha = 250;
 	HpbarInit();
+	exp = 4;
 	return S_OK;
 }
 void Lioner::moving(void)
@@ -1788,7 +1823,9 @@ HRESULT Lucida::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 6;
-	HpbarInit(); 
+	alpha = 250;
+	HpbarInit();
+	exp = 4;
 	return S_OK;
 }
 void Lucida::moving(void)
@@ -2095,7 +2132,9 @@ HRESULT JrYeti::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 3;
+	alpha = 250;
 	HpbarInit();
+	exp = 7;
 	return S_OK;
 }
 void JrYeti::moving(void)
@@ -2412,7 +2451,9 @@ HRESULT PePe::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 3;
+	alpha = 250;
 	HpbarInit();
+	exp = 7;
 	return S_OK;
 }
 void PePe::moving(void)
@@ -2624,71 +2665,70 @@ void PePe::update(void)
 }
 void PePe::render(void)
 {
-		//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
-		if (NowHp != MaxHp&&NowHp >= 1)
+	//	Rectangle(getMemDC(), colBody.left, colBody.top, colBody.right, colBody.bottom);
+	if (NowHp != MaxHp&&NowHp >= 1)
+	{
+		Hpbar->render();
+	}
+	if (moveDir)
+	{
+		//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
+		if (NowHp <= 0)
 		{
-			Hpbar->render();
-		}
-		if (moveDir)
-		{
-			//		int pixel = harp->Base().top + (harp->Base().bottom - harp->Base().top) / 2;
-			if (NowHp <= 0)
+			IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1, alpha);
+			if (alpha > 0)
 			{
-				IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1, alpha);
-				if (alpha > 0)
-				{
-					//데미지 폰트 출력
-					DemageFont(SaveNowDemge);
-				}
-				else if (NowHp > 0 && hit == true)
-				{
-					IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, 0, 1);
-					//데미지 폰트 출력
-					DemageFont(SaveNowDemge);
-				}
-				else if (Stay == false)
-				{
-					IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1);
-				}
-				else if (Stay == true)
-				{
-					IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1);
-				}
-			}
-			else
-			{
-				if (NowHp <= 0)
-				{
-					IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0, alpha);
-					if (alpha > 0)
-					{
-						//데미지 폰트 출력
-						DemageFont(SaveNowDemge);
-					}
-					else if (hit == true)
-					{
-						IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, 0, 0);
-						//데미지 폰트 출력
-						DemageFont(SaveNowDemge);
-					}
-					else if (Stay == false)
-					{
-						IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0);
-					}
-					else if (Stay == true)
-					{
-						IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0);
-					}
-				}
-				//	Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
-				//char tmp[128];
-				//sprintf(tmp,"몬스터좌표 : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
-				//sprintf(tmp, "몬스터좌표 : x-%d y-%d", body.left, body.top);
-				//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
 			}
 		}
+		else if (NowHp > 0 && hit == true)
+		{
+			IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, 0, 1);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
+		}
+		else if (Stay == false)
+		{
+			IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1);
+		}
+		else if (Stay == true)
+		{
+			IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 1);
+		}
+	}
+	else
+	{
+		if (NowHp <= 0)
+		{
+			IMAGEMANAGER->findImage("PePeD")->alphaFrameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0, alpha);
+			if (alpha > 0)
+			{
+				//데미지 폰트 출력
+				DemageFont(SaveNowDemge);
+			}
+		}
+		else if (hit == true)
+		{
+			IMAGEMANAGER->findImage("PePeD")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, 0, 0);
+			//데미지 폰트 출력
+			DemageFont(SaveNowDemge);
+		}
+		else if (Stay == false)
+		{
+			IMAGEMANAGER->findImage("PePeM")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0);
+		}
+		else if (Stay == true)
+		{
+			IMAGEMANAGER->findImage("PePeS")->frameRender(getMemDC(), body.left - cam->camPoint.x, body.top - cam->camPoint.y - 20, frame, 0);
+		}
+	}
+	//	Rectangle(getMemDC(), body.left, body.top, body.right, body.bottom);
+	//char tmp[128];
+	//sprintf(tmp,"몬스터좌표 : x-%d y-%d", harp->GetPos().x, harp->GetPos().y);
+	//sprintf(tmp, "몬스터좌표 : x-%d y-%d", body.left, body.top);
+	//TextOut(getMemDC(), 50, 150, tmp, strlen(tmp));
 }
-
 void PePe::collRect(RECT player, int demage)
 {
 	RECT rc;
@@ -2720,6 +2760,8 @@ HRESULT Sheep::init(POINT pos)
 	HitTimer = 0;
 	MyIndex = 2;
 	HpbarInit();
+	alpha = 250;
+	exp = 10;
 	return S_OK;
 }
 void Sheep::moving(void)
@@ -3025,7 +3067,9 @@ HRESULT JCellion::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 5;
+	alpha = 250;
 	HpbarInit();
+	exp = 1;
 	return S_OK;
 }
 void JCellion::moving(void)
@@ -3332,7 +3376,9 @@ HRESULT JGrupin::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 5;
+	alpha = 250;
 	HpbarInit();
+	exp = 1;
 	return S_OK;
 }
 void JGrupin::moving(void)
@@ -3639,6 +3685,8 @@ HRESULT JLioner::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 5;
+	exp = 1;
+	alpha = 250;
 	HpbarInit();
 	return S_OK;
 }
@@ -3946,6 +3994,8 @@ HRESULT JLucida::init(POINT pos)
 	hit = false;
 	HitTimer = 0;
 	MyIndex = 6;
+	exp = 1;
+	alpha = 250;
 	HpbarInit();
 	return S_OK;
 }
@@ -4254,6 +4304,7 @@ HRESULT Eliza::init(POINT pos)
 	SkillOne = false;
 	SkillTwo = false;
 	MyIndex = 6;
+	alpha = 250;
 	HpbarInit();
 	return S_OK;
 }
@@ -4333,6 +4384,10 @@ void Eliza::moving(void)
 			if (NowHp>0)
 			{
 				HitTimer--;
+				if (HitTimer == 0)
+				{
+					hit = false;
+				}
 			}
 			else if (NowHp <= 0)
 			{
@@ -4344,10 +4399,6 @@ void Eliza::moving(void)
 				{
 					alpha -= 50;
 				}
-			}
-			if (HitTimer == 0)
-			{
-				hit = false;
 			}
 		}
 	}
@@ -4430,6 +4481,7 @@ void Eliza::SubHp(int Atk)
 	SaveNowDemge = Atk - Def;
 	HitTimer = 6;
 	frame = 0;
+	hit = true;
 	SkillTwoCount++;
 	if (SkillTwoCount % 4 == 0 && SkillTwo == false)
 	{
@@ -4492,7 +4544,8 @@ void Eliza::render(void)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			Rectangle(getMemDC(), SkillTwoRect[i].left, SkillTwoRect[i].top, SkillTwoRect[i].right, SkillTwoRect[i].bottom);
+			SkillTwoRect[i] = RectMake(DemagePoint[i].x, DemagePoint[i].y, 341, 286);
+//			Rectangle(getMemDC(), SkillTwoRect[i].left - cam->camPoint.x, SkillTwoRect[i].top - cam->camPoint.y, SkillTwoRect[i].right - cam->camPoint.x, SkillTwoRect[i].bottom - cam->camPoint.y);
 			IMAGEMANAGER->findImage("ElizaSkill2")->frameRender(getMemDC(), DemagePoint[i].x- cam->camPoint.x, DemagePoint[i].y- cam->camPoint.y, SkillTwoF, 0);
 		}
 	}

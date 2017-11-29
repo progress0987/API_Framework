@@ -53,7 +53,7 @@ using namespace Util;
 
 #define WINNAME (LPTSTR)(TEXT("API BASE"))
 #define WINSTARTX 100
-#define WINSTARTY 50
+#define WINSTARTY 0
 #define WINSIZEX  1366
 #define WINSIZEY  768
 #define WINSTYLE  WS_CAPTION|WS_SYSMENU
