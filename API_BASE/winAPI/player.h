@@ -170,6 +170,10 @@ public:
 	void setExp(int exp) {	stat->Exp = exp; }
 	void setLvupExp(int exp) { stat->lvlUpExp = exp; }
 	int getmeso() { return meso; }
+	bool spendmeso(int amount) {
+		if (meso - amount >= 0) { meso -= amount; return true; }
+		else { return false; }
+	}
 
 public:
 	void showShop(bool val) { onShop = val; }
