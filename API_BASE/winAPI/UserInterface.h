@@ -81,9 +81,14 @@ private:
 	image *_me, *_Azoomma;
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
-	RECT buttonQuit, buttonBuy, buttonSell;
+	RECT buttonQuit, buttonBuy, buttonSell, shopEquipTab, shopPortionTab, shopEtcTab;
 	//각버튼위, 상점아줌마위에서 누르고있을때 on, 뗐을떼 off
 	bool onClickQuit, onClickBuy, onClickSell, onClickAzoomma;
+	//장비탭이냐, 소비탭이냐, 기타탭이냐
+	bool onShopEquipTab, onShopPortionTab, onShopEtcTab;
+
+	//0~8까지 있다. 이거에 따라서 아이템구매, 판매를 눌렀을때 무엇을 구매하느냐가 결정된다.
+	int shopList, myList;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
@@ -145,6 +150,8 @@ public:
 	virtual void shop(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
+
+	//플레이어 클래스와 상호참조
 	void setPlayer(player *pl) { this->pl = pl; }
 
 	UserInterface();

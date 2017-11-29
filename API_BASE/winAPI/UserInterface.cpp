@@ -177,7 +177,10 @@ HRESULT UserInterface::init(void)
 	//_ap;
 
 	//----------------------------------상점이미지로드-----------------------
+
+	//처음셋팅
 	onShop = false;
+	onShopEquipTab = true, onShopPortionTab = false, onShopEtcTab = false;
 
 	_me = IMAGEMANAGER->findImage("캐릭터");
 	_Azoomma = IMAGEMANAGER->findImage("storenpc");
@@ -265,11 +268,36 @@ void UserInterface::update(void)
 	_int = _basicInt + totalEquipint;
 	_luk = _basicLuk + totalEquipluk;
 
-	//상점이 켜졌을때 기본적으로 작동하는 프로세스
-	if (onShop)
+
+	//==============================================마우스 올렸을때의 핑거액션!!!!=========================================
+	/*if문이 분할되어 같은 액션(손가락에 마우스가 생겨 까딱거리는 효과)을 취하려고 하면 충돌해버려서 if else 세트로 한꺼번에 묶었음.*/
+	// 1. ---------------------------커서를 상점아줌마에게 갖다댔을때 나타나는 핑거액션
+	if (pl->openShop() == true && !onShop) 
+	{
+		finger->setFrameY(2);
+		if (count % 30 == 0)
+		{
+			fingerCount++;
+			if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+		}
+	}
+
+	// 2. ------------------------------------상점이 켜졌을때
+	else if (onShop)
 	{
 		//상점내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
-		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&buttonQuit, ptMouse) || PtInRect(&buttonBuy, ptMouse) || PtInRect(&buttonSell, ptMouse))
+		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&shopItem[1], ptMouse) || 
+			PtInRect(&shopItem[2], ptMouse) || PtInRect(&shopItem[3], ptMouse) || 
+			PtInRect(&shopItem[4], ptMouse) || PtInRect(&shopItem[5], ptMouse) || 
+			PtInRect(&shopItem[6], ptMouse) || PtInRect(&shopItem[7], ptMouse) || 
+			PtInRect(&shopItem[8], ptMouse) || PtInRect(&buttonQuit, ptMouse) ||
+			PtInRect(&buttonBuy, ptMouse) || PtInRect(&buttonSell, ptMouse) ||
+			PtInRect(&myItem[0], ptMouse) || PtInRect(&myItem[1], ptMouse) ||
+			PtInRect(&myItem[2], ptMouse) || PtInRect(&myItem[3], ptMouse) ||
+			PtInRect(&myItem[4], ptMouse) || PtInRect(&myItem[5], ptMouse) ||
+			PtInRect(&myItem[6], ptMouse) || PtInRect(&myItem[7], ptMouse) ||
+			PtInRect(&myItem[8], ptMouse) || PtInRect(&shopEquipTab, ptMouse) ||
+			PtInRect(&shopPortionTab, ptMouse) || PtInRect(&shopEtcTab, ptMouse))
 		{
 			finger->setFrameY(2);
 			if (count % 30 == 0)
@@ -278,12 +306,25 @@ void UserInterface::update(void)
 				if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
 			}
 		}
+		//상점내부에서 버튼위에 있는게 아닐때
 		else
 		{
 			fingerCount = 0;
 			finger->setFrameY(0);
 		}
+	}
+	// 3.-----------------------------상점이 꺼진상태고, 마우스위에 누구한테도 올린게 아닐때---------------
+	else
+	{
+		fingerCount = 0;
+		finger->setFrameY(0);
+	}
+	//====================================================핑거액션 끝==============================
 
+
+	//상점창 내부 캐릭터, npc움직임을 위한 프레임 처리.
+	if (onShop)
+	{
 		//참고로 이런 프레임렌더를 위한 카운트 변수들 증감은 업데이트 부분에서 해줘야 잘된다.
 		//렌더링부분에서 해주니깐 버벅거린다.
 
@@ -300,9 +341,69 @@ void UserInterface::update(void)
 		}
 	}
 
+	if (onShop)
+	{
+		//상점목록1 이었던 경우
+		if (PtInRect(&shopItem[0], ptMouse))
+		{
+			shopList = 0;
+		}
 
+		//상점목록2 이었던 경우
+		if (PtInRect(&shopItem[1], ptMouse))
+		{
+			shopList = 1;
+		}
 
+		//상점목록3 이었던 경우
+		if (PtInRect(&shopItem[2], ptMouse))
+		{
+			shopList = 2;
+		}
+
+		//상점목록4 이었던 경우
+		if (PtInRect(&shopItem[3], ptMouse))
+		{
+			shopList = 3;
+		}
+
+		//상점목록5 이었던 경우
+		if (PtInRect(&shopItem[4], ptMouse))
+		{
+			shopList = 4;
+		}
+
+		//상점목록6 이었던 경우
+		if (PtInRect(&shopItem[5], ptMouse))
+		{
+			shopList = 5;
+		}
+
+		//상점목록7 이었던 경우
+		if (PtInRect(&shopItem[6], ptMouse))
+		{
+			shopList = 6;
+		}
+
+		//상점목록8 이었던 경우
+		if (PtInRect(&shopItem[7], ptMouse))
+		{
+			shopList = 7;
+		}
+
+		//상점목록9 이었던 경우
+		if (PtInRect(&shopItem[8], ptMouse))
+		{
+			shopList = 8;
+		}
+
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	//---------------------------------------------입력처리-----------------------------------------------
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 	//인벤토리창 띄우기.
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
@@ -354,6 +455,93 @@ void UserInterface::update(void)
 			{
 				onClickSell = true;
 			}
+			
+			//장비탭이었던 경우
+			if (PtInRect(&shopEquipTab, ptMouse))
+			{
+				onShopEquipTab = true;
+				onShopPortionTab = false;
+				onShopEtcTab = false;
+				//탭이 바뀔때마다 선택했던 부분은 초기화.
+				myList = -1;
+
+			}
+
+
+			//소비탭이었던 경우
+			if (PtInRect(&shopPortionTab, ptMouse))
+			{
+				onShopEquipTab = false;
+				onShopPortionTab = true;
+				onShopEtcTab = false;
+				myList = -1;
+			}
+
+
+			//기타탭이었던 경우
+			if (PtInRect(&shopEtcTab, ptMouse))
+			{
+				onShopEquipTab = false;
+				onShopPortionTab = false;
+				onShopEtcTab = true;
+				myList = -1;
+			}
+
+
+			//내아이템목록1 이었던 경우
+			if (PtInRect(&myItem[0], ptMouse))
+			{
+				myList = 0;
+			}
+
+			//내아이템목록2 이었던 경우
+			if (PtInRect(&myItem[1], ptMouse))
+			{
+				myList = 1;
+			}
+
+			//내아이템목록3 이었던 경우
+			if (PtInRect(&myItem[2], ptMouse))
+			{
+				myList = 2;
+			}
+
+			//내아이템목록4 이었던 경우
+			if (PtInRect(&myItem[3], ptMouse))
+			{
+				myList = 3;
+			}
+
+			//내아이템목록5 이었던 경우
+			if (PtInRect(&myItem[4], ptMouse))
+			{
+				myList = 4;
+			}
+
+			//내아이템목록6 이었던 경우
+			if (PtInRect(&myItem[5], ptMouse))
+			{
+				myList = 5;
+			}
+
+			//내아이템목록7 이었던 경우
+			if (PtInRect(&myItem[6], ptMouse))
+			{
+				myList = 6;
+			}
+
+			//내아이템목록8 이었던 경우
+			if (PtInRect(&myItem[7], ptMouse))
+			{
+				myList = 7;
+			}
+
+			//내아이템목록9 이었던 경우
+			if (PtInRect(&myItem[8], ptMouse))
+			{
+				myList = 8;
+			}
+
 		}
 	}
 
@@ -421,7 +609,7 @@ void UserInterface::update(void)
 				onClickQuit = false;
 
 			//아이템 사기버튼에 있었던 경우
-			if (PtInRect(&buttonBuy, ptMouse))
+			if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
 			{
 				onClickBuy = false;
 			}
@@ -429,12 +617,13 @@ void UserInterface::update(void)
 				onClickBuy = false;
 
 			//아이템팔기버튼이었던 경우
-			if (PtInRect(&buttonSell, ptMouse))
+			if (PtInRect(&buttonSell, ptMouse) && onClickSell)
 			{
 				onClickSell = false;
 			}
 			else
 				onClickSell = false;
+			
 		}
 	}
 
@@ -671,6 +860,11 @@ void UserInterface::shop(void)
 	myItem[6] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 376, 200, 35);
 	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
 	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
+	//RectangleMake(getMemDC(), myItem[8].left + 36, myItem[8].top, 165, 35);
+
+	shopEquipTab = RectMake(shopWnd->getX() + 284, shopWnd->getY() + 100, 42, 19);
+	shopPortionTab = RectMake(shopWnd->getX() + 327, shopWnd->getY() + 100, 42, 19);
+	shopEtcTab = RectMake(shopWnd->getX() + 370, shopWnd->getY() + 100, 42, 19);
 
 	_me->frameRender(getMemDC(), shopWnd->getX() + 280, shopWnd->getY() - 10, _meCount, _me->getFrameY());
 	_Azoomma->frameRender(getMemDC(), shopWnd->getX() + 30, shopWnd->getY() + 10, _AzoommaCount, _Azoomma->getFrameY());
@@ -678,13 +872,31 @@ void UserInterface::shop(void)
 	buttonQuit = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 54, 64, 16);
 	buttonBuy = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 74, 64, 16);
 	buttonSell = RectMake(shopWnd->getX() + 433, shopWnd->getY() + 74, 64, 16);
-	//Rectangle(getMemDC(), buttonSell.left, buttonSell.top, buttonSell.right, buttonSell.bottom);
+
+	//장비탭이 켜진경우
+	if (onShopEquipTab)
+	{
+		shopEquip->render(getMemDC(), shopEquipTab.left, shopEquipTab.top);
+	}
+
+	//소비탭이 켜진경우
+	if (onShopPortionTab)
+	{
+		shopPortion->render(getMemDC(), shopPortionTab.left, shopPortionTab.top);
+	}
+
+	//기타탭이 켜진경우
+	if (onShopEtcTab)
+	{
+		shopEtc->render(getMemDC(), shopEtcTab.left, shopEtcTab.top);
+	}
 
 	//상점나가기 버튼에 마우스를 올렸을경우
 	if (PtInRect(&buttonQuit, ptMouse))
 	{
 		shopQuit->render(getMemDC(), buttonQuit.left, buttonQuit.top);
 	}
+	//눌렀을경우
 	if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
 	{
 		shopQuitPushed->render(getMemDC(), buttonQuit.left, buttonQuit.top);
@@ -695,6 +907,7 @@ void UserInterface::shop(void)
 	{
 		shopBuy->render(getMemDC(), buttonBuy.left, buttonBuy.top);
 	}
+	//눌렀을경우
 	if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
 	{
 		shopBuyPushed->render(getMemDC(), buttonBuy.left, buttonBuy.top);
@@ -705,11 +918,70 @@ void UserInterface::shop(void)
 	{
 		shopSell->render(getMemDC(), buttonSell.left, buttonSell.top);
 	}
+	//눌렀을경우
 	if (PtInRect(&buttonSell, ptMouse) && onClickSell)
 	{
 		shopSellPushed->render(getMemDC(), buttonSell.left, buttonSell.top);
 	}
 
+	switch (myList)
+	{
+	case 0:
+		selectEffect->render(getMemDC(), myItem[0].left + 36, myItem[0].top);
+		break;
+	case 1:
+		selectEffect->render(getMemDC(), myItem[1].left + 36, myItem[1].top);
+		break;
+	case 2:
+		selectEffect->render(getMemDC(), myItem[2].left + 36, myItem[2].top);
+		break;
+	case 3:
+		selectEffect->render(getMemDC(), myItem[3].left + 36, myItem[3].top);
+		break;
+	case 4:
+		selectEffect->render(getMemDC(), myItem[4].left + 36, myItem[4].top);
+		break;
+	case 5:
+		selectEffect->render(getMemDC(), myItem[5].left + 36, myItem[5].top);
+		break;
+	case 6:
+		selectEffect->render(getMemDC(), myItem[6].left + 36, myItem[6].top);
+		break;
+	case 7:
+		selectEffect->render(getMemDC(), myItem[7].left + 36, myItem[7].top);
+		break;
+	case 8:
+		selectEffect->render(getMemDC(), myItem[8].left + 36, myItem[8].top);
+		break;
+	default:
+		break;
+
+	}
+
+	switch (shopList)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
+		break;
+	default:
+		break;
+
+	}
 	//상점 판매목록에 기본적으로 표시되어있는 메소아이콘
 	for (int i = 0; i < 9; i++)
 	{

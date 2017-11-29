@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include "mainGame.h"
 
 
@@ -282,12 +282,40 @@ void mainGame::imgInit()
 
 	////////////////////////////////////////////////¾ÆÀÌÅÛ//////////////////////////////////////////////////////
 
-	IMAGEMANAGER->addImage("ÂÞÂÞ¹Ù", "sprites/UI/ÂÞÂÞ¹Ù.bmp", 31, 31, true, NULL);
-	IMAGEMANAGER->addImage("»¡°£Æ÷¼Ç", "sprites/UI/»¡°£Æ÷¼Ç.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("ÁÖÈ²Æ÷¼Ç", "sprites/UI/ÁÖÈ²Æ÷¼Ç.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("ÆÄ¶õÆ÷¼Ç", "sprites/UI/ÆÄ¶õÆ÷¼Ç.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("ÆÏºù¼ö", "sprites/UI/ÆÏºù¼ö.bmp", 26, 30, true, NULL);
-	IMAGEMANAGER->addImage("ÇÏ¾áÆ÷¼Ç", "sprites/UI/ÇÏ¾áÆ÷¼Ç.bmp", 27, 27, true, NULL);
+	IMAGEMANAGER->addImage("ÂÞÂÞ¹Ù",	"sprites/item/ÂÞÂÞ¹Ù.bmp",		32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("»¡°£Æ÷¼Ç",	"sprites/item/»¡°£Æ÷¼Ç.bmp",	32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("ÁÖÈ²Æ÷¼Ç",	"sprites/item/ÁÖÈ²Æ÷¼Ç.bmp",	32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("ÆÄ¶õÆ÷¼Ç",	"sprites/item/ÆÄ¶õÆ÷¼Ç.bmp",	32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("ÆÏºù¼ö",	"sprites/item/ÆÏºù¼ö.bmp",		32, 32, true, RGB(255,0,255));
+	IMAGEMANAGER->addImage("ÇÏ¾áÆ÷¼Ç",	"sprites/item/ÇÏ¾áÆ÷¼Ç.bmp",	32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¸ÁÅä1", "sprites/item/¸ÁÅä1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¸ÁÅä2", "sprites/item/¸ÁÅä2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¸ÁÅä3",	"sprites/item/¸ÁÅä3.bmp",	32, 32, true, RGB(255,0,255));
+
+	IMAGEMANAGER->addImage("¸ðÀÚ1", "sprites/item/¸ðÀÚ1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¸ðÀÚ2", "sprites/item/¸ðÀÚ2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¸ðÀÚ3", "sprites/item/¸ðÀÚ3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("¹«±â1", "sprites/item/¹«±â1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¹«±â2", "sprites/item/¹«±â2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¹«±â3", "sprites/item/¹«±â3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("¹ÙÁö1", "sprites/item/¹ÙÁö1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¹ÙÁö2", "sprites/item/¹ÙÁö2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¹ÙÁö3", "sprites/item/¹ÙÁö3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("»óÀÇ1", "sprites/item/»óÀÇ1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("»óÀÇ2", "sprites/item/»óÀÇ2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("»óÀÇ3", "sprites/item/»óÀÇ3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("½Å¹ß1", "sprites/item/½Å¹ß1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½Å¹ß2", "sprites/item/½Å¹ß2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½Å¹ß3", "sprites/item/½Å¹ß3.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("Àå°©1", "sprites/item/Àå°©1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Àå°©2", "sprites/item/Àå°©2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Àå°©3", "sprites/item/Àå°©3.bmp", 32, 32, true, RGB(255, 0, 255));
+
 
 
 	//////////////////////////////////////////////UI//////////////////////////////////////////////////////
@@ -439,6 +467,9 @@ void mainGame::soundInit()
 	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("askill", "sound/Askill.mp3", true, false);
+	SOUNDMANAGER->addSound("basicatt", "sound/BasicAtt.mp3", true, false);
+	SOUNDMANAGER->addSound("sskill", "sound/Sskill.mp3", true, false);
 }
 
 
