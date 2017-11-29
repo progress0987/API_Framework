@@ -508,9 +508,7 @@ void player::update(void)
 	}
 	///////////////////////////////////////////////////테스트
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		onLvlUP = true;
-		levelUPCount = lvlUPFrame = 0;
-		lvlupIMGpt = pointMake(curPos.x - 904 / 2, curPos.y - 904+200);
+		GainExp(100);
 	}
 	
 
@@ -651,8 +649,8 @@ void player::GainExp(int exp)
 		stat->Level++;
 		stat->ap += 5;
 		onLvlUP = true;
-		//수정 - 레벨업 이펙트
-		EFFECTMANAGER->play("레벨업", curPos.x-mycam->camPoint.x - IMAGEMANAGER->findImage("레벨업")->getWidth()/2, curPos.y-mycam->camPoint.y-IMAGEMANAGER->findImage("레벨업")->getWidth()/2);
+		levelUPCount = lvlUPFrame = 0;
+		lvlupIMGpt = pointMake(curPos.x - 904 / 2, curPos.y - 904 + 200);
 	}
 }
 
