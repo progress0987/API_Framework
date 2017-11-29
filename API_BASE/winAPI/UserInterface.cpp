@@ -174,7 +174,7 @@ HRESULT UserInterface::init(void)
 	_dex = pl->getstatus()->Dex;
 	_int = pl->getstatus()->Int;
 	_luk = pl->getstatus()->Luk;
-	//_ap;
+	_ap = pl->getstatus()->ap;
 
 	//----------------------------------상점이미지로드-----------------------
 
@@ -231,13 +231,17 @@ void UserInterface::update(void)
 	//프레임 처리를 위한 변수
 	count++;
 
-		playerHp = pl->getstatus()->curHP;
-		playerMp = pl->getstatus()->curMP;
-	if (onStat) {
-		Level = pl->getstatus()->Level;
-		MaxHp = pl->getstatus()->maxHP;
-		MaxMp = pl->getstatus()->maxMP;
-	}
+	Level = pl->getstatus()->Level;
+	playerHp = pl->getstatus()->curHP;
+	playerMp = pl->getstatus()->curMP;
+	MaxHp = pl->getstatus()->maxHP;
+	MaxMp = pl->getstatus()->maxMP;
+	_str = pl->getstatus()->Str;
+	_dex = pl->getstatus()->Dex;
+	_int = pl->getstatus()->Int;
+	_luk = pl->getstatus()->Luk;
+	_ap = pl->getstatus()->ap;
+
 	//체력이 회복되고 있는가
 	if (HpHillCount != 0)
 	{
