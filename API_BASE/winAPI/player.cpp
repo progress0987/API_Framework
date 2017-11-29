@@ -64,7 +64,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 
 	//수정 - 레벨업 이펙트 추가
-	//EFFECTMANAGER->addEffect();
+	EFFECTMANAGER->addEffect("레벨업","sprites/UI/레벨업.bmp",18080,904,904,904,5,1,60);
 
 
 	ASkill = skillList[0];
@@ -502,6 +502,11 @@ void player::update(void)
 			playAttMotion();
 		}
 	}
+
+	//테스트
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
+		EFFECTMANAGER->play("레벨업", curPos.x - mycam->camPoint.x - IMAGEMANAGER->findImage("레벨업")->getWidth() / 2, curPos.y - mycam->camPoint.y - IMAGEMANAGER->findImage("레벨업")->getWidth() / 2);
+	}
 	
 	
 	//공격모션중
@@ -575,6 +580,7 @@ void player::update(void)
 	//모든 연산이 끝난 후 렉트를 생성
 	rc = RectMakeCenter(curPos.x, curPos.y, width, height);
 	hitRC = { rc.left + 34,rc.top + 13, rc.right - 36, rc.bottom - 7 };
+	EFFECTMANAGER->update();
 }
 
 void player::render(void)
@@ -594,6 +600,7 @@ void player::render(void)
 	if (curCast != nullptr) {
 		curCast->render();
 	}
+	EFFECTMANAGER->render();
 }
 
 void player::playAttMotion()
@@ -625,9 +632,9 @@ void player::GainExp(int exp)
 		stat->lvlUpExp *= (4 / 3);
 		stat->Level++;
 		stat->ap += 5;
-
+		onLvlUP = true;
 		//수정 - 레벨업 이펙트
-		//EFFECTMANAGER->play("LVLUP", curPos.x-mycam->camPoint.x, curPos.y-mycam->camPoint.y);
+		EFFECTMANAGER->play("레벨업", curPos.x-mycam->camPoint.x - IMAGEMANAGER->findImage("레벨업")->getWidth()/2, curPos.y-mycam->camPoint.y-IMAGEMANAGER->findImage("레벨업")->getWidth()/2);
 	}
 }
 

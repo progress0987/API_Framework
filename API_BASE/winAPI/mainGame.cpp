@@ -300,6 +300,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("닫기",			"sprites/UI/닫기.bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기마우스온",	"sprites/UI/닫기(MouseOn).bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기클릭",		"sprites/UI/닫기(clicked).bmp", 13, 13, true, RGB(0, 0, 0));
+	IMAGEMANAGER->addFrameImage("레벨업", "sprites/UI/레벨업.bmp", 18080, 904, 20, 1, true, RGB(255, 0, 255));
 
 	//-------------------------------------인벤토리------------------------------------------
 	IMAGEMANAGER->addImage("인벤토리창",		"sprites/UI/아이템인벤토리.bmp", 172, 335, true, RGB(255, 0, 255));
