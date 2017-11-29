@@ -157,18 +157,7 @@ public:
 
 	status* getstatus() { return stat; }
 	
-	void setMaxHP(int hp) { stat->maxHP = hp; }
-	void setCurHP(int hp) {		stat->curHP = hp; }
-	void setMaxMP(int mp) { stat->maxMP = mp; }
-	void setCurMP(int mp) {		stat->curMP = mp; }
-	void setStr(int str) {	stat->Str = str; }
-	void setDex(int dex) {	stat->Dex = dex; }
-	void setInt(int intt) {	stat->Int = intt; }
-	void setLuk(int luk) {	stat->Luk = luk; }
-	void setAtt(int att) {	stat->Att = att; }
-	void setLike(int like) { stat->Like = like; }
-	void setExp(int exp) {	stat->Exp = exp; }
-	void setLvupExp(int exp) { stat->lvlUpExp = exp; }
+
 	int getmeso() { return meso; }
 	bool spendmeso(int amount) {
 		if (meso - amount >= 0) { meso -= amount; return true; }
