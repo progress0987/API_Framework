@@ -538,7 +538,7 @@ void player::update(void)
 	}
 	///////////////////////////////////////////////////Å×½ºÆ®
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		GainExp(100);
+		GainExp(10000);
 	}
 	
 
@@ -676,11 +676,11 @@ void player::GainExp(int exp)
 	stat->Exp += exp;
 	if (stat->Exp >= stat->lvlUpExp) {
 		stat->Exp %= stat->lvlUpExp;
-		stat->maxHP = stat->maxHP * 3 / 2;
-		stat->maxMP = stat->maxMP * 3 / 2;
+		stat->maxHP = stat->maxHP * 1.1;
+		stat->maxMP = stat->maxMP * 1.1;
 		stat->curHP = stat->maxHP;
 		stat->curMP = stat->maxMP;
-		stat->lvlUpExp = stat->lvlUpExp* 3/2;
+		stat->lvlUpExp = stat->lvlUpExp* 1.1;
 		stat->Level++;
 		stat->ap += 5;
 		onLvlUP = true;
