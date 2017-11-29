@@ -230,8 +230,34 @@ void UserInterface::update(void)
 		MaxHp = pl->getstatus()->maxHP;
 		MaxMp = pl->getstatus()->maxMP;
 	}
-
-
+	//체력이 회복되고 있는가
+	if (HpHillCount != 0)
+	{
+		HpHillCount--;
+		if (pl->getstatus()->curHP + HpHill >= pl->getstatus()->maxHP)
+		{
+			pl->setCurHP(pl->getstatus()->maxHP);
+		}
+		else
+		{
+			pl->setCurHP(pl->getstatus()->curHP + HpHill);
+		}
+		HpHillMax -= HpHill;
+	}
+	//마나가 회복되고 있는가
+	if (MpHillCount != 0)
+	{
+		MpHillCount--;
+		if (pl->getstatus()->curMP + MpHill >= pl->getstatus()->maxMP)
+		{
+			pl->setCurMP(pl->getstatus()->maxMP);
+		}
+		else
+		{
+			pl->setCurMP(pl->getstatus()->curMP + MpHill);
+		}
+		MpHillMax -= MpHill;
+	}
 	//실시간 캐릭터 스텟 갱신쓰
 
 	_str = _basicStr + totalEquipstr;
@@ -416,16 +442,22 @@ void UserInterface::update(void)
 	//체력포션 처먹처먹
 	if (KEYMANAGER->isOnceKeyDown(VK_DELETE))
 	{
-		
-
+		HpHillMax += 50;
+		HpHill = HpHillMax / 10;
+		HpHillCount = 10;
 	}
 
 	//마나포션 처먹처먹
 	if (KEYMANAGER->isOnceKeyDown(VK_END))
 	{
-
+		MpHillMax += 50;
+		MpHill = MpHillMax / 10;
+		MpHillCount = 10;
 		
 	}
+	Hpwidth = ((float)pl->getstatus()->curHP / (float)pl->getstatus()->maxHP) * (float)hpbar->getWidth();
+	Mpwidth = ((float)pl->getstatus()->curMP / (float)pl->getstatus()->maxMP)*(float)mpbar->getWidth();
+	Exwidth = ((float)pl->getstatus()->Exp / (float)pl->getstatus()->lvlUpExp)*(float)expGuage->getWidth();
 }
 
 void UserInterface::render(void)
@@ -437,13 +469,13 @@ void UserInterface::render(void)
 	//기본인터페이스 렌더링
 	//경험치
 	expBackground->render(getMemDC());
-	expGuage->render(getMemDC());
+	expGuage->render(getMemDC(), 16, 761, 0, 0, Exwidth, expLayer->getHeight());
 	expLayer->render(getMemDC());
 
 	//캐릭터정보 및 체력, 마나게이지
 	_formBackground->render(getMemDC());
-	hpbar->render(getMemDC());
-	mpbar->render(getMemDC());
+	hpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 3, 0, 0, Hpwidth, mpbar->getHeight());
+	mpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 17, 0, 0, Mpwidth, hpbar->getHeight());
 	_form->render(getMemDC());
 	_shine->alphaRender(getMemDC(), _form->getX(), _form->getY(), 120);
 
