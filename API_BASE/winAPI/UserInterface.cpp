@@ -176,12 +176,37 @@ HRESULT UserInterface::init(void)
 	_luk = pl->getstatus()->Luk;
 	//_ap;
 
-	//shopItem[0] = RectMake()
-	
-	Hpwidth = (pl->getstatus()->curHP / pl->getstatus()->maxHP) * hpbar->getWidth();
-	Mpwidth = (pl->getstatus()->curMP / pl->getstatus()->maxMP)*mpbar->getWidth();
-	Exwidth = (pl->getstatus()->Exp / pl->getstatus()->lvlUpExp)*expGuage->getWidth();
-	
+	//----------------------------------상점이미지로드-----------------------
+	onShop = false;
+
+	_me = IMAGEMANAGER->findImage("캐릭터");
+	_Azoomma = IMAGEMANAGER->findImage("storenpc");
+	shopWnd = IMAGEMANAGER->findImage("상점");
+	shopQuit = IMAGEMANAGER->findImage("상점나가기마우스");
+	shopBuy = IMAGEMANAGER->findImage("아이템사기마우스");
+	shopSell = IMAGEMANAGER->findImage("아이템팔기마우스");
+	shopQuitPushed = IMAGEMANAGER->findImage("상점나가기눌림");
+	shopBuyPushed = IMAGEMANAGER->findImage("아이템사기눌림");
+	shopSellPushed = IMAGEMANAGER->findImage("아이템팔기눌림");
+	shopEquip = IMAGEMANAGER->findImage("상점장비활성");
+	shopPortion = IMAGEMANAGER->findImage("상점소비활성");
+	shopEtc = IMAGEMANAGER->findImage("상점기타활성");
+	mesoIcon = IMAGEMANAGER->findImage("메소아이콘");
+	selectEffect = IMAGEMANAGER->findImage("셀렉트효과");
+
+	_me->setFrameX(0);
+	_me->setFrameY(0);
+	_Azoomma->setFrameX(0);
+	_Azoomma->setFrameY(0);
+
+	_meCount = 0;
+	_AzoommaCount = 0;
+
+	//-------------------------------임시변수들 초기 설정---------------------------
+
+	count = fingerCount = 0;
+
+	onClickQuit = onClickBuy = onClickSell = onClickAzoomma = false;
 
 	return S_OK;
 }
@@ -192,6 +217,12 @@ void UserInterface::release(void)
 
 void UserInterface::update(void)
 {
+	//------------------------------실시간 UI프로세스 갱신쓰!-----------------------------
+
+
+	//프레임 처리를 위한 변수
+	count++;
+
 		playerHp = pl->getstatus()->curHP;
 		playerMp = pl->getstatus()->curMP;
 	if (onStat) {
@@ -199,6 +230,53 @@ void UserInterface::update(void)
 		MaxHp = pl->getstatus()->maxHP;
 		MaxMp = pl->getstatus()->maxMP;
 	}
+
+
+	//실시간 캐릭터 스텟 갱신쓰
+
+	_str = _basicStr + totalEquipstr;
+	_dex = _basicDex + totalEquipdex;
+	_int = _basicInt + totalEquipint;
+	_luk = _basicLuk + totalEquipluk;
+
+	//상점이 켜졌을때 기본적으로 작동하는 프로세스
+	if (onShop)
+	{
+		//상점내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
+		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&buttonQuit, ptMouse) || PtInRect(&buttonBuy, ptMouse) || PtInRect(&buttonSell, ptMouse))
+		{
+			finger->setFrameY(2);
+			if (count % 30 == 0)
+			{
+				fingerCount++;
+				if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+			}
+		}
+		else
+		{
+			fingerCount = 0;
+			finger->setFrameY(0);
+		}
+
+		//참고로 이런 프레임렌더를 위한 카운트 변수들 증감은 업데이트 부분에서 해줘야 잘된다.
+		//렌더링부분에서 해주니깐 버벅거린다.
+
+		if (count % 40 == 0)
+		{
+			_meCount++;
+			if (_meCount > _me->getMaxFrameX()) _meCount = 0;
+		}
+
+		if (count % 50 == 0)
+		{
+			_AzoommaCount++;
+			if (_AzoommaCount > _Azoomma->getMaxFrameX()) _AzoommaCount = 0;
+		}
+	}
+
+
+
+	//---------------------------------------------입력처리-----------------------------------------------
 	//인벤토리창 띄우기.
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
@@ -220,16 +298,117 @@ void UserInterface::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
+		
 		//장비창이 켜져있는경우
 
 		//스텟창이 켜져있는경우
 
 		//인벤토리창이 켜져있는경우
-
-		//상점이 켜져있는경우
+		
+		//상점 아줌마 클릭하기쓰
 		if (pl->openShop() == true) {
-			//
+			onClickAzoomma = true;
+		}
+
+		//만일 샵이 켜져있는 경우
+		else if (onShop)
+		{
+			//눌렀을때 나가기 버튼위에 있었던 경우
+			if (PtInRect(&buttonQuit, ptMouse))
+			{
+				onClickQuit = true;
+			}
+			//눌렀을때 아이템사기 버튼위에 있었던 경우
+			if (PtInRect(&buttonBuy, ptMouse))
+			{
+				onClickBuy = true;
+			}
+			//눌렀을때 아이템팔기 버튼위에 있었던 경우
+			if (PtInRect(&buttonSell, ptMouse))
+			{
+				onClickSell = true;
+			}
+		}
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	{
+		finger->setFrameY(1);
+		//==============만일 아줌마클릭에서 버튼액션을 발동시킨 상태라면=============
+		if (pl->openShop() == true && onClickAzoomma) {
+			//버튼액션 유지
+			onClickAzoomma = true;
+		}
+		//아니라면 버튼액션 종료
+		else
+			onClickAzoomma = false;
+
+		//==================만일 샵에서 버튼액션을 발동시킨상태라면==================
+		if (onShop)
+		{
+			//버튼위에서 누르고있으면 클릭을 유지시켜준다.
+			if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
+			{
+				onClickQuit = true;
+			}
+			//누른상태에서 버튼을 벗어나면 액션을 취소시킨다.
+			else
+				onClickQuit = false;
+
+			if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
+			{
+				onClickBuy = true;
+			}
+			else
+				onClickBuy = false;
+
+			if (PtInRect(&buttonSell, ptMouse) && onClickSell)
+			{
+				onClickSell = true;
+			}
+			else
+				onClickSell = false;
+		}
+
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		finger->setFrameY(0);
+		//==================상점아줌마를 누르고 있던 경우===============
+		if (pl->openShop() == true && onClickAzoomma) {
+			//마우스를 뗌과 동시에 상점을 켜준다.
 			this->onShop = true;
+		}
+
+		//==================샵에서 버튼을 누르고있는 경우===============
+		if (onShop)
+		{
+			//뗐을때 버튼위에 있었 경우
+			if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
+			{
+				//버튼클릭을 꺼주고, 샵을 닫아준다.
+				onClickQuit = false;
+				onShop = false;
+			}
+			else
+				//아닌경우 버튼액션만 무효화시킨다.
+				onClickQuit = false;
+
+			//아이템 사기버튼에 있었던 경우
+			if (PtInRect(&buttonBuy, ptMouse))
+			{
+				onClickBuy = false;
+			}
+			else
+				onClickBuy = false;
+
+			//아이템팔기버튼이었던 경우
+			if (PtInRect(&buttonSell, ptMouse))
+			{
+				onClickSell = false;
+			}
+			else
+				onClickSell = false;
 		}
 	}
 
@@ -247,17 +426,6 @@ void UserInterface::update(void)
 
 		
 	}
-
-
-	//실시간 캐릭터 스텟 갱신쓰
-
-	_str = _basicStr + totalEquipstr;
-	_dex = _basicDex + totalEquipdex;
-	_int = _basicInt + totalEquipint;
-	_luk = _basicLuk + totalEquipluk;
-	Hpwidth = ((float)pl->getstatus()->curHP / (float)pl->getstatus()->maxHP) * (float)hpbar->getWidth();
-	Mpwidth = ((float)pl->getstatus()->curMP / (float)pl->getstatus()->maxMP)*(float)mpbar->getWidth();
-	Exwidth = ((float)pl->getstatus()->Exp / (float)pl->getstatus()->lvlUpExp)*(float)expGuage->getWidth();
 }
 
 void UserInterface::render(void)
@@ -269,13 +437,13 @@ void UserInterface::render(void)
 	//기본인터페이스 렌더링
 	//경험치
 	expBackground->render(getMemDC());
-	expGuage->render(getMemDC(), 16, 761, 0, 0, Exwidth, expLayer->getHeight());
+	expGuage->render(getMemDC());
 	expLayer->render(getMemDC());
 
 	//캐릭터정보 및 체력, 마나게이지
 	_formBackground->render(getMemDC());
-	hpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 3, 0, 0, Hpwidth, mpbar->getHeight());
-	mpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 17, 0, 0, Mpwidth, hpbar->getHeight());
+	hpbar->render(getMemDC());
+	mpbar->render(getMemDC());
 	_form->render(getMemDC());
 	_shine->alphaRender(getMemDC(), _form->getX(), _form->getY(), 120);
 
@@ -324,19 +492,21 @@ void UserInterface::render(void)
 	_pgdn->render(getMemDC(), 1127, 725);
 
 
-	//스텟창, 장비창, 인벤토리 렌더링
+	//스텟창, 장비창, 인벤토리, 상점 렌더링
 	if (onStat)
 		statement();
 	if (onEquip)
 		equip();
 	if (onInven)
 		inventory();
+	if (onShop)
+		shop();
 
 	//마우스 커서 숨기기
 	SetCursor(NULL);
 	ShowCursor(false);
 
-	finger->frameRender(getMemDC(), ptMouse.x, ptMouse.y);
+	finger->frameRender(getMemDC(), ptMouse.x, ptMouse.y, fingerCount, finger->getFrameY());
 }
 
 void UserInterface::equip(void)
@@ -439,6 +609,80 @@ void UserInterface::statement(void)
 	//다썼으면 지워주자!!!
 	DeleteObject(oldFont);
 	DeleteObject(font1);
+}
+
+void UserInterface::shop(void)
+{
+	shopWnd->setX(450);
+	shopWnd->setY(100);
+	shopWnd->render(getMemDC());
+	
+	//아이템사진은 35x35. 아이템 설명및 가격표기 태그는 165x35.
+
+	//상점 버튼액션 및 이미지 렌더링을 위한 구역렉트설정
+	shopItem[0] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 124, 200, 35);
+	shopItem[1] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 166, 200, 35);
+	shopItem[2] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 208, 200, 35);
+	shopItem[3] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 250, 200, 35);
+	shopItem[4] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 292, 200, 35);
+	shopItem[5] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 334, 200, 35);
+	shopItem[6] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 376, 200, 35);
+	shopItem[7] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 418, 200, 35);
+	shopItem[8] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 460, 200, 35);
+	
+	myItem[0] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 124, 200, 35);
+	myItem[1] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 166, 200, 35);
+	myItem[2] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 208, 200, 35);
+	myItem[3] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 250, 200, 35);
+	myItem[4] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 292, 200, 35);
+	myItem[5] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 334, 200, 35);
+	myItem[6] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 376, 200, 35);
+	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
+	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
+
+	_me->frameRender(getMemDC(), shopWnd->getX() + 280, shopWnd->getY() - 10, _meCount, _me->getFrameY());
+	_Azoomma->frameRender(getMemDC(), shopWnd->getX() + 30, shopWnd->getY() + 10, _AzoommaCount, _Azoomma->getFrameY());
+	
+	buttonQuit = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 54, 64, 16);
+	buttonBuy = RectMake(shopWnd->getX() + 203, shopWnd->getY() + 74, 64, 16);
+	buttonSell = RectMake(shopWnd->getX() + 433, shopWnd->getY() + 74, 64, 16);
+	//Rectangle(getMemDC(), buttonSell.left, buttonSell.top, buttonSell.right, buttonSell.bottom);
+
+	//상점나가기 버튼에 마우스를 올렸을경우
+	if (PtInRect(&buttonQuit, ptMouse))
+	{
+		shopQuit->render(getMemDC(), buttonQuit.left, buttonQuit.top);
+	}
+	if (PtInRect(&buttonQuit, ptMouse) && onClickQuit)
+	{
+		shopQuitPushed->render(getMemDC(), buttonQuit.left, buttonQuit.top);
+	}
+
+	//아이템사기 버튼에 마우스를 올렸을 경우
+	if (PtInRect(&buttonBuy, ptMouse))
+	{
+		shopBuy->render(getMemDC(), buttonBuy.left, buttonBuy.top);
+	}
+	if (PtInRect(&buttonBuy, ptMouse) && onClickBuy)
+	{
+		shopBuyPushed->render(getMemDC(), buttonBuy.left, buttonBuy.top);
+	}
+
+	//아이템팔기 버튼에 마우스를 올렸을 경우
+	if (PtInRect(&buttonSell, ptMouse))
+	{
+		shopSell->render(getMemDC(), buttonSell.left, buttonSell.top);
+	}
+	if (PtInRect(&buttonSell, ptMouse) && onClickSell)
+	{
+		shopSellPushed->render(getMemDC(), buttonSell.left, buttonSell.top);
+	}
+
+	//상점 판매목록에 기본적으로 표시되어있는 메소아이콘
+	for (int i = 0; i < 9; i++)
+	{
+		mesoIcon->render(getMemDC(), shopItem[i].left + 40, shopItem[i].top + 21);
+	}
 }
 
 UserInterface::UserInterface()

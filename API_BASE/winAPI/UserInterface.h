@@ -75,11 +75,15 @@ private:
 	bool onInven = false; //인벤토리창 온오프
 	bool invEq, invPo, invEtc; //장비탭, 소비탭, 기타탭 온오프 처리 불변수.
 
-	//------------------------------------상점데이터---------------------------------------------
+    //------------------------------------상점데이터---------------------------------------------
 
 	bool onShop; //샵 온오프
-	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopEquip, *shopPortion, *shopEtc, *mesoIcon;
+	image *_me, *_Azoomma;
+	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
+	RECT buttonQuit, buttonBuy, buttonSell;
+	//각버튼위, 상점아줌마위에서 누르고있을때 on, 뗐을떼 off
+	bool onClickQuit, onClickBuy, onClickSell, onClickAzoomma;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
@@ -112,6 +116,17 @@ private:
 	//------------------------------------캐릭터 상태표시 숫자들----------------------------
 	image *_0, *_1, *_2, *_3, *_4, *_5, *_6, *_7, *_8, *_9, *_rs, *_Lc, *_Rc, *_percent, *_dot;
 	//숫자, 역슬래쉬, 왼쪽커버, 오른쪽커버, 퍼센트, 점.
+	
+	//-----------------------------------UI프로세싱을 위한 변수들---------------------------
+
+	//손가락 움직임을 위한 변수
+	int count, fingerCount;
+
+	//상점내 내 캐릭과 상점아줌마 움직임을 위한 변수
+	int _meCount, _AzoommaCount;
+	
+
+
 
 public:
 	virtual HRESULT init(void);
@@ -123,9 +138,11 @@ public:
 
 
 	//덩어리로 작업해야 하기 때문에 함수로 묶어줬다.
+	//렌더링 함수들!!!!!
 	virtual void equip(void);
 	virtual void inventory(void);
 	virtual void statement(void);
+	virtual void shop(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
 	void setPlayer(player *pl) { this->pl = pl; }

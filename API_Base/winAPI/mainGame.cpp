@@ -158,9 +158,6 @@ void mainGame::render()
 	if (SceneChanged) {
 		IMAGEMANAGER->findImage("fade")->alphaRender(getMemDC(), fadeAlpha);
 	}
-
-	//IMAGEMANAGER->render("ÀÎÅÍÆäÀÌ½º", getMemDC(), 0, 0);
-
 	UI->render();
 
 	TIMEMANAGER->render(getMemDC());
@@ -284,10 +281,13 @@ void mainGame::imgInit()
 
 
 	////////////////////////////////////////////////¾ÆÀÌÅÛ//////////////////////////////////////////////////////
-	IMAGEMANAGER->addImage("ÂÞÂÞ¹Ù", "ÂÞÂÞ¹Ù.bmp", 31, 31, true, NULL);
-	IMAGEMANAGER->addImage("ÆÄ¶õÆ÷¼Ç", "ÆÄ¶õÆ÷¼Ç.bmp", 27, 27, true, NULL);
-	IMAGEMANAGER->addImage("ÆÏºù¼ö", "ÆÏºù¼ö.bmp", 26, 30, true, NULL);
-	IMAGEMANAGER->addImage("ÇÏ¾áÆ÷¼Ç", "ÇÏ¾áÆ÷¼Ç.bmp", 27, 27, true, NULL);
+
+	IMAGEMANAGER->addImage("ÂÞÂÞ¹Ù", "sprites/UI/ÂÞÂÞ¹Ù.bmp", 31, 31, true, NULL);
+	IMAGEMANAGER->addImage("»¡°£Æ÷¼Ç", "sprites/UI/»¡°£Æ÷¼Ç.bmp", 27, 27, true, NULL);
+	IMAGEMANAGER->addImage("ÁÖÈ²Æ÷¼Ç", "sprites/UI/ÁÖÈ²Æ÷¼Ç.bmp", 27, 27, true, NULL);
+	IMAGEMANAGER->addImage("ÆÄ¶õÆ÷¼Ç", "sprites/UI/ÆÄ¶õÆ÷¼Ç.bmp", 27, 27, true, NULL);
+	IMAGEMANAGER->addImage("ÆÏºù¼ö", "sprites/UI/ÆÏºù¼ö.bmp", 26, 30, true, NULL);
+	IMAGEMANAGER->addImage("ÇÏ¾áÆ÷¼Ç", "sprites/UI/ÇÏ¾áÆ÷¼Ç.bmp", 27, 27, true, NULL);
 
 
 	//////////////////////////////////////////////UI//////////////////////////////////////////////////////
@@ -422,6 +422,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("¾ÆÀÌÅÛÆÈ±â¸¶¿ì½º", "sprites/UI/¾ÆÀÌÅÛÆÈ±â¸¶¿ì½º.bmp", 64, 16, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("¾ÆÀÌÅÛÆÈ±â´­¸²", "sprites/UI/¾ÆÀÌÅÛÆÈ±â´­¸².bmp", 64, 16, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("¸Þ¼Ò¾ÆÀÌÄÜ", "sprites/UI/¸Þ¼Ò¾ÆÀÌÄÜ.bmp", 12, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¼¿·ºÆ®È¿°ú", "sprites/UI/¼¿·ºÆ®È¿°ú.bmp", 165, 35, true, RGB(255, 0, 255));
 	
 }
 
