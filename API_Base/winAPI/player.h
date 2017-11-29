@@ -136,6 +136,11 @@ private:
 	int attX;
 
 	int meso = 1000;
+
+	vector<items> equip;
+	vector<items> consume;
+	vector<items> etc;
+
 public:
 	bool sceneChange=false;
 	bool sceneChangeFinished = false;
@@ -154,7 +159,9 @@ public:
 	//°æÇèÄ¡ È¹µæ
 	void GainExp(int exp);
 
-
+	vector<items> getEquip() { return equip; }
+	vector<items> getConsume() { return consume; }
+	vector<items> getEtc() { return etc; }
 	status* getstatus() { return stat; }
 	
 	void setMaxHP(int hp) { stat->maxHP = hp; }
