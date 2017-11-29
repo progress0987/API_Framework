@@ -18,6 +18,8 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	sceneChange = false;
 	curDir = false;
 	curPos = pos;
+	ItemList = new items;
+	ItemList->init();
 
 	onAttack = false;
 	onHit = false;
@@ -63,7 +65,30 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	skillList.push_back(sk2);
 
 
-	//수정 - 레벨업 이펙트 추가
+	//각 탭에 아이템 추가
+
+	
+	item tmp = getItem("붉은 망토");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("낡은 고깔모자");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("기본형 ESP 증폭기");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("천바지");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("티셔츠");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("빽구두");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("하얀 장갑");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+
+	tmp = getItem("빨간포션");
+	tmp.stack = 10;
+	if (tmp.itemtype != -1)consume.push_back(tmp);
+	tmp = getItem("파란포션");
+	tmp.stack = 10;
+	if (tmp.itemtype != -1)consume.push_back(tmp);
 
 
 	ASkill = skillList[0];
@@ -660,6 +685,18 @@ void player::GainExp(int exp)
 
 //캐릭터를 비춰주는 카메라 함수. 렌더링은 렌더함수 부분에서 처리.
 //진행방향과 캐릭터좌표정보를 받아서 mapx, mapy를 조정해준다.
+
+item player::getItem(char itemName[])
+{
+	item ret;
+	ret.itemtype = -1;//에러타입
+	for (vector<item>::iterator i = ItemList->_item.begin(); i != ItemList->_item.end(); i++) {
+		if (strcmp(itemName, i->itemname) == 0) {
+			return (*i);
+		}
+	}
+	return ret;
+}
 
 bool player::openShop()
 {
