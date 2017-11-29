@@ -106,7 +106,9 @@ private:
 	image *_0, *_1, *_2, *_3, *_4, *_5, *_6, *_7, *_8, *_9, *_rs, *_Lc, *_Rc, *_percent, *_dot;
 	//숫자, 역슬래쉬, 왼쪽커버, 오른쪽커버, 퍼센트, 점.
 
-	
+	//-----------------------------------UI프로세싱을 위한 변수들---------------------------
+	int count, fingerCount;
+
 public:
 	virtual HRESULT init(void);
 	virtual void release(void);

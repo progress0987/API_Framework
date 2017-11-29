@@ -192,7 +192,9 @@ HRESULT UserInterface::init(void)
 	mesoIcon = IMAGEMANAGER->findImage("메소아이콘");
 	selectEffect = IMAGEMANAGER->findImage("셀렉트효과");
 
-	
+	//-------------------------------임시변수들 초기 설정---------------------------
+
+	count = fingerCount = 0;
 
 	
 
@@ -205,6 +207,9 @@ void UserInterface::release(void)
 
 void UserInterface::update(void)
 {
+	//프레임 처리를 위한 변수
+	count++;
+
 		playerHp = pl->getstatus()->curHP;
 		playerMp = pl->getstatus()->curMP;
 	if (onStat) {
@@ -231,8 +236,18 @@ void UserInterface::update(void)
 		onEquip = !onEquip;
 	}
 
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	{
+		finger->setFrameY(1);
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		finger->setFrameY(0);
+	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
+		
 		//장비창이 켜져있는경우
 
 		//스텟창이 켜져있는경우
@@ -261,6 +276,22 @@ void UserInterface::update(void)
 		
 	}
 
+
+	//실시간 UI프로세스 갱신쓰!
+	if (PtInRect(&shopItem[0], ptMouse))
+	{
+		finger->setFrameY(2);
+		if (count % 25 == 0)
+		{
+			fingerCount++;
+			if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+		}
+	}
+	else
+	{
+		fingerCount = 0;
+		finger->setFrameY(0);
+	}
 
 	//실시간 캐릭터 스텟 갱신쓰
 
@@ -348,7 +379,7 @@ void UserInterface::render(void)
 	SetCursor(NULL);
 	ShowCursor(false);
 
-	finger->frameRender(getMemDC(), ptMouse.x, ptMouse.y);
+	finger->frameRender(getMemDC(), ptMouse.x, ptMouse.y, fingerCount, finger->getFrameY());
 }
 
 void UserInterface::equip(void)
@@ -455,7 +486,31 @@ void UserInterface::statement(void)
 
 void UserInterface::shop(void)
 {
-	shopWnd->render(getMemDC(), 450, 100);
+	shopWnd->setX(450);
+	shopWnd->setY(100);
+	shopWnd->render(getMemDC());
+	
+	//아이템사진은 35x35. 아이템 설명및 가격표기 태그는 165x35.
+	shopItem[0] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 124, 200, 35);
+	shopItem[1] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 166, 200, 35);
+	shopItem[2] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 208, 200, 35);
+	shopItem[3] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 250, 200, 35);
+	shopItem[4] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 292, 200, 35);
+	shopItem[5] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 334, 200, 35);
+	shopItem[6] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 376, 200, 35);
+	shopItem[7] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 418, 200, 35);
+	shopItem[8] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 460, 200, 35);
+	
+	myItem[0] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 124, 200, 35);
+	myItem[1] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 166, 200, 35);
+	myItem[2] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 208, 200, 35);
+	myItem[3] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 250, 200, 35);
+	myItem[4] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 292, 200, 35);
+	myItem[5] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 334, 200, 35);
+	myItem[6] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 376, 200, 35);
+	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
+	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
+	
 }
 
 UserInterface::UserInterface()
