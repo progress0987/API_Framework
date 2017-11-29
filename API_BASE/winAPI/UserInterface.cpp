@@ -178,7 +178,9 @@ HRESULT UserInterface::init(void)
 
 	//shopItem[0] = RectMake()
 	
-
+	Hpwidth = (pl->getstatus()->curHP / pl->getstatus()->maxHP) * hpbar->getWidth();
+	Mpwidth = (pl->getstatus()->curMP / pl->getstatus()->maxMP)*mpbar->getWidth();
+	Exwidth = (pl->getstatus()->Exp / pl->getstatus()->lvlUpExp)*expGuage->getWidth();
 	
 
 	return S_OK;
@@ -253,6 +255,9 @@ void UserInterface::update(void)
 	_dex = _basicDex + totalEquipdex;
 	_int = _basicInt + totalEquipint;
 	_luk = _basicLuk + totalEquipluk;
+	Hpwidth = (pl->getstatus()->curHP / pl->getstatus()->maxHP) * hpbar->getWidth();
+	Mpwidth = (pl->getstatus()->curMP / pl->getstatus()->maxMP)*mpbar->getWidth();
+	Exwidth = (pl->getstatus()->Exp / pl->getstatus()->lvlUpExp)*expGuage->getWidth();
 }
 
 void UserInterface::render(void)
@@ -264,13 +269,13 @@ void UserInterface::render(void)
 	//기본인터페이스 렌더링
 	//경험치
 	expBackground->render(getMemDC());
-	expGuage->render(getMemDC());
+	expGuage->render(getMemDC(), 16, 761, 0, 0, Exwidth, expLayer->getHeight());
 	expLayer->render(getMemDC());
 
 	//캐릭터정보 및 체력, 마나게이지
 	_formBackground->render(getMemDC());
-	hpbar->render(getMemDC());
-	mpbar->render(getMemDC());
+	hpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 3, 0, 0, Hpwidth, mpbar->getHeight());
+	mpbar->render(getMemDC(), _formBackground->getX() + 22, _formBackground->getY() + 17, 0, 0, Mpwidth, hpbar->getHeight());
 	_form->render(getMemDC());
 	_shine->alphaRender(getMemDC(), _form->getX(), _form->getY(), 120);
 
