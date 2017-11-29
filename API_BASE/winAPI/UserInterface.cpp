@@ -176,7 +176,7 @@ HRESULT UserInterface::init(void)
 	_luk = pl->getstatus()->Luk;
 	//_ap;
 
-	shopItem[0] = RectMake()
+	//shopItem[0] = RectMake()
 	
 
 	
@@ -227,7 +227,7 @@ void UserInterface::update(void)
 		//상점이 켜져있는경우
 		if (pl->openShop() == true) {
 			//
-			//onShop=!onShop;
+			this->onShop = true;
 		}
 	}
 
