@@ -323,7 +323,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addFrameImage("커서", "sprites/UI/Cursor.bmp", 120, 120, 4, 4, true, RGB(255, 0, 255));
 
 
-	IMAGEMANAGER->addImage("아이템정보창",	"sprites/UI/아이템정보창.bmp", 220, 300, false, NULL);
+	IMAGEMANAGER->addImage("아이템정보창",	"sprites/UI/아이템정보창.bmp", 261, 301, false, NULL);
 	//------------------------------------공용-----------------------------------------------
 	IMAGEMANAGER->addImage("닫기",			"sprites/UI/닫기.bmp", 13, 13, true, RGB(0, 0, 0));
 	IMAGEMANAGER->addImage("닫기마우스온",	"sprites/UI/닫기(MouseOn).bmp", 13, 13, true, RGB(0, 0, 0));
