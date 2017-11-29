@@ -86,7 +86,9 @@ private:
 	bool onClickQuit, onClickBuy, onClickSell, onClickAzoomma;
 	//장비탭이냐, 소비탭이냐, 기타탭이냐
 	bool onShopEquipTab, onShopPortionTab, onShopEtcTab;
-	bool onClickShopEquip, onClickShopPortion, onClickShopEtc;
+
+	//0~8까지 있다. 이거에 따라서 아이템구매, 판매를 눌렀을때 무엇을 구매하느냐가 결정된다.
+	int shopList, myList;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
