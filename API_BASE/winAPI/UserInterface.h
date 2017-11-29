@@ -78,6 +78,11 @@ private:
     //------------------------------------상점데이터---------------------------------------------
 
 	bool onShop; //샵 온오프
+
+	items *Sellings;
+
+	items *Mines;
+
 	image *_me, *_Azoomma;
 	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
 	RECT shopItem[9], myItem[9];
@@ -150,6 +155,8 @@ public:
 	virtual void shop(void);
 	virtual void showLevel(void);
 	virtual void showStatement(void);
+	
+	void showItemInfo(int index);
 
 	//플레이어 클래스와 상호참조
 	void setPlayer(player *pl) { this->pl = pl; }
