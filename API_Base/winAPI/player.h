@@ -119,6 +119,7 @@ private:
 
 	bool onAttack;
 	bool onHit;
+	bool onShop;
 
 
 	bool onLvlUP;
@@ -131,6 +132,8 @@ private:
 
 	int attFrame;
 	int attX;
+
+	int meso;
 public:
 	bool sceneChange=false;
 	bool sceneChangeFinished = false;
@@ -152,20 +155,23 @@ public:
 
 	status* getstatus() { return stat; }
 	
-	int setMaxHP(int hp) { stat->maxHP = hp; }
-	int setCurHP(int hp) {		stat->curHP = hp; }
-	int setMaxMP(int mp) { stat->maxMP = mp; }
-	int setCurMP(int mp) {		stat->curMP = mp; }
-	int setStr(int str) {	stat->Str = str; }
-	int setDex(int dex) {	stat->Dex = dex; }
-	int setInt(int intt) {	stat->Int = intt; }
-	int setLuk(int luk) {	stat->Luk = luk; }
-	int setAtt(int att) {	stat->Att = att; }
-	int setLike(int like) { stat->Like = like; }
-	int setExp(int exp) {	stat->Exp = exp; }
-	int setLvupExp(int exp) { stat->lvlUpExp = exp; }
+	void setMaxHP(int hp) { stat->maxHP = hp; }
+	void setCurHP(int hp) {		stat->curHP = hp; }
+	void setMaxMP(int mp) { stat->maxMP = mp; }
+	void setCurMP(int mp) {		stat->curMP = mp; }
+	void setStr(int str) {	stat->Str = str; }
+	void setDex(int dex) {	stat->Dex = dex; }
+	void setInt(int intt) {	stat->Int = intt; }
+	void setLuk(int luk) {	stat->Luk = luk; }
+	void setAtt(int att) {	stat->Att = att; }
+	void setLike(int like) { stat->Like = like; }
+	void setExp(int exp) {	stat->Exp = exp; }
+	void setLvupExp(int exp) { stat->lvlUpExp = exp; }
+	int getmeso() { return meso; }
 
-
+public:
+	void showShop(bool val) { onShop = val; }
+	bool openShop();
 
 	player();
 	~player();
