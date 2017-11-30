@@ -233,6 +233,7 @@ void UserInterface::update(void)
 	//프레임 처리를 위한 변수
 	count++;
 
+	//실시간 캐릭터정보갱신쓰
 	Level = pl->getstatus()->Level;
 	playerHp = pl->getstatus()->curHP;
 	playerMp = pl->getstatus()->curMP;
@@ -274,12 +275,6 @@ void UserInterface::update(void)
 		}
 		MpHillMax -= MpHill;
 	}
-	//실시간 캐릭터 스텟 갱신쓰
-
-	_str = _basicStr + totalEquipstr;
-	_dex = _basicDex + totalEquipdex;
-	_int = _basicInt + totalEquipint;
-	_luk = _basicLuk + totalEquipluk;
 
 
 	//==============================================마우스 올렸을때의 핑거액션!!!!=========================================
