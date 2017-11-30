@@ -53,8 +53,8 @@ void BossMap::render()
 	{
 		i->_img->alphaFrameRender(getMemDC(), i->x - 50 - cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
 	}
-	Rectangle(getMemDC(), portal.rc.left - cam->camPoint.x, portal.rc.top - cam->camPoint.y,
-		portal.rc.right - cam->camPoint.x, portal.rc.bottom - cam->camPoint.y);
+	//Rectangle(getMemDC(), portal.rc.left - cam->camPoint.x, portal.rc.top - cam->camPoint.y,
+	//	portal.rc.right - cam->camPoint.x, portal.rc.bottom - cam->camPoint.y);
 
 }
 //Ű 

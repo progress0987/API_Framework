@@ -472,6 +472,7 @@ void mainGame::soundInit()
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("askill", "sound/Askill.mp3", true, false);
 	SOUNDMANAGER->addSound("basicatt", "sound/BasicAtt.mp3", true, false);
+	SOUNDMANAGER->addSound("level", "sound/LevelUp.mp3", true, false);
 	SOUNDMANAGER->addSound("sskill", "sound/Sskill.mp3", true, false);
 }
 
