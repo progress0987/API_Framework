@@ -55,6 +55,7 @@ public:
 		tmpRC.bottom += rc.top;
 		return tmpRC;
 	}
+
 	void setSkillDMG(int dmg) { this->dmg = dmg; }
 	int getReqMP() { return reqMP; }
 	void setCam(Camera* glcam) { cam = glcam; }

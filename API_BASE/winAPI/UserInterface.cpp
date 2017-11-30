@@ -823,19 +823,19 @@ void UserInterface::statement(void)
 	TextOut(getMemDC(), statWnd->getX() + 85, statWnd->getY() + 182, temp8, strlen(temp8));
 
 	char temp9[255];
-	sprintf(temp9, "%d(%d+%d)", _str, _basicStr, totalEquipstr);
+	sprintf(temp9, "%d", _str);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 209, temp9, strlen(temp9));
 
 	char temp10[255];
-	sprintf(temp10, "%d(%d+%d)", _dex, _basicDex, totalEquipdex);
+	sprintf(temp10, "%d", _dex);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 227, temp10, strlen(temp10));
 
 	char temp11[255];
-	sprintf(temp11, "%d(%d+%d)", _int, _basicInt, totalEquipint);
+	sprintf(temp11, "%d", _int);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 245, temp11, strlen(temp11));
 
 	char temp12[255];
-	sprintf(temp12, "%d(%d+%d)", _luk, _basicLuk, totalEquipluk);
+	sprintf(temp12, "%d", _luk);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 263, temp12, strlen(temp12));
 
 	//다썼으면 지워주자!!!
