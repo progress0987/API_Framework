@@ -83,7 +83,7 @@ void StoreMap::render()
 	{
 		i->_img->frameRender(getMemDC(), i->rc.left - cam->camPoint.x, i->rc.top - cam->camPoint.y, i->currentX, 0);
 	}
-	Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
+	//Rectangle(getMemDC(), portal.rc.left, portal.rc.top, portal.rc.right, portal.rc.bottom);
 
-	Rectangle(getMemDC(), storewindow.rc.left, storewindow.rc.top, storewindow.rc.right, storewindow.rc.bottom);
+	//Rectangle(getMemDC(), storewindow.rc.left, storewindow.rc.top, storewindow.rc.right, storewindow.rc.bottom);
 }

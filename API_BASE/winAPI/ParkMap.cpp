@@ -68,11 +68,11 @@ void ParkMap::render()
 		i->_img->alphaFrameRender(getMemDC(), i->x - 50 - cam->camPoint.x, i->y - 50 - cam->camPoint.y, i->currentX, 0, 150);
 	}
 	//포탈 충돌렉트
-	Rectangle(getMemDC(), leftportal.rc.left - cam->camPoint.x, leftportal.rc.top - cam->camPoint.y,
-		leftportal.rc.right - cam->camPoint.x, leftportal.rc.bottom - cam->camPoint.y);
+	//Rectangle(getMemDC(), leftportal.rc.left - cam->camPoint.x, leftportal.rc.top - cam->camPoint.y,
+		//leftportal.rc.right - cam->camPoint.x, leftportal.rc.bottom - cam->camPoint.y);
 
-	Rectangle(getMemDC(), rightportal.rc.left - cam->camPoint.x, rightportal.rc.top - cam->camPoint.y,
-		rightportal.rc.right - cam->camPoint.x, rightportal.rc.bottom - cam->camPoint.y);
+	//Rectangle(getMemDC(), rightportal.rc.left - cam->camPoint.x, rightportal.rc.top - cam->camPoint.y,
+		//rightportal.rc.right - cam->camPoint.x, rightportal.rc.bottom - cam->camPoint.y);
 }
 
 void ParkMap::Keymanager()

@@ -55,8 +55,8 @@ void ForestMap::render()
 	{
 		i->_img->alphaFrameRender(getMemDC(), i->rc.left - 50 - cam->camPoint.x, i->rc.top - 50 - cam->camPoint.y, i->currentX, 0, 150);
 		//포탈충돌렉트
-		Rectangle(getMemDC(), portal.rc.left - cam->camPoint.x, portal.rc.top - cam->camPoint.y, 
-			portal.rc.right - cam->camPoint.x, portal.rc.bottom - cam->camPoint.y);
+		//Rectangle(getMemDC(), portal.rc.left - cam->camPoint.x, portal.rc.top - cam->camPoint.y, 
+			//portal.rc.right - cam->camPoint.x, portal.rc.bottom - cam->camPoint.y);
 	}
 	
 	
