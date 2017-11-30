@@ -541,6 +541,7 @@ for (int i = 0; i < monincurmap.size(); i++) {
 	///////////////////////////////////////////////////Å×½ºÆ®
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 		GainExp(10000);
+		SOUNDMANAGER->play("level");
 	}
 
 
