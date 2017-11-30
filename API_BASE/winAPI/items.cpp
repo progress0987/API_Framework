@@ -165,6 +165,7 @@ HRESULT items::init(void)
 
 	//망토
 	{
+		//아이템 7 붉은망토
 		t.itemimg = IMAGEMANAGER->findImage("망토1");
 		strcpy(t.itemname, "붉은 망토");
 		t.itemtype = itemType::cape;
@@ -183,6 +184,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 8 푸른망토
 		t.itemimg = IMAGEMANAGER->findImage("망토2");
 		strcpy(t.itemname, "푸른 망토");
 		t.itemtype = itemType::cape;
@@ -201,6 +204,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 9 하얀망토
 		t.itemimg = IMAGEMANAGER->findImage("망토3");
 		strcpy(t.itemname, "하얀 망토");
 		t.itemtype = itemType::cape;
@@ -222,6 +227,7 @@ HRESULT items::init(void)
 
 	//모자
 	{
+		//아이템 10 낡은 고깔모자
 		t.itemimg = IMAGEMANAGER->findImage("모자1");
 		strcpy(t.itemname, "낡은 고깔모자");
 		t.itemtype = itemType::helm;
@@ -240,6 +246,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+		//아이템 11 여행용 삿갓
+
 		t.itemimg = IMAGEMANAGER->findImage("모자2");
 		strcpy(t.itemname, "여행용 삿갓");
 		t.itemtype = itemType::helm;
@@ -257,6 +265,8 @@ HRESULT items::init(void)
 		strcpy(t.script, "여행용으로 개량한 삿갓.");
 
 		_item.push_back(t);
+
+		//아이템 12 마법사모자
 
 		t.itemimg = IMAGEMANAGER->findImage("망토3");
 		strcpy(t.itemname, "마법사 모자");
@@ -279,6 +289,7 @@ HRESULT items::init(void)
 
 	//무기
 	{
+		//아이템 13 기본형 ESP 증폭기
 		t.itemimg = IMAGEMANAGER->findImage("무기1");
 		strcpy(t.itemname, "기본형 ESP 증폭기");
 		t.itemtype = itemType::weapons;
@@ -297,6 +308,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 14 서리증폭기
 		t.itemimg = IMAGEMANAGER->findImage("무기2");
 		strcpy(t.itemname, "서리 증폭기");
 		t.itemtype = itemType::weapons;
@@ -315,6 +328,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 15 코로나 증폭기
 		t.itemimg = IMAGEMANAGER->findImage("무기3");
 		strcpy(t.itemname, "코로나 증폭기");
 		t.itemtype = itemType::weapons;
@@ -336,6 +351,8 @@ HRESULT items::init(void)
 
 	//바지
 	{
+
+		//아이템 16 천바지
 		t.itemimg = IMAGEMANAGER->findImage("바지1");
 		strcpy(t.itemname, "천바지");
 		t.itemtype = itemType::pants;
@@ -354,6 +371,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 17 가죽치마
 		t.itemimg = IMAGEMANAGER->findImage("바지2");
 		strcpy(t.itemname, "가죽 치마");
 		t.itemtype = itemType::pants;
@@ -372,6 +391,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 18 하얀치마
 		t.itemimg = IMAGEMANAGER->findImage("바지3");
 		strcpy(t.itemname, "하얀 치마");
 		t.itemtype = itemType::pants;
@@ -393,6 +414,8 @@ HRESULT items::init(void)
 
 	//상의
 	{
+
+		//아이템 19 티셔츠
 		t.itemimg = IMAGEMANAGER->findImage("상의1");
 		strcpy(t.itemname, "티셔츠");
 		t.itemtype = itemType::clothes;
@@ -411,6 +434,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 20 롱코트
 		t.itemimg = IMAGEMANAGER->findImage("상의2");
 		strcpy(t.itemname, "롱코트");
 		t.itemtype = itemType::clothes;
@@ -429,6 +454,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 21 검은 갑옷
 		t.itemimg = IMAGEMANAGER->findImage("상의3");
 		strcpy(t.itemname, "검은 갑옷");
 		t.itemtype = itemType::clothes;
@@ -450,6 +477,8 @@ HRESULT items::init(void)
 
 	//신발
 	{
+
+		//아이템 22 빽구두
 		t.itemimg = IMAGEMANAGER->findImage("신발1");
 		strcpy(t.itemname, "빽구두");
 		t.itemtype = itemType::boots;
@@ -468,6 +497,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 23 가죽신발
 		t.itemimg = IMAGEMANAGER->findImage("신발2");
 		strcpy(t.itemname, "가죽신발");
 		t.itemtype = itemType::boots;
@@ -486,6 +517,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 24 털부츠
 		t.itemimg = IMAGEMANAGER->findImage("신발3");
 		strcpy(t.itemname, "털부츠");
 		t.itemtype = itemType::boots;
@@ -507,6 +540,8 @@ HRESULT items::init(void)
 
 	//장갑
 	{
+
+		//아이템 25 하얀장갑
 		t.itemimg = IMAGEMANAGER->findImage("장갑1");
 		strcpy(t.itemname, "하얀 장갑");
 		t.itemtype = itemType::gloves;
@@ -525,6 +560,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 26 두툼한 장갑
 		t.itemimg = IMAGEMANAGER->findImage("장갑2");
 		strcpy(t.itemname, "두툼한 장갑");
 		t.itemtype = itemType::gloves;
@@ -543,6 +580,8 @@ HRESULT items::init(void)
 
 		_item.push_back(t);
 
+
+		//아이템 27 가죽장갑
 		t.itemimg = IMAGEMANAGER->findImage("장갑3");
 		strcpy(t.itemname, "가죽장갑");
 		t.itemtype = itemType::gloves;
