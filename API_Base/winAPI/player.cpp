@@ -92,9 +92,9 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 
 	ASkill = skillList[0];
-	ASkill->setSkillDMG(stat->Int * 50);
+	ASkill->setSkillDMG(stat->Int * 30);
 	SSkill = skillList[1];
-	SSkill->setSkillDMG(stat->Int * 80);
+	SSkill->setSkillDMG(stat->Int * 20);
 	return S_OK;
 }
 
@@ -541,6 +541,7 @@ for (int i = 0; i < monincurmap.size(); i++) {
 	///////////////////////////////////////////////////Å×½ºÆ®
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
 		GainExp(10000);
+		SOUNDMANAGER->play("level");
 	}
 
 
@@ -694,8 +695,8 @@ void player::GainExp(int exp)
 		stat->Dex += rand() % 3 + 2;
 		stat->Luk += rand() % 3 + 2;
 
-		ASkill->setSkillDMG(stat->Int * 50);
-		SSkill->setSkillDMG(stat->Int * 80);
+		ASkill->setSkillDMG(stat->Int * 30);
+		SSkill->setSkillDMG(stat->Int * 20);
 		onLvlUP = true;
 		levelUPCount = lvlUPFrame = 0;
 		lvlupIMGpt = pointMake(curPos.x - 904 / 2, curPos.y - 904 + 200);
