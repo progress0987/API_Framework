@@ -92,7 +92,9 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 
 	ASkill = skillList[0];
+	ASkill->setSkillDMG(stat->Int * 50);
 	SSkill = skillList[1];
+	SSkill->setSkillDMG(stat->Int * 80);
 	return S_OK;
 }
 
@@ -686,7 +688,14 @@ void player::GainExp(int exp)
 		stat->curMP = stat->maxMP;
 		stat->lvlUpExp = stat->lvlUpExp* 1.1;
 		stat->Level++;
-		stat->ap += 5;
+		//stat->ap += 5;
+		stat->Str += rand() % 3 + 2;
+		stat->Int += rand() % 3 + 2;
+		stat->Dex += rand() % 3 + 2;
+		stat->Luk += rand() % 3 + 2;
+
+		ASkill->setSkillDMG(stat->Int * 50);
+		SSkill->setSkillDMG(stat->Int * 80);
 		onLvlUP = true;
 		levelUPCount = lvlUPFrame = 0;
 		lvlupIMGpt = pointMake(curPos.x - 904 / 2, curPos.y - 904 + 200);
