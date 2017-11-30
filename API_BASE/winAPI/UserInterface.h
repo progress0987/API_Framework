@@ -55,7 +55,7 @@ private:
 	//인벤토리 재고량 표기번호
 	image *sZero, *sOne, *sTwo, *sThree, *sFour, *sFive, *sSix, *sSeven, *sEight, *sNine;
 	// 왼쪽상단부터 1234, 밑으로 5678순....24까지.
-	RECT wndInven, _equip[24], _potion[24], _etc[24];
+	RECT _equip[24], _potion[24], _etc[24], *equipTabSq, *potionTabSq, *etcTabSq;
 	//재고, 돈.
 	int stack, money;
 	//프로그레스바를 위한 width

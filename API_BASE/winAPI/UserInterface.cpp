@@ -751,6 +751,8 @@ void UserInterface::inventory(void)
 {
 	wndInven = RectMake(invenWnd->getX(), invenWnd->getY(), invenWnd->getWidth(), invenWnd->getHeight());
 	invenWnd->render(getMemDC());
+
+	
 }
 
 void UserInterface::statement(void)
@@ -990,46 +992,91 @@ void UserInterface::shop(void)
 	char temp[255];
 	sprintf(temp, "%d 五社", Sellings->_item.at(0)._price);
 	TextOut(getMemDC(), shopItem[0].left + 55, shopItem[0].top + 21, temp, strlen(temp));
+	char temp10[255];
+	sprintf(temp10, "%s", Sellings->_item.at(0).itemname);
+	TextOut(getMemDC(), shopItem[0].left + 40, shopItem[0].top + 2, temp10, strlen(temp10));
+
+
 
 	Sellings->_item.at(4).itemimg->render(getMemDC(), shopItem[1].left + 2, shopItem[1].top + 2);
 	char temp2[255];
 	sprintf(temp2, "%d 五社", Sellings->_item.at(4)._price);
 	TextOut(getMemDC(), shopItem[1].left + 55, shopItem[1].top + 21, temp2, strlen(temp2));
+	char temp11[255];
+	sprintf(temp11, "%s", Sellings->_item.at(4).itemname);
+	TextOut(getMemDC(), shopItem[1].left + 40, shopItem[1].top + 2, temp11, strlen(temp11));
+
+
 
 	Sellings->_item.at(7).itemimg->render(getMemDC(), shopItem[2].left + 2, shopItem[2].top + 2);
 	char temp3[255];
 	sprintf(temp3, "%d 五社", Sellings->_item.at(7)._price);
 	TextOut(getMemDC(), shopItem[2].left + 55, shopItem[2].top + 21, temp3, strlen(temp3));
+	char temp12[255];
+	sprintf(temp12, "%s", Sellings->_item.at(7).itemname);
+	TextOut(getMemDC(), shopItem[2].left + 40, shopItem[2].top + 2, temp12, strlen(temp12));
+
+
 
 	Sellings->_item.at(9).itemimg->render(getMemDC(), shopItem[3].left + 2, shopItem[3].top + 2);
 	char temp4[255];
 	sprintf(temp4, "%d 五社", Sellings->_item.at(9)._price);
 	TextOut(getMemDC(), shopItem[3].left + 55, shopItem[3].top + 21, temp4, strlen(temp4));
+	char temp13[255];
+	sprintf(temp13, "%s", Sellings->_item.at(9).itemname);
+	TextOut(getMemDC(), shopItem[3].left + 40, shopItem[3].top + 2, temp13, strlen(temp13));
+
+
 
 	Sellings->_item.at(13).itemimg->render(getMemDC(), shopItem[4].left + 2, shopItem[4].top + 2);
 	char temp5[255];
 	sprintf(temp5, "%d 五社", Sellings->_item.at(13)._price);
 	TextOut(getMemDC(), shopItem[4].left + 55, shopItem[4].top + 21, temp5, strlen(temp5));
+	char temp14[255];
+	sprintf(temp14, "%s", Sellings->_item.at(13).itemname);
+	TextOut(getMemDC(), shopItem[4].left + 40, shopItem[4].top + 2, temp14, strlen(temp14));
+
+
 
 	Sellings->_item.at(15).itemimg->render(getMemDC(), shopItem[5].left + 2, shopItem[5].top + 2);
 	char temp6[255];
 	sprintf(temp6, "%d 五社", Sellings->_item.at(15)._price);
 	TextOut(getMemDC(), shopItem[5].left + 55, shopItem[5].top + 21, temp6, strlen(temp6));
+	char temp15[255];
+	sprintf(temp15, "%s", Sellings->_item.at(15).itemname);
+	TextOut(getMemDC(), shopItem[5].left + 40, shopItem[5].top + 2, temp15, strlen(temp15));
+
+
 
 	Sellings->_item.at(19).itemimg->render(getMemDC(), shopItem[6].left + 2, shopItem[6].top + 2);
 	char temp7[255];
 	sprintf(temp7, "%d 五社", Sellings->_item.at(19)._price);
 	TextOut(getMemDC(), shopItem[6].left + 55, shopItem[6].top + 21, temp7, strlen(temp7));
+	char temp16[255];
+	sprintf(temp16, "%s", Sellings->_item.at(19).itemname);
+	TextOut(getMemDC(), shopItem[6].left + 40, shopItem[6].top + 2, temp16, strlen(temp16));
+
+
 
 	Sellings->_item.at(21).itemimg->render(getMemDC(), shopItem[7].left + 2, shopItem[7].top + 2);
 	char temp8[255];
 	sprintf(temp8, "%d 五社", Sellings->_item.at(21)._price);
 	TextOut(getMemDC(), shopItem[7].left + 55, shopItem[7].top + 21, temp8, strlen(temp8));
+	char temp17[255];
+	sprintf(temp17, "%s", Sellings->_item.at(21).itemname);
+	TextOut(getMemDC(), shopItem[7].left + 40, shopItem[7].top + 2, temp17, strlen(temp17));
+
+
 
 	Sellings->_item.at(26).itemimg->render(getMemDC(), shopItem[8].left + 2, shopItem[8].top + 2);
 	char temp9[255];
 	sprintf(temp9, "%d 五社", Sellings->_item.at(26)._price);
 	TextOut(getMemDC(), shopItem[8].left + 55, shopItem[8].top + 21, temp9, strlen(temp9));
+	char temp18[255];
+	sprintf(temp18, "%s", Sellings->_item.at(26).itemname);
+	TextOut(getMemDC(), shopItem[8].left + 40, shopItem[8].top + 2, temp18, strlen(temp18));
+
+
 
 	//陥処生檎 走趨爽切!!!
 	DeleteObject(oldFont);
