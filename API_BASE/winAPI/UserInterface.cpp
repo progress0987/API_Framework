@@ -749,7 +749,7 @@ void UserInterface::equip(void)
 
 void UserInterface::inventory(void)
 {
-	wndInven = RectMake(invenWnd->getX(), invenWnd->getY(), invenWnd->getWidth(), invenWnd->getHeight());
+	//wndInven = RectMake(invenWnd->getX(), invenWnd->getY(), invenWnd->getWidth(), invenWnd->getHeight());
 	invenWnd->render(getMemDC());
 
 	
