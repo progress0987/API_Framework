@@ -358,7 +358,7 @@ void player::update(void)
 			if (curStatus == Status::onRope || curStatus == Status::onLadder) {
 				count++;
 				curPos.y += 1;
-				if (count % 150) {
+				if (count % 250) {
 					curFrameX++;
 					if (curFrameX > _human->getMaxFrameX())curFrameX = 0;
 				}
@@ -422,6 +422,11 @@ void player::update(void)
 			}
 		}
 		if (curStatus == Status::onRope || curStatus == Status::onLadder) {
+			count++;
+			if (count % 250) {
+				curFrameX++;
+				if (curFrameX > _human->getMaxFrameX())curFrameX = 0;
+			}
 			curPos.y -= 1;
 			for (int i = -2; i < 3; i++) {
 				COLORREF t = GetPixel(backStage->getMemDC(), curPos.x, hitRC.bottom+i);
@@ -506,27 +511,27 @@ void player::update(void)
 					attX = 0;
 					playAttMotion();
 
-RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
-RECT hit;
-if (curDir) {//坷弗率
-	skillRange.left += SSkill->getRange() / 2;
-	skillRange.right += SSkill->getRange() / 2;
-}
-else {//哭率
-	skillRange.left -= SSkill->getRange() / 2;
-	skillRange.right -= SSkill->getRange() / 2;
+					RECT skillRange = RectMakeCenter(curPos.x, curPos.y, SSkill->getRange(), 10);
+					RECT hit;
+					if (curDir) {//坷弗率
+						skillRange.left += SSkill->getRange() / 2;
+						skillRange.right += SSkill->getRange() / 2;
+					}
+					else {//哭率
+						skillRange.left -= SSkill->getRange() / 2;
+						skillRange.right -= SSkill->getRange() / 2;
 
-}
-em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
+					}
+					em->colling(skillRange, SSkill->getDmg(), curScene->getIndex());
 
-vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-for (int i = 0; i < monincurmap.size(); i++) {
-	if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
-		curCast = SSkill;
-		curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
-		//break;
-	}
-}
+					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
+					for (int i = 0; i < monincurmap.size(); i++) {
+						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+							curCast = SSkill;
+							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
+							//break;
+						}
+					}
 				}
 			}
 		}
@@ -649,7 +654,12 @@ void player::render(void)
 		}
 	}
 	else {
-		attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
+		if (onHit) {
+			attackMotion->alphaFrameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir,hitalpha);
+		}
+		else {
+			attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
+		}
 	}
 	
 	if (curCast != nullptr) {
