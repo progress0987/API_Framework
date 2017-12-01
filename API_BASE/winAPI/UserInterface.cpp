@@ -43,6 +43,8 @@ HRESULT UserInterface::init(void)
 	invenWnd->setX(700);
 	invenWnd->setY(200);
 
+	invEq = true, invPo = false, invEtc = false;
+
 	//재고량 표기번호
 	sZero = IMAGEMANAGER->findImage("0");
 	sOne = IMAGEMANAGER->findImage("1");
@@ -749,10 +751,21 @@ void UserInterface::equip(void)
 
 void UserInterface::inventory(void)
 {
-	wndInven = RectMake(invenWnd->getX(), invenWnd->getY(), invenWnd->getWidth(), invenWnd->getHeight());
 	invenWnd->render(getMemDC());
+	if (invEq && !invPo && !invEtc)
+	{
+		_equip[0] = RectMake(invenWnd->getX() + 3, invenWnd->getY() + 15, 32, 32);
+		Rectangle(getMemDC(), _equip[0].left, _equip[0].top, _equip[0].right, _equip[0].bottom);
+	}
 
-	
+	else if (!invEq && invPo && !invEtc)
+	{
+
+	}
+	else if (!invEq && !invPo && invEtc)
+	{
+
+	}
 }
 
 void UserInterface::statement(void)
