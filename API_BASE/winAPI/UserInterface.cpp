@@ -33,6 +33,9 @@ HRESULT UserInterface::init(void)
 	equipWnd->setX(400);
 	equipWnd->setY(200);
 
+	iT = new items;
+	iT->init();
+
 	//인벤토리 작업
 	invenWnd = IMAGEMANAGER->findImage("인벤토리창");
 	equipTab = IMAGEMANAGER->findImage("장비탭");
@@ -268,13 +271,18 @@ void UserInterface::update(void)
 	playerMp = pl->getstatus()->curMP;
 	MaxHp = pl->getstatus()->maxHP;
 	MaxMp = pl->getstatus()->maxMP;
-	_str = pl->getstatus()->Str;
-	_dex = pl->getstatus()->Dex;
-	_int = pl->getstatus()->Int;
-	_luk = pl->getstatus()->Luk;
+	_str = pl->getstatus()->Str + totalEquipstr;
+	_dex = pl->getstatus()->Dex + totalEquipdex;
+	_int = pl->getstatus()->Int + totalEquipint;
+	_luk = pl->getstatus()->Luk + totalEquipluk;
 	_ap = pl->getstatus()->ap;
 	_exp = pl->getstatus()->Exp;
 	LvExp = pl->getstatus()->lvlUpExp;
+
+	totalEquipstr = i_cap.str + i_weapon.str + i_clothes.str + i_earAcc.str + i_pants.str + i_shoes.str + i_gloves.str + i_capes.str;
+	totalEquipdex = i_cap.dex + i_weapon.dex + i_clothes.dex + i_earAcc.dex + i_pants.dex + i_shoes.dex + i_gloves.dex + i_capes.dex;
+	totalEquipint = i_cap.inteligence + i_weapon.inteligence + i_clothes.inteligence + i_earAcc.inteligence + i_pants.inteligence + i_shoes.inteligence + i_gloves.inteligence + i_capes.inteligence;
+	totalEquipluk = i_cap.luk + i_weapon.luk + i_clothes.luk + i_earAcc.luk + i_pants.luk + i_shoes.luk + i_gloves.luk + i_capes.luk;
 
 	//체력이 회복되고 있는가
 	if (HpHillCount != 0)
@@ -820,6 +828,146 @@ void UserInterface::update(void)
 		}
 	}
 
+	//우클릭 이벤트!!! 아이템 장착 해제!!!!
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		//인벤토리창이 켜져있을때에로만 한정시켜야 한다.
+		if (onInven)
+		{
+			//장비탭에만 한정시켜야 함.
+			if (invEq)
+			{
+				for (int i = 0; i < 24; i++)
+				{
+					if (PtInRect(&_myInven[i], ptMouse))
+					{
+						if (c_equip[i] >= 0)
+						{
+							switch (pl->getEquip().at(c_equip[i]).itemtype)
+							{
+							case helm:
+								e_cap = pl->getEquip().at(c_equip[i]).number;
+								i_cap = pl->getEquip().at(c_equip[i]);
+								break;
+							case earacc:
+								e_earAcc = pl->getEquip().at(c_equip[i]).number;
+								i_earAcc = pl->getEquip().at(c_equip[i]);
+								break;
+							case clothes:
+								e_clothes = pl->getEquip().at(c_equip[i]).number;
+								i_clothes = pl->getEquip().at(c_equip[i]);
+								break;
+							case pants:
+								e_pants = pl->getEquip().at(c_equip[i]).number;
+								i_pants = pl->getEquip().at(c_equip[i]);
+								break;
+							case boots:
+								e_shoes = pl->getEquip().at(c_equip[i]).number;
+								i_shoes = pl->getEquip().at(c_equip[i]);
+								break;
+							case weapons:
+								e_weapon = pl->getEquip().at(c_equip[i]).number;
+								i_weapon = pl->getEquip().at(c_equip[i]);
+								break;
+							case gloves:
+								e_gloves = pl->getEquip().at(c_equip[i]).number;
+								i_gloves = pl->getEquip().at(c_equip[i]);
+								break;
+							case cape:
+								e_capes = pl->getEquip().at(c_equip[i]).number;
+								i_capes = pl->getEquip().at(c_equip[i]);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		//장비창에서 해제할 경우
+
+		if (onEquip)
+		{
+			//모자
+			if (PtInRect(&_cap, ptMouse))
+			{
+				if (e_cap > 0)
+				{
+					e_cap = -1;
+					i_cap = i_empty;
+				}
+			}
+
+			//무기
+			if (PtInRect(&_weapon, ptMouse))
+			{
+				if (e_weapon > 0)
+				{
+					e_weapon = -1;
+					i_weapon = i_empty;
+				}
+			}
+
+			//귀고리
+			if (PtInRect(&_earAcc, ptMouse))
+			{
+				//귀고리는 없으니깐 아무처리도안함.
+			}
+
+			//상의
+			if (PtInRect(&_clothes, ptMouse))
+			{
+				if (e_clothes > 0)
+				{
+					e_clothes = -1;
+					i_clothes = i_empty;
+				}
+			}
+
+			//하의
+			if (PtInRect(&_pants, ptMouse))
+			{
+				if (e_pants > 0)
+				{
+					e_pants = -1;
+					i_pants = i_empty;
+				}
+			}
+
+			//신발
+			if (PtInRect(&_shoes, ptMouse))
+			{
+				if (e_shoes > 0)
+				{
+					e_shoes = -1;
+					i_shoes = i_empty;
+				}
+			}
+
+			//장갑
+			if (PtInRect(&_gloves, ptMouse))
+			{
+				if (e_gloves > 0)
+				{
+					e_gloves = -1;
+					i_gloves = i_empty;
+				}
+			}
+
+			//망토
+			if (PtInRect(&_capes, ptMouse))
+			{
+				if (e_capes > 0)
+				{
+					e_capes = -1;
+					i_capes = i_empty;
+				}
+			}
+		}
+
+	}
+
 	//키 작동 확인.
 	//체력포션 처먹처먹
 	if (KEYMANAGER->isOnceKeyDown(VK_DELETE))
@@ -925,8 +1073,128 @@ void UserInterface::render(void)
 
 void UserInterface::equip(void)
 {
-	wndEquip = RectMake(equipWnd->getX(), equipWnd->getY(), equipWnd->getWidth(), equipWnd->getHeight());
 	equipWnd->render(getMemDC());
+	_cap = RectMake(equipWnd->getX() + 97, equipWnd->getY() + 55, 38, 38);
+	_clothes = RectMake(equipWnd->getX() + 97, equipWnd->getY() + 179, 38, 38);
+	_weapon = RectMake(equipWnd->getX() + 57, equipWnd->getY() + 179, 38, 38);
+	_earAcc = RectMake(equipWnd->getX() + 146, equipWnd->getY() + 134, 38, 38);
+	_pants = RectMake(equipWnd->getX() + 97, equipWnd->getY() + 220, 38, 38);
+	_shoes = RectMake(equipWnd->getX() + 97, equipWnd->getY() + 260, 38, 38);
+	_gloves = RectMake(equipWnd->getX() + 137, equipWnd->getY() + 220, 38, 38);
+	_capes = RectMake(equipWnd->getX() + 177, equipWnd->getY() + 220, 38, 38);
+	//Rectangle(getMemDC(), _capes.left, _capes.top, _capes.right, _capes.bottom);
+
+	switch (e_cap)
+	{
+	case 9:
+		iT->_item.at(e_cap).itemimg->render(getMemDC(), _cap.left + 3, _cap.top + 3);
+		break;
+	case 10:
+		iT->_item.at(e_cap).itemimg->render(getMemDC(), _cap.left + 3, _cap.top + 3);
+		break;
+	case 11:
+		iT->_item.at(e_cap).itemimg->render(getMemDC(), _cap.left + 3, _cap.top + 3);
+		break;
+	default:
+		break;
+	}
+
+	switch (e_weapon)
+	{
+	case 12:
+		iT->_item.at(e_weapon).itemimg->render(getMemDC(), _weapon.left + 3, _weapon.top + 3);
+		break;
+	case 13:
+		iT->_item.at(e_weapon).itemimg->render(getMemDC(), _weapon.left + 3, _weapon.top + 3);
+		break;
+	case 14:
+		iT->_item.at(e_weapon).itemimg->render(getMemDC(), _weapon.left + 3, _weapon.top + 3);
+		break;
+	default:
+		break;
+	}
+
+	switch (e_clothes)
+	{
+	case 18:
+		iT->_item.at(e_clothes).itemimg->render(getMemDC(), _clothes.left + 3, _clothes.top + 3);
+		break;
+	case 19:
+		iT->_item.at(e_clothes).itemimg->render(getMemDC(), _clothes.left + 3, _clothes.top + 3);
+		break;
+	case 20:
+		iT->_item.at(e_clothes).itemimg->render(getMemDC(), _clothes.left + 3, _clothes.top + 3);
+		break;
+	default:
+		break;
+	}
+
+	switch (e_earAcc)
+	{
+	//귀고리는 없어서 정의 안함.
+	default:
+		break;
+	}
+
+	switch (e_pants)
+	{
+	case 15:
+		iT->_item.at(e_pants).itemimg->render(getMemDC(), _pants.left + 3, _pants.top + 3);
+		break;
+	case 16:
+		iT->_item.at(e_pants).itemimg->render(getMemDC(), _pants.left + 3, _pants.top + 3);
+		break;
+	case 17:
+		iT->_item.at(e_pants).itemimg->render(getMemDC(), _pants.left + 3, _pants.top + 3);
+		break;
+	default:
+		break;
+	}
+
+	switch (e_shoes)
+	{
+	case 21:
+		iT->_item.at(e_shoes).itemimg->render(getMemDC(), _shoes.left + 3, _shoes.top + 3);
+		break;
+	case 22:
+		iT->_item.at(e_shoes).itemimg->render(getMemDC(), _shoes.left + 3, _shoes.top + 3);
+		break;
+	case 23:
+		iT->_item.at(e_shoes).itemimg->render(getMemDC(), _shoes.left + 3, _shoes.top + 3);
+		break;
+	default:
+		break;
+	}
+
+	switch (e_gloves)
+	{
+	case 24:
+		iT->_item.at(e_gloves).itemimg->render(getMemDC(), _gloves.left + 3, _gloves.top + 3);
+		break;
+	case 25:
+		iT->_item.at(e_gloves).itemimg->render(getMemDC(), _gloves.left + 3, _gloves.top + 3);
+		break;
+	case 26:
+		iT->_item.at(e_gloves).itemimg->render(getMemDC(), _gloves.left + 3, _gloves.top + 3);
+		break;
+	default:
+		break;
+	}
+
+	switch (e_capes)
+	{
+	case 6:
+		iT->_item.at(e_capes).itemimg->render(getMemDC(), _capes.left + 3, _capes.top + 3);
+		break;
+	case 7:
+		iT->_item.at(e_capes).itemimg->render(getMemDC(), _capes.left + 3, _capes.top + 3);
+		break;
+	case 8:
+		iT->_item.at(e_capes).itemimg->render(getMemDC(), _capes.left + 3, _capes.top + 3);
+		break;
+	default:
+		break;
+	}
 }
 
 void UserInterface::inventory(void)
@@ -1227,6 +1495,7 @@ void UserInterface::inventory(void)
 		break;
 
 	}
+
 }
 
 void UserInterface::statement(void)
@@ -1299,19 +1568,19 @@ void UserInterface::statement(void)
 	TextOut(getMemDC(), statWnd->getX() + 85, statWnd->getY() + 182, temp8, strlen(temp8));
 
 	char temp9[255];
-	sprintf(temp9, "%d", _str);
+	sprintf(temp9, "%d(%d+%d)", _str, pl->getstatus()->Str, totalEquipstr);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 209, temp9, strlen(temp9));
 
 	char temp10[255];
-	sprintf(temp10, "%d", _dex);
+	sprintf(temp10, "%d(%d+%d)", _dex, pl->getstatus()->Dex, totalEquipdex);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 227, temp10, strlen(temp10));
 
 	char temp11[255];
-	sprintf(temp11, "%d", _int);
+	sprintf(temp11, "%d(%d+%d)", _int, pl->getstatus()->Int, totalEquipint);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 245, temp11, strlen(temp11));
 
 	char temp12[255];
-	sprintf(temp12, "%d", _luk);
+	sprintf(temp12, "%d", _luk, pl->getstatus()->Luk, totalEquipluk);
 	TextOut(getMemDC(), statWnd->getX() + 75, statWnd->getY() + 263, temp12, strlen(temp12));
 
 	//다썼으면 지워주자!!!

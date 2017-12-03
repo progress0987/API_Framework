@@ -23,7 +23,7 @@ private:
 	RECT wndStat;
 	//스텟창에 들어가는 정보들(임시값 들어가있는데 어차피 init에서 바꿔치기 해주니깐 걱정 ㄴㄴ)
 	int Level = 249, playerHp = 34689, playerMp = 12570, MaxHp = 500000, MaxMp = 500000, _str, _dex, _int, _luk, _ap = 0;
-	int totalEquipstr = 10, totalEquipdex = 20, totalEquipint = 400, totalEquipluk = 3;
+	int totalEquipstr = 0, totalEquipdex = 0, totalEquipint = 0, totalEquipluk = 0;
 	int _basicStr = 4, _basicDex = 4, _basicInt = 13, _basicLuk = 4;
 
 
@@ -36,11 +36,15 @@ private:
 
 	//플레이어의 장비데이터
 	image *equipWnd;
-	RECT wndEquip; //장비창사각형
 	RECT _cap, _clothes, _pants, _earAcc, _weapon, _shoes, _gloves, _capes;
 
+	//인벤토리로부터 넘겨받을 아이템 번호.
+	int e_cap, e_clothes, e_pants, e_earAcc, e_weapon, e_shoes, e_gloves, e_capes;
 
-
+	//아이템정보를 끌어다쓸 용도
+	items *iT;
+	item i_cap, i_weapon, i_clothes, i_earAcc, i_pants, i_shoes, i_gloves, i_capes,
+		i_empty; //->공란을 만들어 장비해제 역할을 수행하기 위함.
 
 
 	//z Order
@@ -56,7 +60,10 @@ private:
 	image *sZero, *sOne, *sTwo, *sThree, *sFour, *sFive, *sSix, *sSeven, *sEight, *sNine;
 	// 왼쪽상단부터 1234, 밑으로 5678순....24까지.
 	RECT _equips, _myInven[24], equipTabSq, potionTabSq, etcTabSq;
+
+	//플레이어가 소지하고있는 아이템벡터에 접근하는 인덱스를 저장.
 	int c_equip[24], c_consume[24], c_etc[24];
+
 	//재고, 돈.
 	int stack, money;
 	//프로그레스바를 위한 width
