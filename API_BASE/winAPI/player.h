@@ -125,6 +125,7 @@ private:
 
 	bool onAttack;
 	bool onHit;
+	bool showHit;
 	bool onShop;
 
 
@@ -160,7 +161,7 @@ public:
 	RECT getDmgRC() { return dmgRC; }
 	RECT getRc() { return rc; }
 	void linkEnemyManager(enemyManager* em) { this->em = em; }
-	void BeingHit(int amount = 50);
+	void BeingHit(int amount = 20);
 	//°æÇèÄ¡ È¹µæ
 	void GainExp(int exp);
 
