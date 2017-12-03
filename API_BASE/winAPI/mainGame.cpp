@@ -455,6 +455,7 @@ void mainGame::imgInit()
 	IMAGEMANAGER->addImage("아이템팔기눌림", "sprites/UI/아이템팔기눌림.bmp", 64, 16, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("메소아이콘", "sprites/UI/메소아이콘.bmp", 12, 12, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("셀렉트효과", "sprites/UI/셀렉트효과.bmp", 165, 35, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("셀렉트효과2", "sprites/UI/셀렉트효과2.bmp", 208, 35, true, RGB(255, 0, 255));
 	
 }
 

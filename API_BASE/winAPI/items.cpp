@@ -51,6 +51,7 @@ HRESULT items::init(void)
 
 	/*아이템1 셋팅*/
 	t.itemimg = IMAGEMANAGER->findImage("빨간포션");
+	t.number = 0;
 	strcpy(t.itemname, "빨간포션");
 	t.itemtype = potion;
 	t._price = 50; //가격
@@ -64,6 +65,7 @@ HRESULT items::init(void)
 
 	/*아이템2 셋팅*/
 	t.itemimg = IMAGEMANAGER->findImage("주황포션");
+	t.number = 1;
 	strcpy(t.itemname, "주황포션");
 	t.itemtype = potion;
 	t._price = 160; //가격
@@ -76,6 +78,7 @@ HRESULT items::init(void)
 
 	/*아이템3 셋팅*/
 	t.itemimg = IMAGEMANAGER->findImage("하얀포션");
+	t.number = 2;
 	strcpy(t.itemname, "하얀포션");
 	t.itemtype = potion;
 	t._price = 320; //가격
@@ -87,6 +90,7 @@ HRESULT items::init(void)
 
 	/*아이템4 셋팅*/
 	t.itemimg = IMAGEMANAGER->findImage("쭈쭈바");
+	t.number = 3;
 	strcpy(t.itemname, "쭈쭈바");
 	t.itemtype = potion;
 	t._price = 2100; //가격
@@ -98,6 +102,7 @@ HRESULT items::init(void)
 
 	/*아이템5 셋팅*/
 	t.itemimg = IMAGEMANAGER->findImage("파란포션");
+	t.number = 4;
 	strcpy(t.itemname, "파란포션");
 	t.itemtype = potion;
 	t._price = 200; //가격
@@ -109,6 +114,7 @@ HRESULT items::init(void)
 
 	/*아이템6 셋팅*/
 	t.itemimg = IMAGEMANAGER->findImage("팥빙수");
+	t.number = 5;
 	strcpy(t.itemname, "팥빙수");
 	t.itemtype = potion;
 	t._price = 2500; //가격
@@ -167,6 +173,7 @@ HRESULT items::init(void)
 	{
 		//아이템 7 붉은망토
 		t.itemimg = IMAGEMANAGER->findImage("망토1");
+		t.number = 6;
 		strcpy(t.itemname, "붉은 망토");
 		t.itemtype = itemType::cape;
 		t._price = 500;
@@ -187,6 +194,7 @@ HRESULT items::init(void)
 
 		//아이템 8 푸른망토
 		t.itemimg = IMAGEMANAGER->findImage("망토2");
+		t.number = 7;
 		strcpy(t.itemname, "푸른 망토");
 		t.itemtype = itemType::cape;
 		t._price = 1000;
@@ -207,6 +215,7 @@ HRESULT items::init(void)
 
 		//아이템 9 하얀망토
 		t.itemimg = IMAGEMANAGER->findImage("망토3");
+		t.number = 8;
 		strcpy(t.itemname, "하얀 망토");
 		t.itemtype = itemType::cape;
 		t._price = 1500;
@@ -229,6 +238,7 @@ HRESULT items::init(void)
 	{
 		//아이템 10 낡은 고깔모자
 		t.itemimg = IMAGEMANAGER->findImage("모자1");
+		t.number = 9;
 		strcpy(t.itemname, "낡은 고깔모자");
 		t.itemtype = itemType::helm;
 		t._price = 300;
@@ -249,6 +259,7 @@ HRESULT items::init(void)
 		//아이템 11 여행용 삿갓
 
 		t.itemimg = IMAGEMANAGER->findImage("모자2");
+		t.number = 10;
 		strcpy(t.itemname, "여행용 삿갓");
 		t.itemtype = itemType::helm;
 		t._price = 600;
@@ -269,6 +280,7 @@ HRESULT items::init(void)
 		//아이템 12 마법사모자
 
 		t.itemimg = IMAGEMANAGER->findImage("망토3");
+		t.number = 11;
 		strcpy(t.itemname, "마법사 모자");
 		t.itemtype = itemType::helm;
 		t._price = 1000;
@@ -291,6 +303,7 @@ HRESULT items::init(void)
 	{
 		//아이템 13 기본형 ESP 증폭기
 		t.itemimg = IMAGEMANAGER->findImage("무기1");
+		t.number = 12;
 		strcpy(t.itemname, "기본형 ESP 증폭기");
 		t.itemtype = itemType::weapons;
 		t._price = 150;
@@ -311,6 +324,7 @@ HRESULT items::init(void)
 
 		//아이템 14 서리증폭기
 		t.itemimg = IMAGEMANAGER->findImage("무기2");
+		t.number = 13;
 		strcpy(t.itemname, "서리 증폭기");
 		t.itemtype = itemType::weapons;
 		t._price = 500;
@@ -331,6 +345,7 @@ HRESULT items::init(void)
 
 		//아이템 15 코로나 증폭기
 		t.itemimg = IMAGEMANAGER->findImage("무기3");
+		t.number = 14;
 		strcpy(t.itemname, "코로나 증폭기");
 		t.itemtype = itemType::weapons;
 		t._price = 1000;
@@ -354,6 +369,7 @@ HRESULT items::init(void)
 
 		//아이템 16 천바지
 		t.itemimg = IMAGEMANAGER->findImage("바지1");
+		t.number = 15;
 		strcpy(t.itemname, "천바지");
 		t.itemtype = itemType::pants;
 		t._price = 150;
@@ -374,6 +390,7 @@ HRESULT items::init(void)
 
 		//아이템 17 가죽치마
 		t.itemimg = IMAGEMANAGER->findImage("바지2");
+		t.number = 16;
 		strcpy(t.itemname, "가죽 치마");
 		t.itemtype = itemType::pants;
 		t._price = 300;
@@ -394,6 +411,7 @@ HRESULT items::init(void)
 
 		//아이템 18 하얀치마
 		t.itemimg = IMAGEMANAGER->findImage("바지3");
+		t.number = 17;
 		strcpy(t.itemname, "하얀 치마");
 		t.itemtype = itemType::pants;
 		t._price = 500;
@@ -417,6 +435,7 @@ HRESULT items::init(void)
 
 		//아이템 19 티셔츠
 		t.itemimg = IMAGEMANAGER->findImage("상의1");
+		t.number = 18;
 		strcpy(t.itemname, "티셔츠");
 		t.itemtype = itemType::clothes;
 		t._price = 150;
@@ -437,6 +456,7 @@ HRESULT items::init(void)
 
 		//아이템 20 롱코트
 		t.itemimg = IMAGEMANAGER->findImage("상의2");
+		t.number = 19;
 		strcpy(t.itemname, "롱코트");
 		t.itemtype = itemType::clothes;
 		t._price = 300;
@@ -457,6 +477,7 @@ HRESULT items::init(void)
 
 		//아이템 21 검은 갑옷
 		t.itemimg = IMAGEMANAGER->findImage("상의3");
+		t.number = 20;
 		strcpy(t.itemname, "검은 갑옷");
 		t.itemtype = itemType::clothes;
 		t._price = 500;
@@ -480,6 +501,7 @@ HRESULT items::init(void)
 
 		//아이템 22 빽구두
 		t.itemimg = IMAGEMANAGER->findImage("신발1");
+		t.number = 21;
 		strcpy(t.itemname, "빽구두");
 		t.itemtype = itemType::boots;
 		t._price = 150;
@@ -500,6 +522,7 @@ HRESULT items::init(void)
 
 		//아이템 23 가죽신발
 		t.itemimg = IMAGEMANAGER->findImage("신발2");
+		t.number = 22;
 		strcpy(t.itemname, "가죽신발");
 		t.itemtype = itemType::boots;
 		t._price = 300;
@@ -520,6 +543,7 @@ HRESULT items::init(void)
 
 		//아이템 24 털부츠
 		t.itemimg = IMAGEMANAGER->findImage("신발3");
+		t.number = 23;
 		strcpy(t.itemname, "털부츠");
 		t.itemtype = itemType::boots;
 		t._price = 500;
@@ -543,6 +567,7 @@ HRESULT items::init(void)
 
 		//아이템 25 하얀장갑
 		t.itemimg = IMAGEMANAGER->findImage("장갑1");
+		t.number = 24;
 		strcpy(t.itemname, "하얀 장갑");
 		t.itemtype = itemType::gloves;
 		t._price = 150;
@@ -563,6 +588,7 @@ HRESULT items::init(void)
 
 		//아이템 26 두툼한 장갑
 		t.itemimg = IMAGEMANAGER->findImage("장갑2");
+		t.number = 25;
 		strcpy(t.itemname, "두툼한 장갑");
 		t.itemtype = itemType::gloves;
 		t._price = 300;
@@ -583,6 +609,7 @@ HRESULT items::init(void)
 
 		//아이템 27 가죽장갑
 		t.itemimg = IMAGEMANAGER->findImage("장갑3");
+		t.number = 26;
 		strcpy(t.itemname, "가죽장갑");
 		t.itemtype = itemType::gloves;
 		t._price = 500;

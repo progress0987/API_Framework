@@ -34,6 +34,9 @@ struct item {
 	//아이템 이미지.
 	image *itemimg;
 
+	//아이템 넘버 ->아이템정보 출력에 필요해서 넣은거임.
+	int number = -1;
+
 	//아이템 이름
 	char itemname[200];
 

@@ -43,6 +43,30 @@ HRESULT UserInterface::init(void)
 	invenWnd->setX(700);
 	invenWnd->setY(200);
 
+	//플레이어가 기본적으로 소지하고 있는 아이템을 인벤토리에 넣어준다.
+	//처음에 초기화.
+
+	memset(c_equip, -1, sizeof(c_equip));
+	memset(c_consume, -1, sizeof(c_consume));
+	memset(c_etc, -1, sizeof(c_etc));
+
+
+	//플에이어가 기본적으로 가지고 있는 아이템을 인벤토리로 가져온다.
+	//-1은 비어있음을 의미한다.
+
+	c_equip[0] = 0; //각 배열에 들어있는 숫자는 각 벡터의 인덱스에 해당하는 아이템을 의미한다.
+	c_equip[1] = 1;
+	c_equip[2] = 2;
+	c_equip[3] = 3;
+	c_equip[4] = 4;
+	c_equip[5] = 5;
+	c_equip[6] = 6;
+
+	c_consume[0] = 0;
+	c_consume[1] = 1;
+
+
+
 	invEq = true, invPo = false, invEtc = false;
 
 	//재고량 표기번호
@@ -200,6 +224,7 @@ HRESULT UserInterface::init(void)
 	shopEtc = IMAGEMANAGER->findImage("상점기타활성");
 	mesoIcon = IMAGEMANAGER->findImage("메소아이콘");
 	selectEffect = IMAGEMANAGER->findImage("셀렉트효과");
+	selectEffect2 = IMAGEMANAGER->findImage("셀렉트효과2");
 
 	_me->setFrameX(0);
 	_me->setFrameY(0);
@@ -213,6 +238,8 @@ HRESULT UserInterface::init(void)
 	Sellings->init();
 	Mines = new items;
 	Mines->init();
+
+	shopListClick = -1;
 
 	//-------------------------------임시변수들 초기 설정---------------------------
 
@@ -279,10 +306,13 @@ void UserInterface::update(void)
 	}
 
 
-	//==============================================마우스 올렸을때의 핑거액션!!!!=========================================
-	/*if문이 분할되어 같은 액션(손가락에 마우스가 생겨 까딱거리는 효과)을 취하려고 하면 충돌해버려서 if else 세트로 한꺼번에 묶었음.*/
-	// 1. ---------------------------커서를 상점아줌마에게 갖다댔을때 나타나는 핑거액션
-	if (pl->openShop() == true && !onShop) 
+	////==============================================마우스 올렸을때의 핑거액션!!!!=========================================
+
+
+	/*if문을 분할해서 처리하려고 하면 충돌해버려서 if else 세트로 한꺼번에 묶었음.*/
+
+	
+	if (PtInRect(&equipTabSq, ptMouse) || PtInRect(&potionTabSq, ptMouse) || PtInRect(&etcTabSq, ptMouse))
 	{
 		finger->setFrameY(2);
 		if (count % 30 == 0)
@@ -292,10 +322,38 @@ void UserInterface::update(void)
 		}
 	}
 
-	// 2. ------------------------------------상점이 켜졌을때
+	else if (PtInRect(&_myInven[0], ptMouse)  || PtInRect(&_myInven[1], ptMouse) || PtInRect(&_myInven[2], ptMouse) ||
+		PtInRect(&_myInven[3], ptMouse) || PtInRect(&_myInven[4], ptMouse) || PtInRect(&_myInven[5], ptMouse) ||
+		PtInRect(&_myInven[6], ptMouse) || PtInRect(&_myInven[7], ptMouse) || PtInRect(&_myInven[8], ptMouse) ||
+		PtInRect(&_myInven[9], ptMouse) || PtInRect(&_myInven[10], ptMouse) || PtInRect(&_myInven[11], ptMouse) || 
+		PtInRect(&_myInven[12], ptMouse) || PtInRect(&_myInven[13], ptMouse) || PtInRect(&_myInven[14], ptMouse) || 
+		PtInRect(&_myInven[15], ptMouse) || PtInRect(&_myInven[16], ptMouse) || PtInRect(&_myInven[17], ptMouse) || 
+		PtInRect(&_myInven[18], ptMouse) || PtInRect(&_myInven[19], ptMouse) || PtInRect(&_myInven[20], ptMouse) || 
+		PtInRect(&_myInven[21], ptMouse) || PtInRect(&_myInven[22], ptMouse) || PtInRect(&_myInven[23], ptMouse))
+	{
+		finger->setFrameY(3);
+		if (count % 30 == 0)
+		{
+			fingerCount++;
+			if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+		}
+	}	
+
+	// 1. ---------------------------커서를 상점아줌마에게 갖다댔을때 나타나는 핑거액션
+	else if (pl->openShop() == true) 
+	{	
+		finger->setFrameY(2);
+		if (count % 30 == 0)
+		{
+			fingerCount++;
+			if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
+		}
+	}
+
+	// 2. ------------------------------------창이 켜졌을때(장비창은 이 액션을 쓰지 않으므로 제외)-----------------------
 	else if (onShop)
 	{
-		//상점내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
+		//창내 버튼과 아이템목록에 마우스를 올렸을때 커서액션
 		if (PtInRect(&shopItem[0], ptMouse) || PtInRect(&shopItem[1], ptMouse) || 
 			PtInRect(&shopItem[2], ptMouse) || PtInRect(&shopItem[3], ptMouse) || 
 			PtInRect(&shopItem[4], ptMouse) || PtInRect(&shopItem[5], ptMouse) || 
@@ -316,14 +374,15 @@ void UserInterface::update(void)
 				if (fingerCount > finger->getMaxFrameX()) fingerCount = 0;
 			}
 		}
-		//상점내부에서 버튼위에 있는게 아닐때
+		//창내부에서 버튼위에 있는게 아닐때
 		else
 		{
 			fingerCount = 0;
 			finger->setFrameY(0);
 		}
 	}
-	// 3.-----------------------------상점이 꺼진상태고, 마우스위에 누구한테도 올린게 아닐때---------------
+
+	// 3.-------모든창이 꺼진상태고, 마우스위에 누구한테도 올린게 아닐때. 얘 조심해야한다. 얘 때문에 마우스액션 다 씹힐수 있음. else if로 조심스레 피해야함.---------------
 	else
 	{
 		fingerCount = 0;
@@ -412,6 +471,44 @@ void UserInterface::update(void)
 
 	}
 
+
+	///////////////////////////인벤토리 아이템정보 보여주기//////////////////////////////////////////
+
+	if (onInven)
+	{
+		for (int i = 0; i < 24; i++)
+		{
+	
+			if (PtInRect(&_myInven[i], ptMouse))
+			{
+				if (invEq)
+				{
+					if (c_equip[i] >= 0)
+						invInfo = pl->getEquip().at(c_equip[i]).number;
+					else
+						invInfo = -1;
+				}
+
+				else if (invPo)
+				{
+					if (c_consume[i] >= 0)
+						invInfo = pl->getConsume().at(c_consume[i]).number;
+					else
+						invInfo = -1;
+				}
+
+				else if (invEtc)
+				{
+					if (c_etc[i] >= 0)
+						invInfo = pl->getEtc().at(c_etc[i]).number;
+					else
+						invInfo = -1;
+				}
+			}
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	//---------------------------------------------입력처리-----------------------------------------------
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -444,6 +541,35 @@ void UserInterface::update(void)
 		//스텟창이 켜져있는경우
 
 		//인벤토리창이 켜져있는경우
+		if (onInven)
+		{
+			//장비탭이었던 경우
+			if (PtInRect(&equipTabSq, ptMouse))
+			{
+				invEq= true;
+				invPo = false;
+				invEtc = false;
+			}
+
+
+			//소비탭이었던 경우
+			if (PtInRect(&potionTabSq, ptMouse))
+			{
+				invEq = false;
+				invPo = true;
+				invEtc = false;
+			}
+
+
+			//기타탭이었던 경우
+			if (PtInRect(&etcTabSq, ptMouse))
+			{
+				invEq = false;
+				invPo = false;
+				invEtc = true;
+			}
+		}
+
 		
 		//상점 아줌마 클릭하기쓰
 		if (pl->openShop() == true) {
@@ -553,6 +679,60 @@ void UserInterface::update(void)
 			if (PtInRect(&myItem[8], ptMouse))
 			{
 				myList = 8;
+			}
+
+			//상점목록1 이었던 경우
+			if (PtInRect(&shopItem[0], ptMouse))
+			{
+				shopListClick = 0;
+			}
+
+			//상점목록2 이었던 경우
+			else if (PtInRect(&shopItem[1], ptMouse))
+			{
+				shopListClick = 1;
+			}
+
+			//상점목록3 이었던 경우
+			else if (PtInRect(&shopItem[2], ptMouse))
+			{
+				shopListClick = 2;
+			}
+
+			//상점목록4 이었던 경우
+			else if (PtInRect(&shopItem[3], ptMouse))
+			{
+				shopListClick = 3;
+			}
+
+			//상점목록5 이었던 경우
+			else if (PtInRect(&shopItem[4], ptMouse))
+			{
+				shopListClick = 4;
+			}
+
+			//상점목록6 이었던 경우
+			else if (PtInRect(&shopItem[5], ptMouse))
+			{
+				shopListClick = 5;
+			}
+
+			//상점목록7 이었던 경우
+			else if (PtInRect(&shopItem[6], ptMouse))
+			{
+				shopListClick = 6;
+			}
+
+			//상점목록8 이었던 경우
+			else if (PtInRect(&shopItem[7], ptMouse))
+			{
+				shopListClick = 7;
+			}
+
+			//상점목록9 이었던 경우
+			else if (PtInRect(&shopItem[8], ptMouse))
+			{
+				shopListClick = 8;
 			}
 
 		}
@@ -752,18 +932,299 @@ void UserInterface::equip(void)
 void UserInterface::inventory(void)
 {
 	invenWnd->render(getMemDC());
-	if (invEq && !invPo && !invEtc)
+
+	//탭 클릭을 위한 영역처리
+	equipTabSq = RectMake(invenWnd->getX() + 9, invenWnd->getY() + 26, 30, 19);
+	potionTabSq = RectMake(invenWnd->getX() + 41, invenWnd->getY() + 26, 30, 19);
+	etcTabSq = RectMake(invenWnd->getX() + 73, invenWnd->getY() + 26, 30, 19);
+	//Rectangle(getMemDC(), etcTabSq.left, etcTabSq.top, etcTabSq.right, etcTabSq.bottom);
+
+
+	//아이템 저장영역은 24개이고, 각 탭마다 만들어줄 필요 X.
+	//각 탭마다 만들어버리면 RectMake가 계속 위에다 덮어씌워버린다. ->나중에 기타탭 누르고 소비탭으로 돌아가면 기타탭정보가 남아버림........
+	for (int i = 0; i < 6; i++)
 	{
-		_equip[0] = RectMake(invenWnd->getX() + 3, invenWnd->getY() + 15, 32, 32);
-		Rectangle(getMemDC(), _equip[0].left, _equip[0].top, _equip[0].right, _equip[0].bottom);
+		for (int j = 0; j < 4; j++)
+		{
+			_myInven[i*4 + j] = RectMake(invenWnd->getX() + 10 +36.2*j, invenWnd->getY() + 50 + 35*i, 32, 32);
+		}
+	}
+	
+	//장비탭이 켜진경우
+	if (invEq)
+	{
+		equipTab->render(getMemDC(), equipTabSq.left, equipTabSq.top);
+		for (int i = 0; i < 24; i++)
+		{
+			switch (c_equip[i])
+			{
+			case 0:
+				if (pl->getEquip().at(0).stack > 0)
+				{
+					pl->getEquip().at(0).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 1:
+				if (pl->getEquip().at(1).stack > 0)
+				{
+					pl->getEquip().at(1).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 2:
+				if (pl->getEquip().at(2).stack > 0)
+				{
+					pl->getEquip().at(2).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 3:
+				if (pl->getEquip().at(3).stack > 0)
+				{
+					pl->getEquip().at(3).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 4:
+				if (pl->getEquip().at(4).stack > 0)
+				{
+					pl->getEquip().at(4).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 5:
+				if (pl->getEquip().at(5).stack > 0)
+				{
+					pl->getEquip().at(5).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 6:
+				if (pl->getEquip().at(6).stack > 0)
+				{
+					pl->getEquip().at(6).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+				//그외에것은 아무것도 그리지 않는다.
+			default :
+				break;
+			}
+		}
 	}
 
-	else if (!invEq && invPo && !invEtc)
+	//소비탭이 켜진경우
+	if (invPo)
 	{
-
+		potionTab->render(getMemDC(), potionTabSq.left, potionTabSq.top);
+		for (int i = 0; i < 24; i++)
+		{
+			switch (c_consume[i])
+			{
+			case 0:
+				if (pl->getConsume().at(0).stack > 0)
+				{
+					pl->getConsume().at(0).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 1:
+				if (pl->getConsume().at(1).stack > 0)
+				{
+					pl->getConsume().at(1).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 2:
+				if (pl->getConsume().at(2).stack > 0)
+				{
+					pl->getConsume().at(2).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 3:
+				if (pl->getConsume().at(3).stack > 0)
+				{
+					pl->getConsume().at(3).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 4:
+				if (pl->getConsume().at(4).stack > 0)
+				{
+					pl->getConsume().at(4).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 5:
+				if (pl->getConsume().at(5).stack > 0)
+				{
+					pl->getConsume().at(5).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 6:
+				if (pl->getConsume().at(6).stack > 0)
+				{
+					pl->getConsume().at(6).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+				//그외에것은 아무것도 그리지 않는다.
+			default:
+				break;
+			}
+		}
 	}
-	else if (!invEq && !invPo && invEtc)
+
+	//기타탭이 켜진경우
+	if (invEtc)
 	{
+		etcTab->render(getMemDC(), etcTabSq.left, etcTabSq.top);
+		for (int i = 0; i < 24; i++)
+		{
+			switch (c_etc[i])
+			{
+			case 0:
+				if (pl->getEtc().at(0).stack > 0)
+				{
+					pl->getEtc().at(0).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 1:
+				if (pl->getEtc().at(1).stack > 0)
+				{
+					pl->getEtc().at(1).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 2:
+				if (pl->getEtc().at(2).stack > 0)
+				{
+					pl->getEtc().at(2).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 3:
+				if (pl->getEtc().at(3).stack > 0)
+				{
+					pl->getEtc().at(3).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 4:
+				if (pl->getEtc().at(4).stack > 0)
+				{
+					pl->getEtc().at(4).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 5:
+				if (pl->getEtc().at(5).stack > 0)
+				{
+					pl->getEtc().at(5).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 6:
+				if (pl->getEtc().at(6).stack > 0)
+				{
+					pl->getEtc().at(6).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+				//그외에것은 아무것도 그리지 않는다.
+			default:
+				break;
+			}
+		}
+	}
+
+	//글자출력을 위한 폰트설정
+	HFONT font1, oldFont;
+
+	font1 = CreateFont(12, 0, 0, 0, 100, false, 0, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
+	SetTextColor(getMemDC(), RGB(0, 0, 0));
+	SetBkMode(getMemDC(), TRANSPARENT);
+	oldFont = (HFONT)SelectObject(getMemDC(), font1);
+
+	//캐릭터가 보유하고있는 메소 표기
+
+	char tempMeso[255];
+	sprintf(tempMeso, "%d", pl->getmeso());
+	RECT rcTextArea = RectMake(invenWnd->getX() + 40, invenWnd->getY() + 266, 83, 15);
+	DrawText(getMemDC(), tempMeso, -1, &rcTextArea, DT_RIGHT);
+
+	//폰트 설정 제거.
+	DeleteObject(oldFont);
+	DeleteObject(font1);
+
+	switch (invInfo)
+	{
+	case 0:
+		showItemInfo(0);
+		break;
+	case 1:
+		showItemInfo(1);
+		break;
+	case 2:
+		showItemInfo(2);
+		break;
+	case 3:
+		showItemInfo(3);
+		break;
+	case 4:
+		showItemInfo(4);
+		break;
+	case 5:
+		showItemInfo(5);
+		break;
+	case 6:
+		showItemInfo(6);
+		break;
+	case 7:
+		showItemInfo(7);
+		break;
+	case 8:
+		showItemInfo(8);
+		break;
+	case 9:
+		showItemInfo(9);
+		break;
+	case 10:
+		showItemInfo(10);
+		break;
+	case 11:
+		showItemInfo(11);
+		break;
+	case 12:
+		showItemInfo(12);
+		break;
+	case 13:
+		showItemInfo(13);
+		break;
+	case 14:
+		showItemInfo(14);
+		break;
+	case 15:
+		showItemInfo(15);
+		break;
+	case 16:
+		showItemInfo(16);
+		break;
+	case 17:
+		showItemInfo(17);
+		break;
+	case 18:
+		showItemInfo(18);
+		break;
+	case 19:
+		showItemInfo(19);
+		break;
+	case 20:
+		showItemInfo(20);
+		break;
+	case 21:
+		showItemInfo(21);
+		break;
+	case 22:
+		showItemInfo(22);
+		break;
+	case 23:
+		showItemInfo(23);
+		break;
+	case 24:
+		showItemInfo(24);
+		break;
+	case 25:
+		showItemInfo(25);
+		break;
+	case 26:
+		showItemInfo(26);
+		break;
+	default :
+		break;
 
 	}
 }
@@ -864,18 +1325,19 @@ void UserInterface::shop(void)
 	shopWnd->setY(100);
 	shopWnd->render(getMemDC());
 	
-	//아이템사진은 35x35. 아이템 설명및 가격표기 태그는 165x35.
+	//아이템사진은 35x35. 아이템 설명및 가격표기 태그는 208x35 & 165x35.
 
 	//상점 버튼액션 및 이미지 렌더링을 위한 구역렉트설정
-	shopItem[0] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 124, 200, 35);
-	shopItem[1] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 166, 200, 35);
-	shopItem[2] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 208, 200, 35);
-	shopItem[3] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 250, 200, 35);
-	shopItem[4] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 292, 200, 35);
-	shopItem[5] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 334, 200, 35);
-	shopItem[6] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 376, 200, 35);
-	shopItem[7] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 418, 200, 35);
-	shopItem[8] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 460, 200, 35);
+	shopItem[0] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 124, 245, 35);
+	shopItem[1] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 166, 245, 35);
+	shopItem[2] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 208, 245, 35);
+	shopItem[3] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 250, 245, 35);
+	shopItem[4] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 292, 245, 35);
+	shopItem[5] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 334, 245, 35);
+	shopItem[6] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 376, 245, 35);
+	shopItem[7] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 418, 245, 35);
+	shopItem[8] = RectMake(shopWnd->getX() + 10, shopWnd->getY() + 460, 245, 35);
+	//Rectangle(getMemDC(), shopItem[0].left, shopItem[0].top, shopItem[0].right, shopItem[0].bottom);
 	
 	myItem[0] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 124, 200, 35);
 	myItem[1] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 166, 200, 35);
@@ -886,7 +1348,6 @@ void UserInterface::shop(void)
 	myItem[6] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 376, 200, 35);
 	myItem[7] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 418, 200, 35);
 	myItem[8] = RectMake(shopWnd->getX() + 285, shopWnd->getY() + 460, 200, 35);
-	//RectangleMake(getMemDC(), myItem[8].left + 36, myItem[8].top, 165, 35);
 
 	shopEquipTab = RectMake(shopWnd->getX() + 284, shopWnd->getY() + 100, 42, 19);
 	shopPortionTab = RectMake(shopWnd->getX() + 327, shopWnd->getY() + 100, 42, 19);
@@ -950,6 +1411,41 @@ void UserInterface::shop(void)
 		shopSellPushed->render(getMemDC(), buttonSell.left, buttonSell.top);
 	}
 
+	//샵 구매목록 클릭처리
+	switch (shopListClick)
+	{
+	case 0:
+		selectEffect2->render(getMemDC(), shopItem[0].left + 36, shopItem[0].top);
+		break;
+	case 1:
+		selectEffect2->render(getMemDC(), shopItem[1].left + 36, shopItem[1].top);
+		break;
+	case 2:
+		selectEffect2->render(getMemDC(), shopItem[2].left + 36, shopItem[2].top);
+		break;
+	case 3:
+		selectEffect2->render(getMemDC(), shopItem[3].left + 36, shopItem[3].top);
+		break;
+	case 4:
+		selectEffect2->render(getMemDC(), shopItem[4].left + 36, shopItem[4].top);
+		break;
+	case 5:
+		selectEffect2->render(getMemDC(), shopItem[5].left + 36, shopItem[5].top);
+		break;
+	case 6:
+		selectEffect2->render(getMemDC(), shopItem[6].left + 36, shopItem[6].top);
+		break;
+	case 7:
+		selectEffect2->render(getMemDC(), shopItem[7].left + 36, shopItem[7].top);
+		break;
+	case 8:
+		selectEffect2->render(getMemDC(), shopItem[8].left + 36, shopItem[8].top);
+		break;
+	default:
+		break;
+
+	}
+
 	switch (myList)
 	{
 	case 0:
@@ -990,15 +1486,26 @@ void UserInterface::shop(void)
 		mesoIcon->render(getMemDC(), shopItem[i].left + 40, shopItem[i].top + 21);
 	}
 
-	//-------------------상점판매아이템 이미지 및 가격 출력-------------
+	//-------------------상점창 텍스트 정보들 출력!!!!-------------
+
+
 
 	//글자출력을 위한 폰트설정
 	HFONT font1, oldFont;
-	
+
 	font1 = CreateFont(13, 0, 0, 0, 100, false, 0, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
 	SetTextColor(getMemDC(), RGB(0, 0, 0));
 	SetBkMode(getMemDC(), TRANSPARENT);
 	oldFont = (HFONT)SelectObject(getMemDC(), font1);
+
+	//캐릭터가 보유하고있는 메소 표기
+
+	char tempMeso[255];
+	sprintf(tempMeso, "%d", pl->getmeso());
+	RECT rcTextArea = RectMake(shopWnd->getX() + 413, shopWnd->getY() + 54, 83, 15);
+	DrawText(getMemDC(), tempMeso, -1, &rcTextArea, DT_RIGHT);
+
+	//-------------------상점판매아이템 이미지 및 가격 출력-------------
 
 
 	Sellings->_item.at(0).itemimg->render(getMemDC(), shopItem[0].left + 2, shopItem[0].top + 2);

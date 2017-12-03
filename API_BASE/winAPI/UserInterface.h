@@ -55,7 +55,8 @@ private:
 	//인벤토리 재고량 표기번호
 	image *sZero, *sOne, *sTwo, *sThree, *sFour, *sFive, *sSix, *sSeven, *sEight, *sNine;
 	// 왼쪽상단부터 1234, 밑으로 5678순....24까지.
-	RECT _equip[24], _potion[24], _etc[24], *equipTabSq, *potionTabSq, *etcTabSq;
+	RECT _equips, _myInven[24], equipTabSq, potionTabSq, etcTabSq;
+	int c_equip[24], c_consume[24], c_etc[24];
 	//재고, 돈.
 	int stack, money;
 	//프로그레스바를 위한 width
@@ -69,8 +70,8 @@ private:
 	float MpHillMax = 0;
 	float MpHill = 0;
 
-	//z Order
-	int Zinven;
+	//아이템정보
+	int invInfo;
 	//true false;
 	bool onInven = false; //인벤토리창 온오프
 	bool invEq, invPo, invEtc; //장비탭, 소비탭, 기타탭 온오프 처리 불변수.
@@ -84,7 +85,7 @@ private:
 	items *Mines;
 
 	image *_me, *_Azoomma;
-	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect;
+	image *shopWnd, *shopQuit, *shopBuy, *shopSell, *shopQuitPushed, *shopBuyPushed, *shopSellPushed, *shopEquip, *shopPortion, *shopEtc, *mesoIcon, *selectEffect, *selectEffect2;
 	RECT shopItem[9], myItem[9];
 	RECT buttonQuit, buttonBuy, buttonSell, shopEquipTab, shopPortionTab, shopEtcTab;
 	//각버튼위, 상점아줌마위에서 누르고있을때 on, 뗐을떼 off
@@ -93,7 +94,7 @@ private:
 	bool onShopEquipTab, onShopPortionTab, onShopEtcTab;
 
 	//0~8까지 있다. 이거에 따라서 아이템구매, 판매를 눌렀을때 무엇을 구매하느냐가 결정된다.
-	int shopList, myList;
+	int shopList, myList, shopListClick;
 
    
     //------------------------------------최하단 UI레이어-----------------------------------------------
