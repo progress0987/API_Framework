@@ -22,7 +22,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	ItemList->init();
 
 	onAttack = false;
-	onHit = false;
+	onHit = showHit=false;
 	onLvlUP = false;
 	levelUPCount = lvlUPFrame= 0;
 
@@ -53,14 +53,14 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	//////////////////////////////////////////스킬 초기화
 	skill* sk1;
 	sk1 = new skill;
-	sk1->init("skill1", 3, 200,300,15);
+	sk1->init("skill1", 3, 200,300,10);
 	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
 
 	skill* sk2;
 	sk2 = new skill;
-	sk2->init("skill2", 10, 150, 300,10);
+	sk2->init("skill2", 10, 150, 300,5);
 	sk2->setCam(mycam);
 	skillList.push_back(sk2);
 
@@ -491,9 +491,8 @@ void player::update(void)
 					}
 					em->colling(skillRange, ASkill->getDmg(), curScene->getIndex());
 
-					vector<monster*> monincurmap = em->getbody(curScene->getIndex());
-					for (int i = 0; i < monincurmap.size(); i++) {
-						if (IntersectRect(&hit, &skillRange, &monincurmap[i]->getbody())) {
+					for (int i = 0; i < em->getMonsters().size(); i++) {
+						if (IntersectRect(&hit, &skillRange, &em->getMonsters()[i]->getbody())&&em->getMonsters()[i]->getIndex()==curScene->getIndex()) {
 							curCast = ASkill;
 							curCast->fire(pointMake((curDir ? hit.left : hit.right), curPos.y));
 							//break;
@@ -545,7 +544,7 @@ void player::update(void)
 	}
 	///////////////////////////////////////////////////테스트
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		GainExp(10000);
+		GainExp(300);
 		SOUNDMANAGER->play("level");
 	}
 
@@ -568,7 +567,7 @@ void player::update(void)
 		if (attFrame % 12 == 0) {
 			attX++;
 			if (attX == 2) {
-				dmgRC = RectMakeCenter(curPos.x + (curDir ? 20 : -20), curPos.y + 10, 30, 30);
+				dmgRC = RectMakeCenter(curPos.x + (curDir ? 40 : -40), curPos.y + 10, 30, 30);
 			}
 			if (attX == 5) {
 				dmgRC = RectMakeCenter(0, 0, 0, 0);
@@ -596,6 +595,7 @@ void player::update(void)
 				hitalpha = 255;
 			}
 		}
+		if (hitcount > 150)showHit = false;
 		if (hitcount >= 300) {
 			onHit = false;
 		}
@@ -607,10 +607,12 @@ void player::update(void)
 		for (int i = 0; i < tmp.size(); i++) {
 			if (IntersectRect(&RECT(), &hitRC, &tmp[i]->getbody())) {
 				BeingHit();
+				showHit = true;
 				break;
 			}
 			if (IntersectRect(&RECT(), &hitRC, &tmp[i]->getSkill())) {
 				BeingHit();
+				showHit = true;
 				break;
 			}
 		}
@@ -660,6 +662,10 @@ void player::render(void)
 		else {
 			attackMotion->frameRender(getMemDC(), rc.left - mycam->camPoint.x, rc.top - mycam->camPoint.y, attX, curDir);
 		}
+	}
+	if (showHit) {
+		IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), curPos.x-mycam->camPoint.x - 30, curPos.y-mycam->camPoint.y - 100, 2, 0);
+		IMAGEMANAGER->findImage("HitDamge")->frameRender(getMemDC(), curPos.x-mycam->camPoint.x, curPos.y-mycam->camPoint.y - 100, 0, 0);
 	}
 	
 	if (curCast != nullptr) {
