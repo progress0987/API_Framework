@@ -114,7 +114,9 @@ void mainGame::update(void)
 			curScene->soundoff();
 			//씬 체인지
 			_player->sceneChange = false;//씬 체인지 받았으니 더이상 바꿔줄 필요가 없음
-			SceneChange(getNextNode());
+
+				SceneChange(getNextNode());
+
 			SceneChanged = true;
 		}
 	}
@@ -495,6 +497,11 @@ mapFrame * mainGame::getNextNode()
 {
 	mapFrame* nextMap;
 	int mapindex=-1, portalindex=-1;
+	if(_player->isDead){
+		playerNextPoint = pointMake(1660, 400);
+		nextMap = curScene = _village;
+		return nextMap;
+	}
 	for (int i = 0; i < curScene->getPortals().size(); i++) {
 		if (IntersectRect(&RECT(), &curScene->getPortals()[i].rc, &_player->getHitRC())) {
 			mapindex = curScene->getIndex();
@@ -506,33 +513,34 @@ mapFrame * mainGame::getNextNode()
 		return nullptr;
 	}
 	//현재 플레이어가 있는 좌표에서 갈 다음 맵을 찾는다 - PlayerNextPoint에 좌표 저장해줌
+
 	switch (mapindex) {
 	case MapIndex::MVillage:																			//마을
 		switch (portalindex) {
 		case 0:																							//왼쪽포탈 - Hill
 			//리스폰될 자리 맞춰주기
 			playerNextPoint.x = _hill->getPortals()[0].x;
-			playerNextPoint.y = _hill->getPortals()[0].y-50;
-			nextMap =curScene = _hill;
+			playerNextPoint.y = _hill->getPortals()[0].y - 50;
+			nextMap = curScene = _hill;
 			break;
 		case 1:																							//오른쪽포탈 - Forest
 			playerNextPoint.x = _forest->getPortals()[0].x;
-			playerNextPoint.y = _forest->getPortals()[0].y-50;
-			nextMap =curScene = _forest;
+			playerNextPoint.y = _forest->getPortals()[0].y - 50;
+			nextMap = curScene = _forest;
 			break;
 		case 2:																							//상점포탈
 			playerNextPoint.x = _map->getPortals()[0].x;
-			playerNextPoint.y = _map->getPortals()[0].y-50;
+			playerNextPoint.y = _map->getPortals()[0].y - 50;
 			nextMap = curScene = _map;
 			break;
 		case 3:																							//공원포탈
-			playerNextPoint.x =  _park->getPortals()[0].x;
-			playerNextPoint.y =  _park->getPortals()[0].y-50;
+			playerNextPoint.x = _park->getPortals()[0].x;
+			playerNextPoint.y = _park->getPortals()[0].y - 50;
 			nextMap = curScene = _park;
 			break;
 		case 4:																							//시장포탈
-			playerNextPoint.x =  _market->getPortals()[0].x;
-			playerNextPoint.y =  _market->getPortals()[0].y-50;
+			playerNextPoint.x = _market->getPortals()[0].x;
+			playerNextPoint.y = _market->getPortals()[0].y - 50;
 			nextMap = curScene = _market;
 			break;
 		}
@@ -540,8 +548,8 @@ mapFrame * mainGame::getNextNode()
 	case MapIndex::MStore:																				//상점
 		switch (portalindex) {
 		case 0:																							//마을로
-			playerNextPoint.x =  _village->getPortals()[2].x;
-			playerNextPoint.y =  _village->getPortals()[2].y-50;
+			playerNextPoint.x = _village->getPortals()[2].x;
+			playerNextPoint.y = _village->getPortals()[2].y - 50;
 			nextMap = curScene = _village;
 			break;
 		}
@@ -554,8 +562,8 @@ mapFrame * mainGame::getNextNode()
 			nextMap = curScene = _village;
 			break;
 		case 1:																							//보스포탈
-			playerNextPoint.x =  _boss->getPortals()[0].x;
-			playerNextPoint.y =  _boss->getPortals()[0].y - 50;
+			playerNextPoint.x = _boss->getPortals()[0].x;
+			playerNextPoint.y = _boss->getPortals()[0].y - 50;
 			nextMap = curScene = _boss;
 			break;
 		}
@@ -597,5 +605,6 @@ mapFrame * mainGame::getNextNode()
 		}
 		break;
 	}
+
 	return nextMap;
 }

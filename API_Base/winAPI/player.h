@@ -148,6 +148,7 @@ private:
 	vector<item> etc;
 
 public:
+	bool isDead;
 	bool sceneChange=false;
 	bool sceneChangeFinished = false;
 	HRESULT init(POINT position,mapFrame* Scene);

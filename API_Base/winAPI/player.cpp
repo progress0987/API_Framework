@@ -22,7 +22,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	ItemList->init();
 
 	onAttack = false;
-	onHit = showHit=false;
+	onHit = showHit=isDead =false;
 	onLvlUP = false;
 	levelUPCount = lvlUPFrame= 0;
 
@@ -92,9 +92,9 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 
 	ASkill = skillList[0];
-	ASkill->setSkillDMG(stat->Int * 30);
+	ASkill->setSkillDMG(stat->Int * 20);
 	SSkill = skillList[1];
-	SSkill->setSkillDMG(stat->Int * 20);
+	SSkill->setSkillDMG(stat->Int * 15);
 	return S_OK;
 }
 
@@ -459,7 +459,7 @@ void player::update(void)
 	///////////////////////////////////////////////////////공격
 	if (curStatus != Status::onLadder&&curStatus != Status::onRope) {
 		//////////////////기본공격
-		if (KEYMANAGER->isOnceKeyDown('X')) {
+		if (KEYMANAGER->isStayKeyDown('X')) {
 			if (!onAttack) {
 				SOUNDMANAGER->play("basicatt");
 				attFrame = 0;
@@ -469,7 +469,7 @@ void player::update(void)
 			}
 		}
 		//////////////////////////////////////////////////////스킬공격
-		if (KEYMANAGER->isOnceKeyDown('A')) {
+		if (KEYMANAGER->isStayKeyDown('A')) {
 			if (!onAttack) {
 				if (stat->curMP >= ASkill->getReqMP()) {
 					SOUNDMANAGER->play("askill");
@@ -501,7 +501,7 @@ void player::update(void)
 				}
 			}
 		}
-		if (KEYMANAGER->isOnceKeyDown('S')) {
+		if (KEYMANAGER->isStayKeyDown('S')) {
 			if (!onAttack) {
 				if (stat->curMP >= SSkill->getReqMP()) {
 					SOUNDMANAGER->play("sskill");
@@ -534,7 +534,7 @@ void player::update(void)
 				}
 			}
 		}
-		if (KEYMANAGER->isOnceKeyDown('D')) {
+		if (KEYMANAGER->isStayKeyDown('D')) {
 			if (!onAttack) {
 				attFrame = 0;
 				attX = 0;
@@ -544,15 +544,15 @@ void player::update(void)
 	}
 	///////////////////////////////////////////////////테스트
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		GainExp(300);
-		SOUNDMANAGER->play("level");
+		//GainExp(300);
+		BeingHit(300);
 	}
 
 
 	//레벨업중
 	if (onLvlUP) {
 		levelUPCount++;
-		if (levelUPCount % 5 == 0) {
+		if (levelUPCount % 8 == 0) {
 			lvlUPFrame++;
 			if (lvlUPFrame > IMAGEMANAGER->findImage("레벨업")->getMaxFrameX()) {
 				levelUPCount = lvlUPFrame = 0;
@@ -582,22 +582,24 @@ void player::update(void)
 
 	//맞는중
 	if (onHit) {
-		hitcount++;
-		if (hitmoveX != 0) {
-			hitmoveX += (hitmoveX > 0 ? -5 : 5);
-		}
-		if (curStatus != Status::onLadder&&curStatus != Status::onRope) {
-			curPos.x += hitmoveX;
-		}
-		if (hitcount % 10 == 0) {
-			hitalpha = rand() % 200 + 55;
-			if (hitcount % 50 == 0) {
-				hitalpha = 255;
+		if (stat->curHP > 0) {
+			hitcount++;
+			if (hitmoveX != 0) {
+				hitmoveX += (hitmoveX > 0 ? -5 : 5);
 			}
-		}
-		if (hitcount > 150)showHit = false;
-		if (hitcount >= 300) {
-			onHit = false;
+			if (curStatus != Status::onLadder&&curStatus != Status::onRope) {
+				curPos.x += hitmoveX;
+			}
+			if (hitcount % 10 == 0) {
+				hitalpha = rand() % 200 + 55;
+				if (hitcount % 50 == 0) {
+					hitalpha = 255;
+				}
+			}
+			if (hitcount > 150)showHit = false;
+			if (hitcount >= 300) {
+				onHit = false;
+			}
 		}
 	}
 
@@ -685,6 +687,13 @@ void player::BeingHit(int amount)
 	hitcount = 0;
 	stat->curHP -= amount;
 	onHit = true;
+	if (stat->curHP <= 0) {//죽었을경우
+		stat->curHP = stat->maxHP;
+		stat->curMP = stat->maxMP;
+		isDead = true;
+		sceneChange = true;
+		return;
+	}
 	bool dir = rand() % 2;//랜덤 방향으로 튀김
 	if (dir) {
 		hitmoveX = 25;
@@ -711,9 +720,10 @@ void player::GainExp(int exp)
 		stat->Dex += rand() % 3 + 2;
 		stat->Luk += rand() % 3 + 2;
 
-		ASkill->setSkillDMG(stat->Int * 30);
-		SSkill->setSkillDMG(stat->Int * 20);
+		ASkill->setSkillDMG(stat->Int * 20);
+		SSkill->setSkillDMG(stat->Int * 15);
 		onLvlUP = true;
+		SOUNDMANAGER->play("level");
 		levelUPCount = lvlUPFrame = 0;
 		lvlupIMGpt = pointMake(curPos.x - 904 / 2, curPos.y - 904 + 200);
 	}
