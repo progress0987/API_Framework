@@ -169,6 +169,13 @@ public:
 	vector<item> getEquip() { return equip; }
 	vector<item> getConsume() { return consume; }
 	vector<item> getEtc() { return etc; }
+
+	void buyEquip(item p) { equip.push_back(p); }
+	void sellEquip(int index) { equip.erase(equip.begin() + index); }
+	void buyConsume(item p) { consume.push_back(p); }
+	void sellConsume(int index) { consume.erase(consume.begin() + index); }
+	void earnMeso(int price) { meso += price; }
+	void payMeso(int price) { meso -= price; }
 	status* getstatus() { return stat; }
 	
 	void setMaxHP(int hp) { stat->maxHP = hp; }
