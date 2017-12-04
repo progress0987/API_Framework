@@ -67,7 +67,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 	//°¢ ÅÇ¿¡ ¾ÆÀÌÅÛ Ãß°¡
 
-	
+	/*
 	item tmp = getItem("ºÓÀº ¸ÁÅä");
 	if (tmp.itemtype != -1)equip.push_back(tmp);
 	tmp = getItem("³°Àº °í±ò¸ðÀÚ");
@@ -89,7 +89,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	tmp = getItem("ÆÄ¶õÆ÷¼Ç");
 	tmp.stack = 10;
 	if (tmp.itemtype != -1)consume.push_back(tmp);
-
+*/
 
 	ASkill = skillList[0];
 	ASkill->setSkillDMG(stat->Int * 20);
@@ -543,8 +543,8 @@ void player::update(void)
 	}
 	///////////////////////////////////////////////////Å×½ºÆ®
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) {
-		//GainExp(300);
-		BeingHit(300);
+		GainExp(300);
+		//BeingHit(300);
 	}
 
 
