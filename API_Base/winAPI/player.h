@@ -172,8 +172,26 @@ public:
 
 	void buyEquip(item p) { equip.push_back(p); }
 	void sellEquip(int index) { equip.erase(equip.begin() + index); }
-	void buyConsume(item p) { consume.push_back(p); }
-	void sellConsume(int index) { consume.erase(consume.begin() + index); }
+	void buyConsume(item p) 
+	{
+		for (vector<item>::iterator i = consume.begin(); i != consume.end(); i++)
+		{
+			if (strcmp(p.itemname, i->itemname) == 0)
+			{
+				i->stack++;
+				return; //구매됬으면 함수 종료.
+			}
+		}
+		//for문을 다 돌아도 일치하는 아이템이 없으면 새로 추가.
+		consume.push_back(p);
+	}
+	void sellConsume(int index)
+	{
+		if (consume.at(0).stack > 0)
+			consume.at(index).stack--;
+		else
+			consume.erase(consume.begin() + index);
+	}
 	void earnMeso(int price) { meso += price; }
 	void payMeso(int price) { meso -= price; }
 	status* getstatus() { return stat; }
