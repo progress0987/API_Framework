@@ -468,10 +468,10 @@ void mainGame::soundInit()
 	SOUNDMANAGER->addSound("Boss", "sound/BossBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Hill", "sound/HillBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Forest", "sound/ForestBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("Store", "sound/StoreBgm.mp3", true, true);
-	SOUNDMANAGER->addSound("Mdie", "sound/MonsterDie.mp3", true, false);
 	SOUNDMANAGER->addSound("Market", "sound/MarketBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Mdie", "sound/MonsterDie.mp3", true, false);
 	SOUNDMANAGER->addSound("Park", "sound/ParkBgm.mp3", true, true);
+	SOUNDMANAGER->addSound("Store", "sound/StoreBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("Village", "sound/VillageBgm.mp3", true, true);
 	SOUNDMANAGER->addSound("askill", "sound/Askill.mp3", true, false);
 	SOUNDMANAGER->addSound("basicatt", "sound/BasicAtt.mp3", true, false);
