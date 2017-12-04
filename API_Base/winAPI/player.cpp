@@ -18,6 +18,8 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	sceneChange = false;
 	curDir = false;
 	curPos = pos;
+	skillList[0]->setCam(mycam);
+	skillList[1]->setCam(mycam);
 
 	onAttack = false;
 	onHit = showHit=isDead =false;
@@ -420,7 +422,7 @@ void player::update(void)
 		//////////////////기본공격
 		if (KEYMANAGER->isStayKeyDown('X')) {
 			if (!onAttack) {
-				SOUNDMANAGER->play("basicatt");
+				SOUNDMANAGER->play("basicatt",0.7f);
 				attFrame = 0;
 				attX = 0;
 				playAttMotion();
@@ -430,7 +432,7 @@ void player::update(void)
 		if (KEYMANAGER->isStayKeyDown('A')) {
 			if (!onAttack) {
 				if (stat->curMP >= ASkill->getReqMP()) {
-					SOUNDMANAGER->play("askill");
+					SOUNDMANAGER->play("askill",0.7f);
 					stat->curMP -= ASkill->getReqMP();
 					attFrame = 0;
 					attX = 0;
@@ -462,7 +464,7 @@ void player::update(void)
 		if (KEYMANAGER->isStayKeyDown('S')) {
 			if (!onAttack) {
 				if (stat->curMP >= SSkill->getReqMP()) {
-					SOUNDMANAGER->play("sskill");
+					SOUNDMANAGER->play("sskill",0.7f);
 					attFrame = 0;
 					stat->curMP -= SSkill->getReqMP();
 					attX = 0;
@@ -723,14 +725,12 @@ player::player()
 	skill* sk1;
 	sk1 = new skill;
 	sk1->init("skill1", 3, 200, 300, 10);
-	sk1->setCam(mycam);
 	skillList.push_back(sk1);
 
 
 	skill* sk2;
 	sk2 = new skill;
 	sk2->init("skill2", 10, 150, 300, 5);
-	sk2->setCam(mycam);
 	skillList.push_back(sk2);
 
 
