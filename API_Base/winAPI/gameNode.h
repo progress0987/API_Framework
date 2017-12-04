@@ -3,7 +3,7 @@
 static image* backBuffer = IMAGEMANAGER->addImage("backBuffer",WINSIZEX,WINSIZEY);
 
 
-typedef struct Camera {
+struct Camera {
 	POINT camPoint;
 	int width, height;
 };

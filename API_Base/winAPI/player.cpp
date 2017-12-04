@@ -465,7 +465,6 @@ void player::update(void)
 				attFrame = 0;
 				attX = 0;
 				playAttMotion();
-				onAttack = true;
 			}
 		}
 		//////////////////////////////////////////////////////스킬공격
