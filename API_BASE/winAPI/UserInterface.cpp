@@ -2489,8 +2489,8 @@ void UserInterface::shop(void)
 			sprintf(tt2, "%s", Mines->_item.at(pl->getConsume().at(0).number).itemname);
 			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
 			char st[255];
-			sprintf(tt2, "%s", Mines->_item.at(pl->getConsume().at(0).number).itemname);
-			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
+			sprintf(st, "%d", pl->getConsume().at(0).stack);
+			TextOut(getMemDC(), myItem[0].left, myItem[0].top + 23, st, strlen(st));
 		}
 
 
@@ -2503,6 +2503,9 @@ void UserInterface::shop(void)
 			char tt4[255];
 			sprintf(tt4, "%s", Mines->_item.at(pl->getConsume().at(1).number).itemname);
 			TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 2, tt4, strlen(tt4));
+			char st[255];
+			sprintf(st, "%d", pl->getConsume().at(1).stack);
+			TextOut(getMemDC(), myItem[1].left, myItem[1].top + 23, st, strlen(st));
 		}
 
 
