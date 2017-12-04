@@ -1436,6 +1436,7 @@ void UserInterface::update(void)
 		HpHillMax += 50;
 		HpHill = HpHillMax / 10;
 		HpHillCount = 10;
+		pl->sellConsume(i);
 			}
 		}
 	}
@@ -1448,6 +1449,7 @@ void UserInterface::update(void)
 				MpHillMax += 50;
 				MpHill = MpHillMax / 10;
 				MpHillCount = 10;
+				pl->sellConsume(i);
 			}
 		}
 	}
