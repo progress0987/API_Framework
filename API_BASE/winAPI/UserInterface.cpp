@@ -1259,18 +1259,25 @@ void UserInterface::update(void)
 	//Ã¼·ÂÆ÷¼Ç Ã³¸ÔÃ³¸Ô
 	if (KEYMANAGER->isOnceKeyDown(VK_DELETE))
 	{
+		for (int i = 0; i < pl->getConsume().size(); i++) {
+			if (strcmp(pl->getConsume()[i].itemname, "»¡°£Æ÷¼Ç") == 0) {
 		HpHillMax += 50;
 		HpHill = HpHillMax / 10;
 		HpHillCount = 10;
+			}
+		}
 	}
 
 	//¸¶³ªÆ÷¼Ç Ã³¸ÔÃ³¸Ô
 	if (KEYMANAGER->isOnceKeyDown(VK_INSERT))
 	{
-		MpHillMax += 50;
-		MpHill = MpHillMax / 10;
-		MpHillCount = 10;
-		
+		for (int i = 0; i < pl->getConsume().size(); i++) {
+			if (strcmp(pl->getConsume()[i].itemname, "ÆÄ¶õÆ÷¼Ç") == 0) {
+				MpHillMax += 50;
+				MpHill = MpHillMax / 10;
+				MpHillCount = 10;
+			}
+		}
 	}
 	Hpwidth = ((float)pl->getstatus()->curHP / (float)pl->getstatus()->maxHP) * (float)hpbar->getWidth();
 	Mpwidth = ((float)pl->getstatus()->curMP / (float)pl->getstatus()->maxMP)*(float)mpbar->getWidth();
