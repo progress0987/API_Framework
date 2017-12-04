@@ -57,7 +57,7 @@ HRESULT UserInterface::init(void)
 	//플에이어가 기본적으로 가지고 있는 아이템을 인벤토리로 가져온다.
 	//-1은 비어있음을 의미한다.
 
-	c_equip[0] = 0; //각 배열에 들어있는 숫자는 각 벡터의 인덱스에 해당하는 아이템을 의미한다.
+	c_equip[0] = 0; //각 배열에 들어있는 숫자는 플레이어의 아이템 벡터의 인덱스에 해당하는 아이템을 의미한다.
 	c_equip[1] = 1;
 	c_equip[2] = 2;
 	c_equip[3] = 3;
@@ -283,6 +283,13 @@ void UserInterface::update(void)
 	totalEquipdex = i_cap.dex + i_weapon.dex + i_clothes.dex + i_earAcc.dex + i_pants.dex + i_shoes.dex + i_gloves.dex + i_capes.dex;
 	totalEquipint = i_cap.inteligence + i_weapon.inteligence + i_clothes.inteligence + i_earAcc.inteligence + i_pants.inteligence + i_shoes.inteligence + i_gloves.inteligence + i_capes.inteligence;
 	totalEquipluk = i_cap.luk + i_weapon.luk + i_clothes.luk + i_earAcc.luk + i_pants.luk + i_shoes.luk + i_gloves.luk + i_capes.luk;
+
+	//실시간 보유아이템 갱신쓰(기타 아이템은 없으므로 제외)
+	
+	/*for (int i = 0; i < 24; i++)
+	{
+		c_equip[i] = 
+	}*/
 
 	//체력이 회복되고 있는가
 	if (HpHillCount != 0)
@@ -554,10 +561,6 @@ void UserInterface::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		
-		//장비창이 켜져있는경우
-
-		//스텟창이 켜져있는경우
 
 		//인벤토리창이 켜져있는경우
 		if (onInven)
@@ -754,6 +757,165 @@ void UserInterface::update(void)
 				shopListClick = 8;
 			}
 
+			//////////////////////////////아이템 구매하기//////////////////////////////////
+			else if (PtInRect(&buttonBuy, ptMouse))
+			{
+				switch (shopListClick)
+				{
+				case 0:
+					if (pl->getmeso() >= Sellings->_item.at(0)._price)
+					{
+						pl->buyConsume(Sellings->_item.at(0));
+						pl->spendmeso(Sellings->_item.at(0)._price);
+					}
+					break;
+				case 1: //4
+					if (pl->getmeso() >= Sellings->_item.at(4)._price)
+					{
+						pl->buyConsume(Sellings->_item.at(4));
+						pl->spendmeso(Sellings->_item.at(4)._price);
+					}
+					break;
+				case 2://7
+					if (pl->getmeso() >= Sellings->_item.at(7)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(7));
+						pl->spendmeso(Sellings->_item.at(7)._price);
+					}
+					break;
+				case 3://9
+					if (pl->getmeso() >= Sellings->_item.at(9)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(9));
+						pl->spendmeso(Sellings->_item.at(9)._price);
+					}
+					break;
+				case 4://13
+					if (pl->getmeso() >= Sellings->_item.at(13)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(13));
+						pl->spendmeso(Sellings->_item.at(13)._price);
+					}
+					break;
+				case 5://15
+					if (pl->getmeso() >= Sellings->_item.at(15)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(15));
+						pl->spendmeso(Sellings->_item.at(15)._price);
+					}
+					break;
+				case 6://19
+					if (pl->getmeso() >= Sellings->_item.at(19)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(19));
+						pl->spendmeso(Sellings->_item.at(19)._price);
+					}
+					break;
+				case 7://21
+					if (pl->getmeso() >= Sellings->_item.at(21)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(21));
+						pl->spendmeso(Sellings->_item.at(21)._price);
+					}
+					break;
+				case 8://26
+					if (pl->getmeso() >= Sellings->_item.at(26)._price)
+					{
+						pl->buyEquip(Sellings->_item.at(26));
+						pl->spendmeso(Sellings->_item.at(26)._price);
+					}
+					break;
+
+				}
+			}
+			////////////////////////아이템 판매하기//////////////////////////////////
+			else if (PtInRect(&buttonSell, ptMouse))
+			{
+				if (onShopEquipTab)
+				{
+					switch (myList)
+					{
+					case 0:
+						pl->sellEquip(0);
+						pl->earnMeso(pl->getEquip().at(0)._price);
+						break;
+					case 1:
+						pl->sellEquip(1);
+						pl->earnMeso(pl->getEquip().at(1)._price);
+						break;
+					case 2:
+						pl->sellEquip(2);
+						pl->earnMeso(pl->getEquip().at(2)._price);
+						break;
+					case 3:
+						pl->sellEquip(3);
+						pl->earnMeso(pl->getEquip().at(3)._price);
+						break;
+					case 4:
+						pl->sellEquip(4);
+						pl->earnMeso(pl->getEquip().at(4)._price);
+						break;
+					case 5:
+						pl->sellEquip(5);
+						pl->earnMeso(pl->getEquip().at(5)._price);
+						break;
+					case 6:
+						pl->sellEquip(6);
+						pl->earnMeso(pl->getEquip().at(6)._price);
+						break;
+					case 7:
+						pl->sellEquip(7);
+						pl->earnMeso(pl->getEquip().at(7)._price);
+						break;
+					case 8:
+						pl->sellEquip(8);
+						pl->earnMeso(pl->getEquip().at(8)._price);
+						break;
+					}
+				}
+				else if (onShopPortionTab)
+				{
+					switch (myList)
+					{
+					case 0:
+						pl->sellConsume(0);
+						pl->earnMeso(pl->getConsume().at(0)._price);
+						break;
+					case 1:
+						pl->sellConsume(1);
+						pl->earnMeso(pl->getConsume().at(1)._price);
+						break;
+					case 2:
+						pl->sellConsume(2);
+						pl->earnMeso(pl->getConsume().at(2)._price);
+						break;
+					case 3:
+						pl->sellConsume(3);
+						pl->earnMeso(pl->getConsume().at(3)._price);
+						break;
+					case 4:
+						pl->sellConsume(4);
+						pl->earnMeso(pl->getConsume().at(4)._price);
+						break;
+					case 5:
+						pl->sellConsume(5);
+						pl->earnMeso(pl->getConsume().at(5)._price);
+						break;
+					case 6:
+						pl->sellConsume(6);
+						pl->earnMeso(pl->getConsume().at(6)._price);
+						break;
+					case 7:
+						pl->sellConsume(7);
+						pl->earnMeso(pl->getConsume().at(7)._price);
+						break;
+					case 8:
+						pl->sellConsume(8);
+						pl->earnMeso(pl->getConsume().at(8)._price);
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -1342,6 +1504,8 @@ void UserInterface::inventory(void)
 			_myInven[i*4 + j] = RectMake(invenWnd->getX() + 10 +36.2*j, invenWnd->getY() + 50 + 35*i, 32, 32);
 		}
 	}
+
+
 	
 	//장비탭이 켜진경우
 	if (invEq)
