@@ -493,7 +493,7 @@ void UserInterface::update(void)
 				{
 					if (c_equip[i] >= 0)
 						invInfo = pl->getEquip().at(c_equip[i]).number;
-					else
+					else 
 						invInfo = -1;
 				}
 
@@ -513,6 +513,17 @@ void UserInterface::update(void)
 						invInfo = -1;
 				}
 			}
+		}
+
+		//이거 안해주면 아이템정보창 안꺼진다.......
+		if (!PtInRect(&_myInven[0], ptMouse) && !PtInRect(&_myInven[1], ptMouse) && !PtInRect(&_myInven[2], ptMouse) && !PtInRect(&_myInven[3], ptMouse) &&
+			!PtInRect(&_myInven[4], ptMouse) && !PtInRect(&_myInven[5], ptMouse) && !PtInRect(&_myInven[6], ptMouse) && !PtInRect(&_myInven[7], ptMouse) &&
+			!PtInRect(&_myInven[8], ptMouse) && !PtInRect(&_myInven[9], ptMouse) && !PtInRect(&_myInven[10], ptMouse) && !PtInRect(&_myInven[11], ptMouse) &&
+			!PtInRect(&_myInven[12], ptMouse) && !PtInRect(&_myInven[13], ptMouse) && !PtInRect(&_myInven[14], ptMouse) && !PtInRect(&_myInven[15], ptMouse) &&
+			!PtInRect(&_myInven[16], ptMouse) && !PtInRect(&_myInven[17], ptMouse) && !PtInRect(&_myInven[18], ptMouse) && !PtInRect(&_myInven[19], ptMouse) &&
+			!PtInRect(&_myInven[20], ptMouse) && !PtInRect(&_myInven[21], ptMouse) && !PtInRect(&_myInven[22], ptMouse) && !PtInRect(&_myInven[23], ptMouse))
+		{
+			invInfo = -1;
 		}
 	}
 
@@ -848,34 +859,42 @@ void UserInterface::update(void)
 							case helm:
 								e_cap = pl->getEquip().at(c_equip[i]).number;
 								i_cap = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case earacc:
 								e_earAcc = pl->getEquip().at(c_equip[i]).number;
 								i_earAcc = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case clothes:
 								e_clothes = pl->getEquip().at(c_equip[i]).number;
 								i_clothes = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case pants:
 								e_pants = pl->getEquip().at(c_equip[i]).number;
 								i_pants = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case boots:
 								e_shoes = pl->getEquip().at(c_equip[i]).number;
 								i_shoes = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case weapons:
 								e_weapon = pl->getEquip().at(c_equip[i]).number;
 								i_weapon = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case gloves:
 								e_gloves = pl->getEquip().at(c_equip[i]).number;
 								i_gloves = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							case cape:
 								e_capes = pl->getEquip().at(c_equip[i]).number;
 								i_capes = pl->getEquip().at(c_equip[i]);
+								c_equip[i] = -1;
 								break;
 							}
 						}
@@ -895,7 +914,23 @@ void UserInterface::update(void)
 				if (e_cap > 0)
 				{
 					e_cap = -1;
-					i_cap = i_empty;
+					//인벤토리의 빈곳에 순차적으로 도로 넣는다.
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_cap.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
+					i_cap = i_empty; //이게 장비로 인해 올라갔던 스텟 다시 원상복귀시켜준다.
 				}
 			}
 
@@ -905,6 +940,21 @@ void UserInterface::update(void)
 				if (e_weapon > 0)
 				{
 					e_weapon = -1;
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_weapon.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
 					i_weapon = i_empty;
 				}
 			}
@@ -921,6 +971,21 @@ void UserInterface::update(void)
 				if (e_clothes > 0)
 				{
 					e_clothes = -1;
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_clothes.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
 					i_clothes = i_empty;
 				}
 			}
@@ -931,6 +996,21 @@ void UserInterface::update(void)
 				if (e_pants > 0)
 				{
 					e_pants = -1;
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_pants.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
 					i_pants = i_empty;
 				}
 			}
@@ -941,6 +1021,21 @@ void UserInterface::update(void)
 				if (e_shoes > 0)
 				{
 					e_shoes = -1;
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_shoes.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
 					i_shoes = i_empty;
 				}
 			}
@@ -951,6 +1046,21 @@ void UserInterface::update(void)
 				if (e_gloves > 0)
 				{
 					e_gloves = -1;
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_gloves.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
 					i_gloves = i_empty;
 				}
 			}
@@ -961,6 +1071,21 @@ void UserInterface::update(void)
 				if (e_capes > 0)
 				{
 					e_capes = -1;
+					for (int i = 0; i < 24; i++)
+					{
+						if (c_equip[i] == -1)
+						{
+							int k = 0;
+							for (int j = 0; j < pl->getEquip().size(); j++) {
+								if (strcmp(i_capes.itemname, pl->getEquip().at(j).itemname) == 0) {
+									break;
+								}
+								k++;
+							}
+							c_equip[i] = k;
+							break;
+						}
+					}
 					i_capes = i_empty;
 				}
 			}
@@ -1266,6 +1391,66 @@ void UserInterface::inventory(void)
 				if (pl->getEquip().at(6).stack > 0)
 				{
 					pl->getEquip().at(6).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 7:
+				if (pl->getEquip().at(7).stack > 0)
+				{
+					pl->getEquip().at(7).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 8:
+				if (pl->getEquip().at(8).stack > 0)
+				{
+					pl->getEquip().at(8).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 9:
+				if (pl->getEquip().at(9).stack > 0)
+				{
+					pl->getEquip().at(9).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 10:
+				if (pl->getEquip().at(10).stack > 0)
+				{
+					pl->getEquip().at(10).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 11:
+				if (pl->getEquip().at(11).stack > 0)
+				{
+					pl->getEquip().at(11).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 12:
+				if (pl->getEquip().at(12).stack > 0)
+				{
+					pl->getEquip().at(12).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 13:
+				if (pl->getEquip().at(13).stack > 0)
+				{
+					pl->getEquip().at(13).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 14:
+				if (pl->getEquip().at(14).stack > 0)
+				{
+					pl->getEquip().at(14).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 15:
+				if (pl->getEquip().at(15).stack > 0)
+				{
+					pl->getEquip().at(15).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+				}
+				break;
+			case 16:
+				if (pl->getEquip().at(16).stack > 0)
+				{
+					pl->getEquip().at(16).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
 				}
 				break;
 				//그외에것은 아무것도 그리지 않는다.
@@ -1865,7 +2050,108 @@ void UserInterface::shop(void)
 	sprintf(temp18, "%s", Sellings->_item.at(26).itemname);
 	TextOut(getMemDC(), shopItem[8].left + 40, shopItem[8].top + 2, temp18, strlen(temp18));
 
+	//-------------------------내 아이템 판매 목록들-------------------------------
 
+	if (pl->getEquip().size() > 0)
+	{
+	Mines->_item.at(pl->getEquip().at(0).number).itemimg->render(getMemDC(), myItem[0].left + 2, myItem[0].top + 2);
+	char tt[255];
+	sprintf(tt, "%d 메소", Mines->_item.at(pl->getEquip().at(0).number)._price);
+	TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 21, tt, strlen(tt));
+	char tt2[255];
+	sprintf(tt2, "%s", Mines->_item.at(pl->getEquip().at(0).number).itemname);
+	TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
+	}
+
+
+	if (pl->getEquip().size() > 1)
+	{
+	Mines->_item.at(pl->getEquip().at(1).number).itemimg->render(getMemDC(), myItem[1].left + 2, myItem[1].top + 2);
+	char tt3[255];
+	sprintf(tt3, "%d 메소", Mines->_item.at(pl->getEquip().at(1).number)._price);
+	TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 21, tt3, strlen(tt3));
+	char tt4[255];
+	sprintf(tt4, "%s", Mines->_item.at(pl->getEquip().at(1).number).itemname);
+	TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 2, tt4, strlen(tt4));
+	}
+
+
+	if (pl->getEquip().size() > 2)
+	{
+	Mines->_item.at(pl->getEquip().at(2).number).itemimg->render(getMemDC(), myItem[2].left + 2, myItem[2].top + 2);
+	char tt5[255];
+	sprintf(tt5, "%d 메소", Mines->_item.at(pl->getEquip().at(2).number)._price);
+	TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 21, tt5, strlen(tt5));
+	char tt6[255];
+	sprintf(tt6, "%s", Mines->_item.at(pl->getEquip().at(2).number).itemname);
+	TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 2, tt6, strlen(tt6));
+	}
+
+	if (pl->getEquip().size() > 3)
+	{
+	Mines->_item.at(pl->getEquip().at(3).number).itemimg->render(getMemDC(), myItem[3].left + 2, myItem[3].top + 2);
+	char tt7[255];
+	sprintf(tt7, "%d 메소", Mines->_item.at(pl->getEquip().at(3).number)._price);
+	TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 21, tt7, strlen(tt7));
+	char tt8[255];
+	sprintf(tt8, "%s", Mines->_item.at(pl->getEquip().at(3).number).itemname);
+	TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 2, tt8, strlen(tt8));
+	}
+
+	if (pl->getEquip().size() > 4)
+	{
+	Mines->_item.at(pl->getEquip().at(4).number).itemimg->render(getMemDC(), myItem[4].left + 2, myItem[4].top + 2);
+	char tt9[255];
+	sprintf(tt9, "%d 메소", Mines->_item.at(pl->getEquip().at(4).number)._price);
+	TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 21, tt9, strlen(tt9));
+	char tt10[255];
+	sprintf(tt10, "%s", Mines->_item.at(pl->getEquip().at(4).number).itemname);
+	TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 2, tt10, strlen(tt10));
+	}
+
+	if (pl->getEquip().size() > 5)
+	{
+	Mines->_item.at(pl->getEquip().at(5).number).itemimg->render(getMemDC(), myItem[5].left + 2, myItem[5].top + 2);
+	char tt11[255];
+	sprintf(tt11, "%d 메소", Mines->_item.at(pl->getEquip().at(5).number)._price);
+	TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 21, tt11, strlen(tt11));
+	char tt12[255];
+	sprintf(tt12, "%s", Mines->_item.at(pl->getEquip().at(5).number).itemname);
+	TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 2, tt12, strlen(tt12));
+	}
+
+	if (pl->getEquip().size() > 6)
+	{
+	Mines->_item.at(pl->getEquip().at(6).number).itemimg->render(getMemDC(), myItem[6].left + 2, myItem[6].top + 2);
+	char tt13[255];
+	sprintf(tt13, "%d 메소", Mines->_item.at(pl->getEquip().at(6).number)._price);
+	TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 21, tt13, strlen(tt13));
+	char tt14[255];
+	sprintf(tt14, "%s", Mines->_item.at(pl->getEquip().at(6).number).itemname);
+	TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 2, tt14, strlen(tt14));
+	}
+
+	if (pl->getEquip().at(7).stack > 0)
+	{
+	Mines->_item.at(pl->getEquip().at(7).number).itemimg->render(getMemDC(), myItem[7].left + 2, myItem[7].top + 2);
+	char tt15[255];
+	sprintf(tt15, "%d 메소", Mines->_item.at(pl->getEquip().at(7).number)._price);
+	TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 21, tt15, strlen(tt15));
+	char tt16[255];
+	sprintf(tt16, "%s", Mines->_item.at(pl->getEquip().at(7).number).itemname);
+	TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 2, tt16, strlen(tt16));
+	}
+
+	if (pl->getEquip().at(8).stack > 0)
+	{
+	Mines->_item.at(pl->getEquip().at(8).number).itemimg->render(getMemDC(), myItem[8].left + 2, myItem[8].top + 2);
+	char tt17[255];
+	sprintf(tt17, "%d 메소", Mines->_item.at(pl->getEquip().at(8).number)._price);
+	TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 21, tt17, strlen(tt17));
+	char tt18[255];
+	sprintf(tt18, "%s", Mines->_item.at(pl->getEquip().at(8).number).itemname);
+	TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 2, tt18, strlen(tt18));
+	}
 
 	//다썼으면 지워주자!!!
 	DeleteObject(oldFont);
