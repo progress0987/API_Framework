@@ -18,8 +18,6 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 	sceneChange = false;
 	curDir = false;
 	curPos = pos;
-	ItemList = new items;
-	ItemList->init();
 
 	onAttack = false;
 	onHit = showHit=isDead =false;
@@ -50,46 +48,7 @@ HRESULT player::init(POINT pos,mapFrame* Scene)
 
 
 
-	//////////////////////////////////////////스킬 초기화
-	skill* sk1;
-	sk1 = new skill;
-	sk1->init("skill1", 3, 200,300,10);
-	sk1->setCam(mycam);
-	skillList.push_back(sk1);
 
-
-	skill* sk2;
-	sk2 = new skill;
-	sk2->init("skill2", 10, 150, 300,5);
-	sk2->setCam(mycam);
-	skillList.push_back(sk2);
-
-
-	//각 탭에 아이템 추가
-
-	/*
-	item tmp = getItem("붉은 망토");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-	tmp = getItem("낡은 고깔모자");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-	tmp = getItem("기본형 ESP 증폭기");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-	tmp = getItem("천바지");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-	tmp = getItem("티셔츠");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-	tmp = getItem("빽구두");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-	tmp = getItem("하얀 장갑");
-	if (tmp.itemtype != -1)equip.push_back(tmp);
-
-	tmp = getItem("빨간포션");
-	tmp.stack = 10;
-	if (tmp.itemtype != -1)consume.push_back(tmp);
-	tmp = getItem("파란포션");
-	tmp.stack = 10;
-	if (tmp.itemtype != -1)consume.push_back(tmp);
-*/
 
 	ASkill = skillList[0];
 	ASkill->setSkillDMG(stat->Int * 20);
@@ -755,9 +714,50 @@ bool player::openShop()
 	return false;
 }
 
-//////////////////////////////////////////////////////////스킬
 player::player()
 {
+
+	ItemList = new items;
+	ItemList->init();
+	//////////////////////////////////////////스킬 초기화
+	skill* sk1;
+	sk1 = new skill;
+	sk1->init("skill1", 3, 200, 300, 10);
+	sk1->setCam(mycam);
+	skillList.push_back(sk1);
+
+
+	skill* sk2;
+	sk2 = new skill;
+	sk2->init("skill2", 10, 150, 300, 5);
+	sk2->setCam(mycam);
+	skillList.push_back(sk2);
+
+
+	//각 탭에 아이템 추가
+
+
+	item tmp = getItem("붉은 망토");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("낡은 고깔모자");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("기본형 ESP 증폭기");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("천바지");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("티셔츠");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("빽구두");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+	tmp = getItem("하얀 장갑");
+	if (tmp.itemtype != -1)equip.push_back(tmp);
+
+	tmp = getItem("빨간포션");
+	tmp.stack = 10;
+	if (tmp.itemtype != -1)consume.push_back(tmp);
+	tmp = getItem("파란포션");
+	tmp.stack = 10;
+	if (tmp.itemtype != -1)consume.push_back(tmp);
 }
 
 
