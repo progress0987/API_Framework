@@ -1429,30 +1429,6 @@ void UserInterface::inventory(void)
 					pl->getEquip().at(12).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
 				}
 				break;
-			case 13:
-				if (pl->getEquip().at(13).stack > 0)
-				{
-					pl->getEquip().at(13).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
-				}
-				break;
-			case 14:
-				if (pl->getEquip().at(14).stack > 0)
-				{
-					pl->getEquip().at(14).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
-				}
-				break;
-			case 15:
-				if (pl->getEquip().at(15).stack > 0)
-				{
-					pl->getEquip().at(15).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
-				}
-				break;
-			case 16:
-				if (pl->getEquip().at(16).stack > 0)
-				{
-					pl->getEquip().at(16).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
-				}
-				break;
 				//그외에것은 아무것도 그리지 않는다.
 			default :
 				break;
@@ -2051,108 +2027,214 @@ void UserInterface::shop(void)
 	TextOut(getMemDC(), shopItem[8].left + 40, shopItem[8].top + 2, temp18, strlen(temp18));
 
 	//-------------------------내 아이템 판매 목록들-------------------------------
-
-	if (pl->getEquip().size() > 0)
+	if (onShopEquipTab)
 	{
-	Mines->_item.at(pl->getEquip().at(0).number).itemimg->render(getMemDC(), myItem[0].left + 2, myItem[0].top + 2);
-	char tt[255];
-	sprintf(tt, "%d 메소", Mines->_item.at(pl->getEquip().at(0).number)._price);
-	TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 21, tt, strlen(tt));
-	char tt2[255];
-	sprintf(tt2, "%s", Mines->_item.at(pl->getEquip().at(0).number).itemname);
-	TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
+		if (pl->getEquip().size() / 2 > 0)
+		{
+			Mines->_item.at(pl->getEquip().at(0).number).itemimg->render(getMemDC(), myItem[0].left + 2, myItem[0].top + 2);
+			char tt[255];
+			sprintf(tt, "%d 메소", Mines->_item.at(pl->getEquip().at(0).number)._price);
+			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 21, tt, strlen(tt));
+			char tt2[255];
+			sprintf(tt2, "%s", Mines->_item.at(pl->getEquip().at(0).number).itemname);
+			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
+		}
+
+
+		if (pl->getEquip().size() / 2 > 1)
+		{
+			Mines->_item.at(pl->getEquip().at(1).number).itemimg->render(getMemDC(), myItem[1].left + 2, myItem[1].top + 2);
+			char tt3[255];
+			sprintf(tt3, "%d 메소", Mines->_item.at(pl->getEquip().at(1).number)._price);
+			TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 21, tt3, strlen(tt3));
+			char tt4[255];
+			sprintf(tt4, "%s", Mines->_item.at(pl->getEquip().at(1).number).itemname);
+			TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 2, tt4, strlen(tt4));
+		}
+
+
+		if (pl->getEquip().size() / 2 > 2)
+		{
+			Mines->_item.at(pl->getEquip().at(2).number).itemimg->render(getMemDC(), myItem[2].left + 2, myItem[2].top + 2);
+			char tt5[255];
+			sprintf(tt5, "%d 메소", Mines->_item.at(pl->getEquip().at(2).number)._price);
+			TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 21, tt5, strlen(tt5));
+			char tt6[255];
+			sprintf(tt6, "%s", Mines->_item.at(pl->getEquip().at(2).number).itemname);
+			TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 2, tt6, strlen(tt6));
+		}
+
+		if (pl->getEquip().size() / 2 > 3)
+		{
+			Mines->_item.at(pl->getEquip().at(3).number).itemimg->render(getMemDC(), myItem[3].left + 2, myItem[3].top + 2);
+			char tt7[255];
+			sprintf(tt7, "%d 메소", Mines->_item.at(pl->getEquip().at(3).number)._price);
+			TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 21, tt7, strlen(tt7));
+			char tt8[255];
+			sprintf(tt8, "%s", Mines->_item.at(pl->getEquip().at(3).number).itemname);
+			TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 2, tt8, strlen(tt8));
+		}
+
+		if (pl->getEquip().size() / 2 > 4)
+		{
+			Mines->_item.at(pl->getEquip().at(4).number).itemimg->render(getMemDC(), myItem[4].left + 2, myItem[4].top + 2);
+			char tt9[255];
+			sprintf(tt9, "%d 메소", Mines->_item.at(pl->getEquip().at(4).number)._price);
+			TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 21, tt9, strlen(tt9));
+			char tt10[255];
+			sprintf(tt10, "%s", Mines->_item.at(pl->getEquip().at(4).number).itemname);
+			TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 2, tt10, strlen(tt10));
+		}
+
+		if (pl->getEquip().size() / 2 > 5)
+		{
+			Mines->_item.at(pl->getEquip().at(5).number).itemimg->render(getMemDC(), myItem[5].left + 2, myItem[5].top + 2);
+			char tt11[255];
+			sprintf(tt11, "%d 메소", Mines->_item.at(pl->getEquip().at(5).number)._price);
+			TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 21, tt11, strlen(tt11));
+			char tt12[255];
+			sprintf(tt12, "%s", Mines->_item.at(pl->getEquip().at(5).number).itemname);
+			TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 2, tt12, strlen(tt12));
+		}
+
+		if (pl->getEquip().size() / 2 > 6)
+		{
+			Mines->_item.at(pl->getEquip().at(6).number).itemimg->render(getMemDC(), myItem[6].left + 2, myItem[6].top + 2);
+			char tt13[255];
+			sprintf(tt13, "%d 메소", Mines->_item.at(pl->getEquip().at(6).number)._price);
+			TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 21, tt13, strlen(tt13));
+			char tt14[255];
+			sprintf(tt14, "%s", Mines->_item.at(pl->getEquip().at(6).number).itemname);
+			TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 2, tt14, strlen(tt14));
+		}
+
+		if (pl->getEquip().size() / 2 > 7)
+		{
+			Mines->_item.at(pl->getEquip().at(7).number).itemimg->render(getMemDC(), myItem[7].left + 2, myItem[7].top + 2);
+			char tt15[255];
+			sprintf(tt15, "%d 메소", Mines->_item.at(pl->getEquip().at(7).number)._price);
+			TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 21, tt15, strlen(tt15));
+			char tt16[255];
+			sprintf(tt16, "%s", Mines->_item.at(pl->getEquip().at(7).number).itemname);
+			TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 2, tt16, strlen(tt16));
+		}
+
+		if (pl->getEquip().size() / 2 > 8)
+		{
+			Mines->_item.at(pl->getEquip().at(8).number).itemimg->render(getMemDC(), myItem[8].left + 2, myItem[8].top + 2);
+			char tt17[255];
+			sprintf(tt17, "%d 메소", Mines->_item.at(pl->getEquip().at(8).number)._price);
+			TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 21, tt17, strlen(tt17));
+			char tt18[255];
+			sprintf(tt18, "%s", Mines->_item.at(pl->getEquip().at(8).number).itemname);
+			TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 2, tt18, strlen(tt18));
+		}
 	}
 
-
-	if (pl->getEquip().size() > 1)
+	//소비탭일경우
+	else if (onShopPortionTab)
 	{
-	Mines->_item.at(pl->getEquip().at(1).number).itemimg->render(getMemDC(), myItem[1].left + 2, myItem[1].top + 2);
-	char tt3[255];
-	sprintf(tt3, "%d 메소", Mines->_item.at(pl->getEquip().at(1).number)._price);
-	TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 21, tt3, strlen(tt3));
-	char tt4[255];
-	sprintf(tt4, "%s", Mines->_item.at(pl->getEquip().at(1).number).itemname);
-	TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 2, tt4, strlen(tt4));
+		if (pl->getConsume().size() / 2 > 0)
+		{
+			Mines->_item.at(pl->getConsume().at(0).number).itemimg->render(getMemDC(), myItem[0].left + 2, myItem[0].top + 2);
+			char tt[255];
+			sprintf(tt, "%d 메소", Mines->_item.at(pl->getConsume().at(0).number)._price);
+			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 21, tt, strlen(tt));
+			char tt2[255];
+			sprintf(tt2, "%s", Mines->_item.at(pl->getConsume().at(0).number).itemname);
+			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
+		}
+
+
+		if (pl->getConsume().size() / 2 > 1)
+		{
+			Mines->_item.at(pl->getConsume().at(1).number).itemimg->render(getMemDC(), myItem[1].left + 2, myItem[1].top + 2);
+			char tt3[255];
+			sprintf(tt3, "%d 메소", Mines->_item.at(pl->getConsume().at(1).number)._price);
+			TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 21, tt3, strlen(tt3));
+			char tt4[255];
+			sprintf(tt4, "%s", Mines->_item.at(pl->getConsume().at(1).number).itemname);
+			TextOut(getMemDC(), myItem[1].left + 40, myItem[1].top + 2, tt4, strlen(tt4));
+		}
+
+
+		if (pl->getConsume().size() / 2 > 2)
+		{
+			Mines->_item.at(pl->getConsume().at(2).number).itemimg->render(getMemDC(), myItem[2].left + 2, myItem[2].top + 2);
+			char tt5[255];
+			sprintf(tt5, "%d 메소", Mines->_item.at(pl->getConsume().at(2).number)._price);
+			TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 21, tt5, strlen(tt5));
+			char tt6[255];
+			sprintf(tt6, "%s", Mines->_item.at(pl->getConsume().at(2).number).itemname);
+			TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 2, tt6, strlen(tt6));
+		}
+
+		if (pl->getConsume().size() / 2 > 3)
+		{
+			Mines->_item.at(pl->getConsume().at(3).number).itemimg->render(getMemDC(), myItem[3].left + 2, myItem[3].top + 2);
+			char tt7[255];
+			sprintf(tt7, "%d 메소", Mines->_item.at(pl->getConsume().at(3).number)._price);
+			TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 21, tt7, strlen(tt7));
+			char tt8[255];
+			sprintf(tt8, "%s", Mines->_item.at(pl->getConsume().at(3).number).itemname);
+			TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 2, tt8, strlen(tt8));
+		}
+
+		if (pl->getConsume().size() / 2 > 4)
+		{
+			Mines->_item.at(pl->getConsume().at(4).number).itemimg->render(getMemDC(), myItem[4].left + 2, myItem[4].top + 2);
+			char tt9[255];
+			sprintf(tt9, "%d 메소", Mines->_item.at(pl->getConsume().at(4).number)._price);
+			TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 21, tt9, strlen(tt9));
+			char tt10[255];
+			sprintf(tt10, "%s", Mines->_item.at(pl->getConsume().at(4).number).itemname);
+			TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 2, tt10, strlen(tt10));
+		}
+
+		if (pl->getConsume().size() / 2 > 5)
+		{
+			Mines->_item.at(pl->getConsume().at(5).number).itemimg->render(getMemDC(), myItem[5].left + 2, myItem[5].top + 2);
+			char tt11[255];
+			sprintf(tt11, "%d 메소", Mines->_item.at(pl->getConsume().at(5).number)._price);
+			TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 21, tt11, strlen(tt11));
+			char tt12[255];
+			sprintf(tt12, "%s", Mines->_item.at(pl->getConsume().at(5).number).itemname);
+			TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 2, tt12, strlen(tt12));
+		}
+
+		if (pl->getConsume().size() / 2 > 6)
+		{
+			Mines->_item.at(pl->getConsume().at(6).number).itemimg->render(getMemDC(), myItem[6].left + 2, myItem[6].top + 2);
+			char tt13[255];
+			sprintf(tt13, "%d 메소", Mines->_item.at(pl->getConsume().at(6).number)._price);
+			TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 21, tt13, strlen(tt13));
+			char tt14[255];
+			sprintf(tt14, "%s", Mines->_item.at(pl->getConsume().at(6).number).itemname);
+			TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 2, tt14, strlen(tt14));
+		}
+
+		if (pl->getConsume().size() / 2 > 7)
+		{
+			Mines->_item.at(pl->getConsume().at(7).number).itemimg->render(getMemDC(), myItem[7].left + 2, myItem[7].top + 2);
+			char tt15[255];
+			sprintf(tt15, "%d 메소", Mines->_item.at(pl->getConsume().at(7).number)._price);
+			TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 21, tt15, strlen(tt15));
+			char tt16[255];
+			sprintf(tt16, "%s", Mines->_item.at(pl->getConsume().at(7).number).itemname);
+			TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 2, tt16, strlen(tt16));
+		}
+
+		if (pl->getConsume().size() / 2 > 8)
+		{
+			Mines->_item.at(pl->getConsume().at(8).number).itemimg->render(getMemDC(), myItem[8].left + 2, myItem[8].top + 2);
+			char tt17[255];
+			sprintf(tt17, "%d 메소", Mines->_item.at(pl->getConsume().at(8).number)._price);
+			TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 21, tt17, strlen(tt17));
+			char tt18[255];
+			sprintf(tt18, "%s", Mines->_item.at(pl->getConsume().at(8).number).itemname);
+			TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 2, tt18, strlen(tt18));
+		}
 	}
-
-
-	if (pl->getEquip().size() > 2)
-	{
-	Mines->_item.at(pl->getEquip().at(2).number).itemimg->render(getMemDC(), myItem[2].left + 2, myItem[2].top + 2);
-	char tt5[255];
-	sprintf(tt5, "%d 메소", Mines->_item.at(pl->getEquip().at(2).number)._price);
-	TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 21, tt5, strlen(tt5));
-	char tt6[255];
-	sprintf(tt6, "%s", Mines->_item.at(pl->getEquip().at(2).number).itemname);
-	TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 2, tt6, strlen(tt6));
-	}
-
-	if (pl->getEquip().size() > 3)
-	{
-	Mines->_item.at(pl->getEquip().at(3).number).itemimg->render(getMemDC(), myItem[3].left + 2, myItem[3].top + 2);
-	char tt7[255];
-	sprintf(tt7, "%d 메소", Mines->_item.at(pl->getEquip().at(3).number)._price);
-	TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 21, tt7, strlen(tt7));
-	char tt8[255];
-	sprintf(tt8, "%s", Mines->_item.at(pl->getEquip().at(3).number).itemname);
-	TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 2, tt8, strlen(tt8));
-	}
-
-	if (pl->getEquip().size() > 4)
-	{
-	Mines->_item.at(pl->getEquip().at(4).number).itemimg->render(getMemDC(), myItem[4].left + 2, myItem[4].top + 2);
-	char tt9[255];
-	sprintf(tt9, "%d 메소", Mines->_item.at(pl->getEquip().at(4).number)._price);
-	TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 21, tt9, strlen(tt9));
-	char tt10[255];
-	sprintf(tt10, "%s", Mines->_item.at(pl->getEquip().at(4).number).itemname);
-	TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 2, tt10, strlen(tt10));
-	}
-
-	if (pl->getEquip().size() > 5)
-	{
-	Mines->_item.at(pl->getEquip().at(5).number).itemimg->render(getMemDC(), myItem[5].left + 2, myItem[5].top + 2);
-	char tt11[255];
-	sprintf(tt11, "%d 메소", Mines->_item.at(pl->getEquip().at(5).number)._price);
-	TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 21, tt11, strlen(tt11));
-	char tt12[255];
-	sprintf(tt12, "%s", Mines->_item.at(pl->getEquip().at(5).number).itemname);
-	TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 2, tt12, strlen(tt12));
-	}
-
-	if (pl->getEquip().size() > 6)
-	{
-	Mines->_item.at(pl->getEquip().at(6).number).itemimg->render(getMemDC(), myItem[6].left + 2, myItem[6].top + 2);
-	char tt13[255];
-	sprintf(tt13, "%d 메소", Mines->_item.at(pl->getEquip().at(6).number)._price);
-	TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 21, tt13, strlen(tt13));
-	char tt14[255];
-	sprintf(tt14, "%s", Mines->_item.at(pl->getEquip().at(6).number).itemname);
-	TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 2, tt14, strlen(tt14));
-	}
-
-	if (pl->getEquip().at(7).stack > 0)
-	{
-	Mines->_item.at(pl->getEquip().at(7).number).itemimg->render(getMemDC(), myItem[7].left + 2, myItem[7].top + 2);
-	char tt15[255];
-	sprintf(tt15, "%d 메소", Mines->_item.at(pl->getEquip().at(7).number)._price);
-	TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 21, tt15, strlen(tt15));
-	char tt16[255];
-	sprintf(tt16, "%s", Mines->_item.at(pl->getEquip().at(7).number).itemname);
-	TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 2, tt16, strlen(tt16));
-	}
-
-	if (pl->getEquip().at(8).stack > 0)
-	{
-	Mines->_item.at(pl->getEquip().at(8).number).itemimg->render(getMemDC(), myItem[8].left + 2, myItem[8].top + 2);
-	char tt17[255];
-	sprintf(tt17, "%d 메소", Mines->_item.at(pl->getEquip().at(8).number)._price);
-	TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 21, tt17, strlen(tt17));
-	char tt18[255];
-	sprintf(tt18, "%s", Mines->_item.at(pl->getEquip().at(8).number).itemname);
-	TextOut(getMemDC(), myItem[8].left + 40, myItem[8].top + 2, tt18, strlen(tt18));
-	}
-
 	//다썼으면 지워주자!!!
 	DeleteObject(oldFont);
 	DeleteObject(font1);
