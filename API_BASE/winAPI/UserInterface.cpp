@@ -2029,7 +2029,7 @@ void UserInterface::shop(void)
 	//-------------------------내 아이템 판매 목록들-------------------------------
 	if (onShopEquipTab)
 	{
-		if (pl->getEquip().size() / 2 > 0)
+		if (pl->getEquip().size() > 0)
 		{
 			Mines->_item.at(pl->getEquip().at(0).number).itemimg->render(getMemDC(), myItem[0].left + 2, myItem[0].top + 2);
 			char tt[255];
@@ -2041,7 +2041,7 @@ void UserInterface::shop(void)
 		}
 
 
-		if (pl->getEquip().size() / 2 > 1)
+		if (pl->getEquip().size() > 1)
 		{
 			Mines->_item.at(pl->getEquip().at(1).number).itemimg->render(getMemDC(), myItem[1].left + 2, myItem[1].top + 2);
 			char tt3[255];
@@ -2053,7 +2053,7 @@ void UserInterface::shop(void)
 		}
 
 
-		if (pl->getEquip().size() / 2 > 2)
+		if (pl->getEquip().size() > 2)
 		{
 			Mines->_item.at(pl->getEquip().at(2).number).itemimg->render(getMemDC(), myItem[2].left + 2, myItem[2].top + 2);
 			char tt5[255];
@@ -2064,7 +2064,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 2, tt6, strlen(tt6));
 		}
 
-		if (pl->getEquip().size() / 2 > 3)
+		if (pl->getEquip().size() > 3)
 		{
 			Mines->_item.at(pl->getEquip().at(3).number).itemimg->render(getMemDC(), myItem[3].left + 2, myItem[3].top + 2);
 			char tt7[255];
@@ -2075,7 +2075,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 2, tt8, strlen(tt8));
 		}
 
-		if (pl->getEquip().size() / 2 > 4)
+		if (pl->getEquip().size() > 4)
 		{
 			Mines->_item.at(pl->getEquip().at(4).number).itemimg->render(getMemDC(), myItem[4].left + 2, myItem[4].top + 2);
 			char tt9[255];
@@ -2086,7 +2086,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 2, tt10, strlen(tt10));
 		}
 
-		if (pl->getEquip().size() / 2 > 5)
+		if (pl->getEquip().size() > 5)
 		{
 			Mines->_item.at(pl->getEquip().at(5).number).itemimg->render(getMemDC(), myItem[5].left + 2, myItem[5].top + 2);
 			char tt11[255];
@@ -2097,7 +2097,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 2, tt12, strlen(tt12));
 		}
 
-		if (pl->getEquip().size() / 2 > 6)
+		if (pl->getEquip().size() > 6)
 		{
 			Mines->_item.at(pl->getEquip().at(6).number).itemimg->render(getMemDC(), myItem[6].left + 2, myItem[6].top + 2);
 			char tt13[255];
@@ -2108,7 +2108,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 2, tt14, strlen(tt14));
 		}
 
-		if (pl->getEquip().size() / 2 > 7)
+		if (pl->getEquip().size() > 7)
 		{
 			Mines->_item.at(pl->getEquip().at(7).number).itemimg->render(getMemDC(), myItem[7].left + 2, myItem[7].top + 2);
 			char tt15[255];
@@ -2119,7 +2119,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 2, tt16, strlen(tt16));
 		}
 
-		if (pl->getEquip().size() / 2 > 8)
+		if (pl->getEquip().size() > 8)
 		{
 			Mines->_item.at(pl->getEquip().at(8).number).itemimg->render(getMemDC(), myItem[8].left + 2, myItem[8].top + 2);
 			char tt17[255];
@@ -2134,7 +2134,7 @@ void UserInterface::shop(void)
 	//소비탭일경우
 	else if (onShopPortionTab)
 	{
-		if (pl->getConsume().size() / 2 > 0)
+		if (pl->getConsume().size() > 0)
 		{
 			Mines->_item.at(pl->getConsume().at(0).number).itemimg->render(getMemDC(), myItem[0].left + 2, myItem[0].top + 2);
 			char tt[255];
@@ -2146,7 +2146,7 @@ void UserInterface::shop(void)
 		}
 
 
-		if (pl->getConsume().size() / 2 > 1)
+		if (pl->getConsume().size() > 1)
 		{
 			Mines->_item.at(pl->getConsume().at(1).number).itemimg->render(getMemDC(), myItem[1].left + 2, myItem[1].top + 2);
 			char tt3[255];
@@ -2158,7 +2158,7 @@ void UserInterface::shop(void)
 		}
 
 
-		if (pl->getConsume().size() / 2 > 2)
+		if (pl->getConsume().size() > 2)
 		{
 			Mines->_item.at(pl->getConsume().at(2).number).itemimg->render(getMemDC(), myItem[2].left + 2, myItem[2].top + 2);
 			char tt5[255];
@@ -2169,7 +2169,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[2].left + 40, myItem[2].top + 2, tt6, strlen(tt6));
 		}
 
-		if (pl->getConsume().size() / 2 > 3)
+		if (pl->getConsume().size() > 3)
 		{
 			Mines->_item.at(pl->getConsume().at(3).number).itemimg->render(getMemDC(), myItem[3].left + 2, myItem[3].top + 2);
 			char tt7[255];
@@ -2180,7 +2180,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[3].left + 40, myItem[3].top + 2, tt8, strlen(tt8));
 		}
 
-		if (pl->getConsume().size() / 2 > 4)
+		if (pl->getConsume().size() > 4)
 		{
 			Mines->_item.at(pl->getConsume().at(4).number).itemimg->render(getMemDC(), myItem[4].left + 2, myItem[4].top + 2);
 			char tt9[255];
@@ -2191,7 +2191,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[4].left + 40, myItem[4].top + 2, tt10, strlen(tt10));
 		}
 
-		if (pl->getConsume().size() / 2 > 5)
+		if (pl->getConsume().size() > 5)
 		{
 			Mines->_item.at(pl->getConsume().at(5).number).itemimg->render(getMemDC(), myItem[5].left + 2, myItem[5].top + 2);
 			char tt11[255];
@@ -2202,7 +2202,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[5].left + 40, myItem[5].top + 2, tt12, strlen(tt12));
 		}
 
-		if (pl->getConsume().size() / 2 > 6)
+		if (pl->getConsume().size() > 6)
 		{
 			Mines->_item.at(pl->getConsume().at(6).number).itemimg->render(getMemDC(), myItem[6].left + 2, myItem[6].top + 2);
 			char tt13[255];
@@ -2213,7 +2213,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[6].left + 40, myItem[6].top + 2, tt14, strlen(tt14));
 		}
 
-		if (pl->getConsume().size() / 2 > 7)
+		if (pl->getConsume().size() > 7)
 		{
 			Mines->_item.at(pl->getConsume().at(7).number).itemimg->render(getMemDC(), myItem[7].left + 2, myItem[7].top + 2);
 			char tt15[255];
@@ -2224,7 +2224,7 @@ void UserInterface::shop(void)
 			TextOut(getMemDC(), myItem[7].left + 40, myItem[7].top + 2, tt16, strlen(tt16));
 		}
 
-		if (pl->getConsume().size() / 2 > 8)
+		if (pl->getConsume().size() > 8)
 		{
 			Mines->_item.at(pl->getConsume().at(8).number).itemimg->render(getMemDC(), myItem[8].left + 2, myItem[8].top + 2);
 			char tt17[255];
