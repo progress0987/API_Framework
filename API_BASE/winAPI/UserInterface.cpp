@@ -36,6 +36,9 @@ HRESULT UserInterface::init(void)
 	iT = new items;
 	iT->init();
 
+	//장비창 초기화
+	e_cap = e_capes = e_gloves = e_clothes = e_earAcc = e_weapon = e_pants = e_shoes = -1;
+
 	//인벤토리 작업
 	invenWnd = IMAGEMANAGER->findImage("인벤토리창");
 	equipTab = IMAGEMANAGER->findImage("장비탭");
@@ -827,6 +830,19 @@ void UserInterface::update(void)
 					break;
 
 				}
+
+				//물건을 사고나면 인벤토리 정보를 갱신해준다.
+				for (int i = 0; i < 6; i++)
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						if ((i * 4 + j)<pl->getEquip().size())
+							c_equip[i * 4 + j] = i * 4 + j;
+						if ((i * 4 + j)<pl->getConsume().size())
+							c_consume[i * 4 + j] = i * 4 + j;
+					}
+				}
+
 			}
 			////////////////////////아이템 판매하기//////////////////////////////////
 			else if (PtInRect(&buttonSell, ptMouse))
@@ -913,6 +929,19 @@ void UserInterface::update(void)
 						pl->sellConsume(8);
 						pl->earnMeso(pl->getConsume().at(8)._price);
 						break;
+					}
+				}
+
+				
+				//물건을 팔고나면 인벤토리 정보를 갱신해준다.
+				for (int i = 0; i < 6; i++)
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						if ((i * 4 + j)<pl->getEquip().size())
+							c_equip[i * 4 + j] = i * 4 + j;
+						if ((i * 4 + j)<pl->getConsume().size())
+							c_consume[i * 4 + j] = i * 4 + j;
 					}
 				}
 			}
@@ -1019,6 +1048,29 @@ void UserInterface::update(void)
 							switch (pl->getEquip().at(c_equip[i]).itemtype)
 							{
 							case helm:
+								//이미 장착을 하고 있으면 해제를 먼저 해야하니까;;
+								if (e_cap > 0)
+								{
+									e_cap = -1;
+									//인벤토리의 빈곳에 순차적으로 도로 넣는다.
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_cap.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_cap = i_empty; //이게 장비로 인해 올라갔던 스텟 다시 원상복귀시켜준다.
+								}
+								
 								e_cap = pl->getEquip().at(c_equip[i]).number;
 								i_cap = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
@@ -1029,31 +1081,151 @@ void UserInterface::update(void)
 								c_equip[i] = -1;
 								break;
 							case clothes:
+								if (e_clothes > 0)
+								{
+									e_clothes = -1;
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_clothes.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_clothes = i_empty;
+								}
 								e_clothes = pl->getEquip().at(c_equip[i]).number;
 								i_clothes = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
 								break;
 							case pants:
+								if (e_pants > 0)
+								{
+									e_pants = -1;
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_pants.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_pants = i_empty;
+								}
 								e_pants = pl->getEquip().at(c_equip[i]).number;
 								i_pants = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
 								break;
 							case boots:
+								if (e_shoes > 0)
+								{
+									e_shoes = -1;
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_shoes.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_shoes = i_empty;
+								}
 								e_shoes = pl->getEquip().at(c_equip[i]).number;
 								i_shoes = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
 								break;
 							case weapons:
+								if (e_weapon > 0)
+								{
+									e_weapon = -1;
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_weapon.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_weapon = i_empty;
+								}
 								e_weapon = pl->getEquip().at(c_equip[i]).number;
 								i_weapon = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
 								break;
 							case gloves:
+								if (e_gloves > 0)
+								{
+									e_gloves = -1;
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_gloves.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_gloves = i_empty;
+								}
 								e_gloves = pl->getEquip().at(c_equip[i]).number;
 								i_gloves = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
 								break;
 							case cape:
+								if (e_capes > 0)
+								{
+									e_capes = -1;
+									for (int i = 0; i < 24; i++)
+									{
+										if (c_equip[i] == -1)
+										{
+											int k = 0;
+											for (int j = 0; j < pl->getEquip().size(); j++) {
+												if (strcmp(i_capes.itemname, pl->getEquip().at(j).itemname) == 0) {
+													break;
+												}
+												k++;
+											}
+											c_equip[i] = k;
+											break;
+										}
+									}
+									i_capes = i_empty;
+								}
 								e_capes = pl->getEquip().at(c_equip[i]).number;
 								i_capes = pl->getEquip().at(c_equip[i]);
 								c_equip[i] = -1;
@@ -1493,6 +1665,14 @@ void UserInterface::equip(void)
 
 void UserInterface::inventory(void)
 {
+	//글자출력을 위한 폰트설정
+	HFONT font1, oldFont;
+
+	font1 = CreateFont(12, 0, 0, 0, 100, false, 0, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
+	SetTextColor(getMemDC(), RGB(0, 0, 0));
+	SetBkMode(getMemDC(), TRANSPARENT);
+	oldFont = (HFONT)SelectObject(getMemDC(), font1);
+
 	invenWnd->render(getMemDC());
 
 	//탭 클릭을 위한 영역처리
@@ -1619,12 +1799,20 @@ void UserInterface::inventory(void)
 				if (pl->getConsume().at(0).stack > 0)
 				{
 					pl->getConsume().at(0).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+					char itStack1[255];
+					sprintf(itStack1, "%d", pl->getConsume().at(0).stack);
+					RECT rcTextArea = RectMake(_myInven[i].left, _myInven[i].top + 20, 16, 16);
+					DrawText(getMemDC(), itStack1, -1, &rcTextArea, DT_LEFT);
 				}
 				break;
 			case 1:
 				if (pl->getConsume().at(1).stack > 0)
 				{
 					pl->getConsume().at(1).itemimg->render(getMemDC(), _myInven[i].left, _myInven[i].top);
+					char itStack2[255];
+					sprintf(itStack2, "%d", pl->getConsume().at(1).stack);
+					RECT rcTextArea = RectMake(_myInven[i].left, _myInven[i].top + 20, 16, 16);
+					DrawText(getMemDC(), itStack2, -1, &rcTextArea, DT_LEFT);
 				}
 				break;
 			case 2:
@@ -1721,13 +1909,6 @@ void UserInterface::inventory(void)
 		}
 	}
 
-	//글자출력을 위한 폰트설정
-	HFONT font1, oldFont;
-
-	font1 = CreateFont(12, 0, 0, 0, 100, false, 0, false, HANGUL_CHARSET, 0, 0, 0, 0, TEXT("돋움체"));
-	SetTextColor(getMemDC(), RGB(0, 0, 0));
-	SetBkMode(getMemDC(), TRANSPARENT);
-	oldFont = (HFONT)SelectObject(getMemDC(), font1);
 
 	//캐릭터가 보유하고있는 메소 표기
 
@@ -2312,6 +2493,9 @@ void UserInterface::shop(void)
 			sprintf(tt, "%d 메소", Mines->_item.at(pl->getConsume().at(0).number)._price);
 			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 21, tt, strlen(tt));
 			char tt2[255];
+			sprintf(tt2, "%s", Mines->_item.at(pl->getConsume().at(0).number).itemname);
+			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
+			char st[255];
 			sprintf(tt2, "%s", Mines->_item.at(pl->getConsume().at(0).number).itemname);
 			TextOut(getMemDC(), myItem[0].left + 40, myItem[0].top + 2, tt2, strlen(tt2));
 		}
